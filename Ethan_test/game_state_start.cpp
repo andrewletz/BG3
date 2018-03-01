@@ -37,6 +37,7 @@ void GameStateStart::handleInput(){
 			}
 			case sf::Event::KeyPressed:{
 				if(event.key.code == sf::Keyboard::Escape){ this->game->window.close();}
+				if(event.key.code == sf::Keyboard::Space){this->loadgame();}
 				break;
 			}
 			default:{break;}
@@ -53,3 +54,7 @@ GameStateStart::GameStateStart(Game* game){
 	this->view.setCenter(pos);
 }
 
+void GameStateStart::loadgame(){
+	this->game->pushState(new GameStateEditor(this->game));
+	return;
+}
