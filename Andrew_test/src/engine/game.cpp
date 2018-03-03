@@ -8,7 +8,8 @@
 
 void Game::loadTextures()
 {
-    texmgr.loadTexture("background", "images/background.png");
+    // remember paths are relative to the generated executable! (not cpp file)
+    texmgr.loadTexture("background", "assets/images/background.png");
 }
 
 void Game::pushState(GameState* state)
