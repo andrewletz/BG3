@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "game_state.hpp"
-#include "game_state_editor.hpp"
+#include "game_state_main.hpp"
 
-void GameStateEditor::draw(const float dt)
+void GameStateMain::draw(const float dt)
 {
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->game->background);
@@ -11,12 +11,12 @@ void GameStateEditor::draw(const float dt)
     return;
 }
 
-void GameStateEditor::update(const float dt)
+void GameStateMain::update(const float dt)
 {
     return;
 }
 
-void GameStateEditor::handleInput()
+void GameStateMain::handleInput()
 {
     sf::Event event;
 
@@ -48,7 +48,7 @@ void GameStateEditor::handleInput()
     return;
 }
 
-GameStateEditor::GameStateEditor(Game* game)
+GameStateMain::GameStateMain(Game* game)
 {
     this->game = game;
     sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());

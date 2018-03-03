@@ -5,7 +5,7 @@
 
 #include "game_state.hpp"
 
-class GameStateEditor : public GameState
+class GameStateMain : public GameState
 {
     private:
 
@@ -18,7 +18,7 @@ class GameStateEditor : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
-    GameStateEditor(Game* game);
+    GameStateMain(Game* game);
 };
 
 #endif /* GAME_STATE_EDITOR_HPP */

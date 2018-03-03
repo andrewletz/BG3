@@ -8,7 +8,7 @@
 
 void Game::loadTextures()
 {
-    // remember paths are relative to the generated executable! (not cpp file)
+    // remember paths are relative to the generated executable! (not the cpp file)
     texmgr.loadTexture("background", "assets/images/background.png");
 }
 
@@ -50,7 +50,7 @@ void Game::gameLoop()
     {
         sf::Time elapsed = clock.restart();
         float dt = elapsed.asSeconds();
-#
+
         if(peekState() == nullptr) continue;
         peekState()->handleInput();
         peekState()->update(dt);
@@ -64,7 +64,7 @@ Game::Game()
 {
     this->loadTextures();
 
-    this->window.create(sf::VideoMode(800, 600), "City Builder");
+    this->window.create(sf::VideoMode(1280, 720), "BG3", sf::Style::Close);
     this->window.setFramerateLimit(60);
 
     this->background.setTexture(this->texmgr.getRef("background"));
