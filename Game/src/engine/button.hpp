@@ -6,16 +6,17 @@
 
 class Button{
 public:
-	Button(float x, float y, std::string msg, void (*func)());
+	Button(float x, float y, std::string msg, std::string op);
 	~Button(){}
 
 	void setPos(int x, int y);
-	void PressButton();
-	void Draw(sf::RenderWindow window);
+	std::string PressButton();
+	void Draw(sf::RenderWindow &window);
 
 	//button info
+	sf::Font font; //the font for the label
 	sf::Text label;
-	void (*operation)();
+	std::string operation;
 	sf::RectangleShape hitbox;
 };
 

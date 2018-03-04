@@ -16,8 +16,10 @@ GameStateStart::GameStateStart(Game* game)
     pos *= 0.5f;
     this->view.setCenter(pos);
     //make a vector to contain the two buttons
-    // Button startButton = Button(400, 300, "Start", &this->loadgame());
-    // this->buttons.push_back(startButton);
+    //std::string Label = "Start";
+    //std::string Message = "load_game";
+    //Button startButton = Button(400, 300, Label, Message);
+    //this->buttons.push_back(startButton);
 }
 
 void GameStateStart::loadgame()
@@ -36,6 +38,13 @@ void GameStateStart::draw(const float dt)
 
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->game->background);
+    /*
+    int butlen = buttons.size();
+    for(int i = 0; i < butlen; i++)
+    {
+        buttons[i].Draw(this->game->window);
+    }
+    */
 
     return;
 }
@@ -99,8 +108,9 @@ void GameStateStart::handleInput()
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(true);
                     }
-                } else if(event.key.code == sf::Keyboard::Dash) {
+                } else if(event.key.code == sf::Keyboard::Dash) {  
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+                        std::cout << "trying to cycle resolution" << std::endl;
                         this->game->cycleResolution(false);
                     }
                 }
@@ -112,6 +122,7 @@ void GameStateStart::handleInput()
                 {
                     clickX = event.mouseButton.x;
                     clickY = event.mouseButton.y;
+                    //std::cout << clickX << " " << clickY << std::endl;
                 }
             }
             case sf::Event::MouseButtonReleased:
@@ -121,6 +132,7 @@ void GameStateStart::handleInput()
                     relX = event.mouseButton.x;
                     relY = event.mouseButton.y;
                     //check if clickX/Y and relX/Y are inside of the boxes of any of the button squares
+                    //std::cout << relX << " " << relY << std::endl;
 
                 }
             }
