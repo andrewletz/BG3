@@ -8,8 +8,9 @@ void Board::step(sf::RenderWindow& window)
     for (auto unit : units)
     {
         window.draw(unit.body);
+        window.draw(unit.range);
     }
-    checkUnitRange();
+    checkCollisions();
 }
 
 void Board::addUnit(Unit unit)
@@ -17,7 +18,7 @@ void Board::addUnit(Unit unit)
     this->units.push_back(unit);
 }
 
-void Board::checkUnitRange()
+void Board::checkCollisions()
 {
     for (int i = 0; i < this->units.size(); i++)
     {
@@ -25,10 +26,16 @@ void Board::checkUnitRange()
         {
             if (j != i)
             {
-                Collider secondCollider = units[j].getCollider();
-                if (units[i].getCollider().checkCollision(secondCollider, 1.0f))
+                UnitCollider firstCollider = units[i].getUnitCollider();
+                UnitCollider secondCollider = units[j].getUnitCollider();
+                if (firstCollider.checkUnitCollision(secondCollider, 0.0f))
                 {
-                    std::cout << "collision detected " << i << " " << j << std::endl;
+                    std::cout << "unit body collision detected " << i << " " << j << std::endl;
+                }
+
+                if (firstCollider.checkRangeCollision(secondCollider))
+                {
+                    std::cout << "unit range collision detected " << i << " " << j << std::endl;
                     units[i].attack(units[j]);
                 }
             }

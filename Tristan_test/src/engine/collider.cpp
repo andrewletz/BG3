@@ -1,15 +1,17 @@
 #include "collider.hpp"
+#include <cmath>
+#include <iostream>
 
-Collider::Collider(sf::RectangleShape& body) :
-    body(body)
+UnitCollider::UnitCollider(sf::RectangleShape& body, sf::CircleShape& range) :
+    body(body), range(range)
 {
 }
 
-Collider::~Collider()
+UnitCollider::~UnitCollider()
 {
 }
 
-bool Collider::checkCollision(Collider & other, float push)
+bool UnitCollider::checkUnitCollision(UnitCollider & other, float push)
 {
     sf::Vector2f otherPosition = other.getPosition();
     sf::Vector2f otherHalfSize = other.getHalfSize();
@@ -55,5 +57,31 @@ bool Collider::checkCollision(Collider & other, float push)
         return true;
     }
 
+    return false;
+}
+
+bool UnitCollider::checkRangeCollision(UnitCollider & other)
+{
+
+    /* CAN BE MADE MORE SIMPLE
+    // loop through points in this units range circle
+    for (int i = 0; i < this->range.getPointCount(); i++)
+    {
+        sf::Vector2f cPoint = other.range.getPoint(i);
+        sf::Vector2f rPos = getPosition();
+        sf::Vector2f half = getHalfSize();
+
+        if (cPoint.x < (rPos.x + half.x) || cPoint.x > (rPos.x - half.x)) {
+            if (cPoint.y < (rPos.y + half.y) || cPoint.y > (rPos.y - half.y)) {
+                return true;
+            }
+        }
+    }
+    */
+    sf::Vector2f thisPos = range.getPosition();
+    sf::Vector2f otherPos = other.body.getPosition();
+    if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f))
+        return true;
+    
     return false;
 }

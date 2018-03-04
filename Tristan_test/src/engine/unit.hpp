@@ -11,7 +11,7 @@ typedef struct{
     unsigned cost;
     unsigned max_hp;
     unsigned attackDamage;
-    float attackRange;
+    float attackRadius;
     float moveSpeed;
 } Attributes;
 
@@ -28,12 +28,13 @@ public:
     Board* parentBoard;
 
     sf::RectangleShape body; 
+    sf::CircleShape range;
 
     Attributes attributes;
     unsigned hp;
 
     void attack(Unit& target);
-    Collider getCollider() { return Collider(body); };
+    UnitCollider getUnitCollider() { return UnitCollider(body, range); };
 
     Unit(Board* board, sf::Vector2f pos, Attributes attributes);
     ~Unit() {};
