@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "game_state.hpp"
+#include "game_state_start.hpp"
 #include "game_state_main.hpp"
 
 void GameStateMain::draw(const float dt)
@@ -27,18 +28,14 @@ void GameStateMain::handleInput()
             /* Close the window */
             case sf::Event::Closed:
             {
-                this->game->window.close();
+                game->window.close();
                 break;
             }
-            /* Resize the window */
-            case sf::Event::Resized:
+            case sf::Event::KeyPressed:
             {
-                gameView.setSize(event.size.width, event.size.height);
-                guiView.setSize(event.size.width, event.size.height);
-                this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0), this->guiView));
-                this->game->background.setScale(
-                    float(event.size.width) / float(this->game->background.getTexture()->getSize().x), 
-                    float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
+                if(event.key.code == sf::Keyboard::Escape) {
+                    // pause or something
+                }
                 break;
             }
             default: break;

@@ -18,6 +18,10 @@ class Game
 
     std::stack<GameState*> states;
 
+    std::vector<sf::Vector2i> validResolutions;
+    int bitsPerPixel;
+    int currentResolution;
+
     sf::RenderWindow window;
     TextureManager texmgr;
     sf::Sprite background;
@@ -25,6 +29,7 @@ class Game
     void pushState(GameState* state);
     void popState();
     void changeState(GameState* state);
+    void cycleResolution(bool forward);
     GameState* peekState();
 
     void gameLoop();
