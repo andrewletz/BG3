@@ -16,10 +16,10 @@ GameStateStart::GameStateStart(Game* game)
     pos *= 0.5f;
     this->view.setCenter(pos);
     //make a vector to contain the two buttons
-    //std::string Label = "Start";
-    //std::string Message = "load_game";
-    //Button startButton = Button(400, 300, Label, Message);
-    //this->buttons.push_back(startButton);
+    std::string Label = "Start";
+    std::string Message = "load_game";
+    Button *startButton = new Button(960, 540, Label, Message); //needs to appear dynamically
+    this->buttons.push_back(startButton);
 }
 
 void GameStateStart::loadgame()
@@ -38,13 +38,12 @@ void GameStateStart::draw(const float dt)
 
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->game->background);
-    /*
+
     int butlen = buttons.size();
     for(int i = 0; i < butlen; i++)
     {
-        buttons[i].Draw(this->game->window);
+        buttons[i]->Draw(this->game->window);
     }
-    */
 
     return;
 }
@@ -106,7 +105,7 @@ void GameStateStart::handleInput()
                     this->loadgame();
                 } else if(event.key.code == sf::Keyboard::Equal) {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-                        this->game->cycleResolution(true);
+                        this->game->cycleResolution(true);  
                     }
                 } else if(event.key.code == sf::Keyboard::Dash) {  
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {

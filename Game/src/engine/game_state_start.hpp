@@ -21,7 +21,7 @@ class GameStateStart : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
-    std::vector<Button> buttons;
+    std::vector<Button*> buttons;
 
     GameStateStart(Game* game);
 };
