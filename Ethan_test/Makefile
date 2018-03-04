@@ -9,8 +9,9 @@ SRCS    := $(shell find $(SRCDIR) -name '*.$(SRCEXT)')
 SRCDIRS := $(shell find . -name '*.$(SRCEXT)' -exec dirname {} \; | uniq)
 OBJS    := $(patsubst %.$(SRCEXT),$(OBJDIR)/%.o,$(SRCS))
 
+DEBUG    = -g
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-CFLAGS   = -std=c++14 -g $(SFMLFLAGS)
+CFLAGS   = -std=c++14 $(SFMLFLAGS)
 CC       = $(CXX)
 
 .PHONY: all clean distclean

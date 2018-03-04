@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 #include "game_state_start.hpp"
 #include "game_state_main.hpp"
 #include "game_state.hpp"
+#include "button.hpp"
 
 GameStateStart::GameStateStart(Game* game)
 {
@@ -13,6 +15,11 @@ GameStateStart::GameStateStart(Game* game)
     this->view.setSize(pos);
     pos *= 0.5f;
     this->view.setCenter(pos);
+    //make a vector to contain the two buttons
+    //std::string Label = "Start";
+    //std::string Message = "load_game";
+    //Button startButton = Button(400, 300, Label, Message);
+    //this->buttons.push_back(startButton);
 }
 
 void GameStateStart::loadgame()
@@ -31,6 +38,13 @@ void GameStateStart::draw(const float dt)
 
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->game->background);
+    /*
+    int butlen = buttons.size();
+    for(int i = 0; i < butlen; i++)
+    {
+        buttons[i].Draw(this->game->window);
+    }
+    */
 
     return;
 }
@@ -42,6 +56,13 @@ void GameStateStart::update(const float dt)
 void GameStateStart::handleInput()
 {
     sf::Event event;
+
+    //The following two ints store where the click happened
+    int clickX;
+    int clickY;
+    //The following two ints store where the mouse release happened
+    int relX;
+    int relY;
 
     while(this->game->window.pollEvent(event))
     {
@@ -87,12 +108,33 @@ void GameStateStart::handleInput()
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(true);
                     }
-                } else if(event.key.code == sf::Keyboard::Dash) {
+                } else if(event.key.code == sf::Keyboard::Dash) {  
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+                        std::cout << "trying to cycle resolution" << std::endl;
                         this->game->cycleResolution(false);
                     }
                 }
                 break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    clickX = event.mouseButton.x;
+                    clickY = event.mouseButton.y;
+                    //std::cout << clickX << " " << clickY << std::endl;
+                }
+            }
+            case sf::Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    relX = event.mouseButton.x;
+                    relY = event.mouseButton.y;
+                    //check if clickX/Y and relX/Y are inside of the boxes of any of the button squares
+                    //std::cout << relX << " " << relY << std::endl;
+
+                }
             }
             default: break;
         }

@@ -5,14 +5,14 @@
 #include <SFML/System.hpp>
 #include "game.hpp"
 #include "game_state.hpp"
-#include "texture_manager.hpp"
-#include "tile.hpp"
-#include "animation_handler.hpp"
-
+//#include "texture_manager.hpp"
+//#include "tile.hpp"
+//#include "animation_handler.hpp"
+/*
 void Game::loadTextures(){
 	texmgr.loadTexture("backgroun", "media/background.png")'
 }
-
+*/
 void Game::pushState(GameState* state){
 	this->states.push(state);
 	return;
@@ -54,18 +54,18 @@ void Game::gameLoop(){
 }
 
 Game::Game(){
-	this->loadTextures();
-	this->loadTiles();
+	//this->loadTextures();
+	//this->loadTiles();
 
 	this->window.create(sf::VideoMode(800, 600), "SFML Tutorial");
 	this->window.setFramerateLimit(60);
-	this->background.setTexture(this->texmgr.getRef("background"));
+	//this->background.setTexture(this->texmgr.getRef("background"));
 }
 
 Game::~Game(){
 	while(!this->states.empty()){popState();}
 }
-
+/*
 void Game::loadTiles(){
 	Animation staticAnim(0, 0, 1.0f);
 	this->tileAtlas["grass"] = Tile(this->tileSize, 1, texmgr.getRef("grass"), 
@@ -115,3 +115,4 @@ void Game::loadTextures(){
 	texmgr.loadTexture("road",          "media/road.png");
 	texmgr.loadTexture("background",    "media/background.png");
 }
+*/

@@ -27,7 +27,7 @@ public:
 
 	unsigned int maxPopPerLevel;
 
-	unsinged int maxLevels;
+	unsigned int maxLevels;
 
 	float production;
 

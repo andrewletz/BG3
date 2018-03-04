@@ -5,24 +5,24 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
-#include "tile.hpp"
+//#include "tile.hpp"
 
 class GameState;
 
 class Game{
 private:
-	void loadTextures();
-	void loadTiles();
+	//void loadTextures();
+	//void loadTiles();
 public:
-	const static int tileSize = 8;
+	//const static int tileSize = 8;
 
 	std::stack<GameState*> states;
 
 	sf::RenderWindow window;
-	TextureManager texmgr;
+	//TextureManager texmgr;
 	sf::Sprite background;
 
-	std::map<std::string, Tile> tileAtlas;
+	//std::map<std::string, Tile> tileAtlas;
 
 	void pushState(GameState* state);
 	void popState();
