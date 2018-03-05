@@ -62,22 +62,6 @@ bool UnitCollider::checkUnitCollision(UnitCollider & other, float push)
 
 bool UnitCollider::checkRangeCollision(UnitCollider & other)
 {
-
-    /* CAN BE MADE MORE SIMPLE
-    // loop through points in this units range circle
-    for (int i = 0; i < this->range.getPointCount(); i++)
-    {
-        sf::Vector2f cPoint = other.range.getPoint(i);
-        sf::Vector2f rPos = getPosition();
-        sf::Vector2f half = getHalfSize();
-
-        if (cPoint.x < (rPos.x + half.x) || cPoint.x > (rPos.x - half.x)) {
-            if (cPoint.y < (rPos.y + half.y) || cPoint.y > (rPos.y - half.y)) {
-                return true;
-            }
-        }
-    }
-    */
     sf::Vector2f thisPos = range.getPosition();
     sf::Vector2f otherPos = other.body.getPosition();
     if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f))

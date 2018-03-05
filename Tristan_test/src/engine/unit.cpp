@@ -37,3 +37,15 @@ void Unit::attack(Unit& target)
 {
     target.hp = target.hp - this->attributes.attackDamage;
 }
+
+bool Unit::shouldDie()
+{
+    if (hp <= 0) return true;
+    return false;
+}
+
+void Unit::draw(sf::RenderWindow& window)
+{
+    window.draw(body);
+    window.draw(range);
+}

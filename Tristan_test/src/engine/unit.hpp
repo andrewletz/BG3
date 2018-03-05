@@ -32,9 +32,12 @@ public:
 
     Attributes attributes;
     unsigned hp;
+    bool dying = false;
 
-    void attack(Unit& target);
     UnitCollider getUnitCollider() { return UnitCollider(body, range); };
+    void attack(Unit& target);
+    bool shouldDie();
+    void draw(sf::RenderWindow& window);
 
     Unit(Board* board, sf::Vector2f pos, Attributes attributes);
     ~Unit() {};
