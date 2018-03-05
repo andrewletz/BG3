@@ -45,10 +45,19 @@ void Unit::step(sf::RenderWindow& window)
     if (!hasTarget) {
         if (team == LEFT) {
             body.move(0.05f, 0);
-            range.move(0.05f, 0);
         } else if (team == RIGHT) {
             body.move(-0.05f, 0);
-            range.move(-0.05f, 0);
+        }
+        range.setPosition(body.getPosition());
+    } 
+    else 
+    {
+        if (target->dying)
+        {
+            this->hasTarget = false;
+            this->target = nullptr;
+        } else {
+            attack(target);
         }
     }
     window.draw(body);

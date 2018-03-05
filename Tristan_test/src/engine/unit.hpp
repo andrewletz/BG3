@@ -42,7 +42,7 @@ public:
     Unit* target;
 
     UnitCollider getUnitCollider() { return UnitCollider(body, range); };
-    void attack(Unit& target) { target.hp = target.hp - this->attributes.attackDamage; };
+    void attack(Unit* target) { target->hp = target->hp - this->attributes.attackDamage; };
     void setTarget(Unit* target) { this->target = target; };
     bool shouldDie();
     void step(sf::RenderWindow& window);

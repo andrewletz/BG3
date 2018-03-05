@@ -53,7 +53,14 @@ void Board::checkCollisions()
                 if (firstCollider.checkRangeCollision(secondCollider))
                 {
                     //std::cout << "unit range collision detected " << i << " " << j << std::endl;
-                    units[i].attack(units[j]);
+                    //units[i].attack(units[j]);
+                   
+                    // set unit target
+                    if (!units[i].hasTarget && units[j].team != units[i].team)
+                    {
+                        units[i].hasTarget = true;
+                        units[i].target = &units[j];
+                    }
                 }
             }
         }
