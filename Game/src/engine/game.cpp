@@ -121,3 +121,8 @@ Game::~Game()
 {
     while(!this->states.empty()) popState();
 }
+
+sf::Vector2i Game::getResolution()
+{
+    return this->validResolutions[this->currentResolution];
+}

@@ -10,7 +10,7 @@ public:
 	~Button(){}
 
 	void setPos(int x, int y);
-	std::string PressButton();
+	std::string isClicked(int cX, int cY, int rX, int rY);
 	void Draw(sf::RenderWindow &window);
 
 	//button info

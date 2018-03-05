@@ -30,6 +30,7 @@ class Game
     void popState();
     void changeState(GameState* state);
     void cycleResolution(bool forward);
+    sf::Vector2i getResolution();
     GameState* peekState();
 
     void gameLoop();

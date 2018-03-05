@@ -27,7 +27,8 @@ void Button::Draw(sf::RenderWindow &window)
 	window.draw(label);
 }
 
-std::string Button::PressButton()
+std::string Button::isClicked(int cX, int cY, int rX, int rY)
 {
-	return this->operation;
+	std::cout << "TODO: make this check if the click and release are both inside of the hitbox" << std::endl;
+	return "null";
 }

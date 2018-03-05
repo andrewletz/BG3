@@ -18,7 +18,11 @@ GameStateStart::GameStateStart(Game* game)
     //make a vector to contain the two buttons
     std::string Label = "Start";
     std::string Message = "load_game";
-    Button *startButton = new Button(960, 540, Label, Message); //needs to appear dynamically
+    sf::Vector2i currRes = this->game->getResolution();
+    int currX = currRes.x / 2;
+    int currY = currRes.y / 2;
+    std::cout << currX << " " << currY << std::endl;
+    Button *startButton = new Button(currX, currY, Label, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
 }
 
@@ -131,7 +135,11 @@ void GameStateStart::handleInput()
                     relX = event.mouseButton.x;
                     relY = event.mouseButton.y;
                     //check if clickX/Y and relX/Y are inside of the boxes of any of the button squares
-                    //std::cout << relX << " " << relY << std::endl;
+                    int butlen = buttons.size();
+                    for(int i = 0; i < butlen; i++)
+                    {
+                        buttons[i]->isClicked(clickX, clickY, relX, relY);
+                    }
 
                 }
             }
