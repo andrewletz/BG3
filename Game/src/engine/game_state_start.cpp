@@ -19,10 +19,10 @@ GameStateStart::GameStateStart(Game* game)
     std::string Label = "Start";
     std::string Message = "load_game";
     sf::Vector2i currRes = this->game->getResolution();
-    int currX = currRes.x / 2;
-    int currY = currRes.y / 2;
-    std::cout << currX << " " << currY << std::endl;
-    Button *startButton = new Button(currX, currY, Label, Message); //needs to appear dynamically
+    sf::Vector2f currPos(currRes.x, currRes.y);
+    std::cout << currPos.x << " " << currPos.y << std::endl;
+    sf::Vector2f currSize(100.0f, 45.0f);
+    Button *startButton = new Button(currPos, currSize, Label, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
 }
 
@@ -43,6 +43,8 @@ void GameStateStart::draw(const float dt)
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->game->background);
 
+
+    //Before this happens need to reposition the button if the resolution has changed.
     int butlen = buttons.size();
     for(int i = 0; i < butlen; i++)
     {
@@ -60,12 +62,6 @@ void GameStateStart::handleInput()
 {
     sf::Event event;
 
-    //The following two ints store where the click happened
-    int clickX;
-    int clickY;
-    //The following two ints store where the mouse release happened
-    int relX;
-    int relY;
 
     while(this->game->window.pollEvent(event))
     {
@@ -123,24 +119,18 @@ void GameStateStart::handleInput()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    clickX = event.mouseButton.x;
-                    clickY = event.mouseButton.y;
-                    //std::cout << clickX << " " << clickY << std::endl;
-                }
-            }
-            case sf::Event::MouseButtonReleased:
-            {
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    relX = event.mouseButton.x;
-                    relY = event.mouseButton.y;
-                    //check if clickX/Y and relX/Y are inside of the boxes of any of the button squares
+                    //The following vector stores store where the click happened
+                    sf::Vector2i clickPos;
+
+                    clickPos.x = event.mouseButton.x;
+                    clickPos.y = event.mouseButton.y;
+
                     int butlen = buttons.size();
                     for(int i = 0; i < butlen; i++)
                     {
-                        buttons[i]->isClicked(clickX, clickY, relX, relY);
+                        buttons[i]->isClicked(clickPos);
                     }
-
+                    break;
                 }
             }
             default: break;

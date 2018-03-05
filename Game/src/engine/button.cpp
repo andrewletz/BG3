@@ -2,13 +2,13 @@
 #include <string>
 #include <iostream>
 
-Button::Button(float x, float y, std::string msg, std::string op)
+Button::Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, std::string op)
 {
 	//operation
 	this->operation = op;
 	//hitbox
-	this->hitbox.setPosition(x, y);
-	this->hitbox.setSize(sf::Vector2f(100.0f, 50.0f));
+	this->hitbox.setPosition(pos);
+	this->hitbox.setSize(size);
 	this->hitbox.setFillColor(sf::Color::Green);
 	this->hitbox.setOutlineColor(sf::Color::Black);
 	this->hitbox.setOutlineThickness(1.0f);
@@ -17,7 +17,7 @@ Button::Button(float x, float y, std::string msg, std::string op)
 	//Text
 	this->label.setFont(font);
 	this->label.setString(msg);
-	this->label.setPosition(x, y);
+	this->label.setPosition(pos);
 	this->label.setColor(sf::Color::Black);
 }
 
@@ -27,8 +27,15 @@ void Button::Draw(sf::RenderWindow &window)
 	window.draw(label);
 }
 
-std::string Button::isClicked(int cX, int cY, int rX, int rY)
+std::string Button::isClicked(sf::Vector2i cPos)
 {
-	std::cout << "TODO: make this check if the click and release are both inside of the hitbox" << std::endl;
+	int cX = cPos.x;
+	int cY = cPos.y;
+	//hitbox size
+	sf::Vector2f hbs = this->hitbox.getSize();
+	//hitbox pos
+	sf::Vector2f hbp = this->hitbox.getPosition();
+	std::cout << hbp.x << " " << hbp.y << std::endl;
+	std::cout << cX << " " << cY << std::endl;
 	return "null";
 }
