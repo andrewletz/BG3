@@ -9,7 +9,7 @@ public:
 	Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, std::string op);
 	~Button(){}
 
-	void setPos(sf::Vector2i pos);
+	void updatePos(float scale);
 	std::string isClicked(sf::Vector2i cPos);
 	void Draw(sf::RenderWindow &window);
 

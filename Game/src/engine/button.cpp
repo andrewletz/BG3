@@ -21,6 +21,21 @@ Button::Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, std::string
 	this->label.setColor(sf::Color::Black);
 }
 
+void Button::updatePos(float scale)
+{
+	//hitbox pos
+	sf::Vector2f hbp = this->hitbox.getPosition();
+	hbp.x *= scale;
+	hbp.y *= scale;
+	this->hitbox.setPosition(hbp);
+
+	//text pos
+	sf::Vector2f tp = this->label.getPosition();
+	tp.x *= scale;
+	tp.y *= scale;
+	this->label.setPosition(tp);
+}
+
 void Button::Draw(sf::RenderWindow &window)
 {
 	window.draw(hitbox);
@@ -29,13 +44,13 @@ void Button::Draw(sf::RenderWindow &window)
 
 std::string Button::isClicked(sf::Vector2i cPos)
 {
-	int cX = cPos.x;
-	int cY = cPos.y;
 	//hitbox size
 	sf::Vector2f hbs = this->hitbox.getSize();
 	//hitbox pos
 	sf::Vector2f hbp = this->hitbox.getPosition();
-	std::cout << hbp.x << " " << hbp.y << std::endl;
-	std::cout << cX << " " << cY << std::endl;
+	if(cPos.x >= hbp.x && cPos.y >= hbp.y && cPos.x <= (hbp.x + hbs.x) && cPos.y <= (hbp.y + hbs.y))
+	{
+		return operation;
+	}
 	return "null";
 }

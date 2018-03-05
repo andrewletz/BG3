@@ -19,8 +19,7 @@ GameStateStart::GameStateStart(Game* game)
     std::string Label = "Start";
     std::string Message = "load_game";
     sf::Vector2i currRes = this->game->getResolution();
-    sf::Vector2f currPos(currRes.x, currRes.y);
-    std::cout << currPos.x << " " << currPos.y << std::endl;
+    sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
     sf::Vector2f currSize(100.0f, 45.0f);
     Button *startButton = new Button(currPos, currSize, Label, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
@@ -95,6 +94,13 @@ void GameStateStart::handleInput()
                 this->game->background.setScale(
                     float(newWidth) / float(this->game->background.getTexture()->getSize().x),
                     float(newHeight) / float(this->game->background.getTexture()->getSize().y));
+
+                //TODO: reposition the button
+                int butlen = buttons.size();
+                for(int i = 0; i < butlen; i++)
+                {
+                    buttons[i]->updatePos(scale);
+                }
                 break;
             }
             case sf::Event::KeyPressed:
@@ -127,7 +133,11 @@ void GameStateStart::handleInput()
                     int butlen = buttons.size();
                     for(int i = 0; i < butlen; i++)
                     {
-                        buttons[i]->isClicked(clickPos);
+                        std::string validClick = buttons[i]->isClicked(clickPos);
+                        if(validClick == "load_game")
+                        {
+                            this->loadgame();
+                        }
                     }
                     break;
                 }
