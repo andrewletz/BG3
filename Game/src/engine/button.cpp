@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-Button::Button(sf::Vector2f pos, std::string filename, std::string msg, std::string op)
+Button::Button(sf::Vector2f pos, std::string filename, std::string op)
 {
 	//operation
 	this->operation = op;

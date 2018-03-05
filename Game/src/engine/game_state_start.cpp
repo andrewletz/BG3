@@ -15,14 +15,27 @@ GameStateStart::GameStateStart(Game* game)
     this->view.setSize(pos);
     pos *= 0.5f;
     this->view.setCenter(pos);
-    //make a vector to contain the two buttons
-    std::string Label = "Start";
+    //make the start button and add it to the buttos vector
     std::string Message = "load_game";
     std::string textFile = "assets/images/start-button.png";
     sf::Vector2i currRes = this->game->getResolution();
     sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
-    Button *startButton = new Button(currPos, textFile, Label, Message); //needs to appear dynamically
+    Button *startButton = new Button(currPos, textFile, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
+    //make the quit button and add it to the vector
+    std::string Message2 = "quit_game";
+    std::string textFile2 = "assets/images/quit-button.png";
+    sf::Vector2i currRes2 = this->game->getResolution();
+    sf::Vector2f currPos2(currRes.x / 2, currRes.y / 2 + 100);
+    Button *quitButton = new Button(currPos2, textFile2, Message2);
+    this->buttons.push_back(quitButton);
+    //make the logo (which is a button) and add it to the vector
+    std::string Message3 = "logo";
+    std::string textFile3 = "assets/images/logo.png";
+    sf::Vector2i currRes3 = this->game->getResolution();
+    sf::Vector2f currPos3(currRes.x / 2, currRes.y / 2 - 200);
+    Button *logoButton = new Button(currPos3, textFile3, Message3);
+    this->buttons.push_back(logoButton);
 }
 
 void GameStateStart::loadgame()
@@ -137,6 +150,10 @@ void GameStateStart::handleInput()
                         if(validClick == "load_game")
                         {
                             this->loadgame();
+                        }
+                        else if(validClick == "quit_game")
+                        {
+                            game->window.close();
                         }
                     }
                     break;

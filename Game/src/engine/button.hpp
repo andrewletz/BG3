@@ -6,7 +6,7 @@
 
 class Button{
 public:
-	Button(sf::Vector2f pos, std::string filename, std::string msg, std::string op);
+	Button(sf::Vector2f pos, std::string filename, std::string op);
 	~Button(){}
 
 	void updatePos(float scale);
