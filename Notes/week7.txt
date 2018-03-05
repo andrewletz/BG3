@@ -1,0 +1,2 @@
+Started work on the project.
+Mostly did work with tutorials to learn how SFML works.
