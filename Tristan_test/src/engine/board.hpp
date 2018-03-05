@@ -15,7 +15,7 @@ public:
 
     void step(sf::RenderWindow& window);
     void addUnit(Unit unit);
-    void checkUnitRange();
+    void checkCollisions();
 
     Board() {};
     ~Board() {};

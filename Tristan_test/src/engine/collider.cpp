@@ -1,15 +1,17 @@
 #include "collider.hpp"
+#include <cmath>
+#include <iostream>
 
-Collider::Collider(sf::RectangleShape& body) :
-    body(body)
+UnitCollider::UnitCollider(sf::RectangleShape& body, sf::CircleShape& range) :
+    body(body), range(range)
 {
 }
 
-Collider::~Collider()
+UnitCollider::~UnitCollider()
 {
 }
 
-bool Collider::checkCollision(Collider & other, float push)
+bool UnitCollider::checkUnitCollision(UnitCollider & other, float push)
 {
     sf::Vector2f otherPosition = other.getPosition();
     sf::Vector2f otherHalfSize = other.getHalfSize();
@@ -55,5 +57,15 @@ bool Collider::checkCollision(Collider & other, float push)
         return true;
     }
 
+    return false;
+}
+
+bool UnitCollider::checkRangeCollision(UnitCollider & other)
+{
+    sf::Vector2f thisPos = range.getPosition();
+    sf::Vector2f otherPos = other.body.getPosition();
+    if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f))
+        return true;
+    
     return false;
 }
