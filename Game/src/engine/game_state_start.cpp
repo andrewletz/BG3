@@ -18,10 +18,10 @@ GameStateStart::GameStateStart(Game* game)
     //make a vector to contain the two buttons
     std::string Label = "Start";
     std::string Message = "load_game";
+    std::string textFile = "assets/images/start-button.png";
     sf::Vector2i currRes = this->game->getResolution();
     sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
-    sf::Vector2f currSize(100.0f, 45.0f);
-    Button *startButton = new Button(currPos, currSize, Label, Message); //needs to appear dynamically
+    Button *startButton = new Button(currPos, textFile, Label, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
 }
 
@@ -110,10 +110,12 @@ void GameStateStart::handleInput()
                 } else if(event.key.code == sf::Keyboard::Space) {
                     this->loadgame();
                 } else if(event.key.code == sf::Keyboard::Equal) {
+                    this->game->cycleResolution(true); //REMEMBER TO REMOVE
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(true);  
                     }
                 } else if(event.key.code == sf::Keyboard::Dash) {  
+                    this->game->cycleResolution(false); //REMEMBER TO REMOVE
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(false);
                     }

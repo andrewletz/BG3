@@ -2,23 +2,21 @@
 #include <string>
 #include <iostream>
 
-Button::Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, std::string op)
+Button::Button(sf::Vector2f pos, std::string filename, std::string msg, std::string op)
 {
 	//operation
 	this->operation = op;
+	//texture
+	this->buttTexture.loadFromFile(filename);
+	sf::Vector2u textureSize = this->buttTexture.getSize();
+	sf::Vector2f texSize;
+	texSize.x = textureSize.x;
+	texSize.y = textureSize.y;
 	//hitbox
 	this->hitbox.setPosition(pos);
-	this->hitbox.setSize(size);
-	this->hitbox.setFillColor(sf::Color::Green);
-	this->hitbox.setOutlineColor(sf::Color::Black);
-	this->hitbox.setOutlineThickness(1.0f);
-	//font
-	this->font.loadFromFile("assets/texts/ALGER.TTF");
-	//Text
-	this->label.setFont(font);
-	this->label.setString(msg);
-	this->label.setPosition(pos);
-	this->label.setColor(sf::Color::Black);
+	this->hitbox.setSize(texSize);
+	this->hitbox.setOrigin(texSize.x/2, texSize.y/2);
+	this->hitbox.setTexture(&this->buttTexture);
 }
 
 void Button::updatePos(float scale)
@@ -29,17 +27,19 @@ void Button::updatePos(float scale)
 	hbp.y *= scale;
 	this->hitbox.setPosition(hbp);
 
-	//text pos
-	sf::Vector2f tp = this->label.getPosition();
-	tp.x *= scale;
-	tp.y *= scale;
-	this->label.setPosition(tp);
+	//hitbox size
+	sf::Vector2f hbs = this->hitbox.getSize();
+	float newHeight = hbs.x*scale;
+	float newWidth = hbs.y*scale;
+
+	hbs.x = newHeight/hbs.x;
+	hbs.y = newWidth/hbs.y;
+	this->hitbox.setScale(hbs);
 }
 
 void Button::Draw(sf::RenderWindow &window)
 {
 	window.draw(hitbox);
-	window.draw(label);
 }
 
 std::string Button::isClicked(sf::Vector2i cPos)

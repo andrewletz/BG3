@@ -6,7 +6,7 @@
 
 class Button{
 public:
-	Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, std::string op);
+	Button(sf::Vector2f pos, std::string filename, std::string msg, std::string op);
 	~Button(){}
 
 	void updatePos(float scale);
@@ -14,10 +14,9 @@ public:
 	void Draw(sf::RenderWindow &window);
 
 	//button info
-	sf::Font font; //the font for the label
-	sf::Text label;
 	std::string operation;
 	sf::RectangleShape hitbox;
+	sf::Texture buttTexture;
 };
 
 #endif
