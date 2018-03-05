@@ -86,7 +86,7 @@ void GameStateStart::handleInput()
                 int newWidth = int(originalWidth * scale);
                 int newHeight = int(originalHeight * scale);
                 this->view.setSize(newWidth, newHeight);
-                this->view.setCenter(newWidth, newHeight);
+                this->view.setCenter(newWidth / 2, newHeight / 2);
 
                 this->game->window.setSize(sf::Vector2u(uint(newWidth), uint(newHeight)));
                 this->game->window.setView(this->view);
@@ -109,7 +109,6 @@ void GameStateStart::handleInput()
                     }
                 } else if(event.key.code == sf::Keyboard::Dash) {  
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-                        std::cout << "trying to cycle resolution" << std::endl;
                         this->game->cycleResolution(false);
                     }
                 }
