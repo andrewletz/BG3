@@ -110,12 +110,10 @@ void GameStateStart::handleInput()
                 } else if(event.key.code == sf::Keyboard::Space) {
                     this->loadgame();
                 } else if(event.key.code == sf::Keyboard::Equal) {
-                    this->game->cycleResolution(true); //REMEMBER TO REMOVE
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(true);  
                     }
                 } else if(event.key.code == sf::Keyboard::Dash) {  
-                    this->game->cycleResolution(false); //REMEMBER TO REMOVE
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                         this->game->cycleResolution(false);
                     }

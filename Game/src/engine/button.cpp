@@ -48,6 +48,9 @@ std::string Button::isClicked(sf::Vector2i cPos)
 	sf::Vector2f hbs = this->hitbox.getSize();
 	//hitbox pos
 	sf::Vector2f hbp = this->hitbox.getPosition();
+	//this adjust the position to the upper left hand corner to make calculations easier
+	hbp.x -= hbs.x/2;
+	hbp.y -= hbs.y/2;
 	if(cPos.x >= hbp.x && cPos.y >= hbp.y && cPos.x <= (hbp.x + hbs.x) && cPos.y <= (hbp.y + hbs.y))
 	{
 		return operation;
