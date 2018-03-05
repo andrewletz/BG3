@@ -2,3 +2,6 @@ Worked on the engine for the game (states and switching between them).
 Resolution scaling was implemented.
 Buttons were implemented though will likely be changed soon to involve textures and not sf::Text.
 Unit agro mechanics and collision detection were worked on.
+Update:
+	buttons now use textures for both their appearance and size
+	scaling is still pretty broken
