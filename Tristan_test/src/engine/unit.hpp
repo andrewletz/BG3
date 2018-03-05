@@ -7,6 +7,9 @@
 #include "board.hpp"
 #include "collider.hpp"
 
+
+enum Team { LEFT, RIGHT, NONE };
+
 typedef struct{
     unsigned cost;
     unsigned max_hp;
@@ -33,13 +36,18 @@ public:
     Attributes attributes;
     unsigned hp;
     bool dying = false;
+    Team team;
+
+    bool hasTarget = false;
+    Unit* target;
 
     UnitCollider getUnitCollider() { return UnitCollider(body, range); };
-    void attack(Unit& target);
+    void attack(Unit& target) { target.hp = target.hp - this->attributes.attackDamage; };
+    void setTarget(Unit* target) { this->target = target; };
     bool shouldDie();
-    void draw(sf::RenderWindow& window);
+    void step(sf::RenderWindow& window);
 
-    Unit(Board* board, sf::Vector2f pos, Attributes attributes);
+    Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes);
     ~Unit() {};
 };
 

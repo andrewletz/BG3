@@ -5,10 +5,11 @@
 #include "collider.hpp"
 
 void Board::step(sf::RenderWindow& window)
-{       
+{   
+    // contains units that will be purged from game
     std::vector<int> dyingUnits;
 
-    checkCollisions();
+    // loop through and step each unit
     for (int i = 0; i < units.size(); i++)
     {
         if (units[i].shouldDie())
@@ -16,9 +17,13 @@ void Board::step(sf::RenderWindow& window)
             units[i].dying = true;
             dyingUnits.push_back(i);
         }
-        units[i].draw(window);
+        units[i].step(window);
     }
 
+    // check for unit and range collision, after movement
+    checkCollisions();
+   
+    // purge marked units
     for (auto unit : dyingUnits)
     {
         units.erase(units.begin() + unit);
@@ -48,9 +53,7 @@ void Board::checkCollisions()
                 if (firstCollider.checkRangeCollision(secondCollider))
                 {
                     //std::cout << "unit range collision detected " << i << " " << j << std::endl;
-                    std::cout << "current unit hp = " << units[j].hp << ", new hp = ";
                     units[i].attack(units[j]);
-                    std::cout << units[j].hp << std::endl;
                 }
             }
         }

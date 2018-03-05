@@ -4,12 +4,13 @@
 #include "board.hpp"
 #include "collider.hpp"
 
-Unit::Unit(Board* board, sf::Vector2f pos, Attributes attributes)
+Unit::Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes)
 {
     // setup member vars
     this->parentBoard = board;
     this->attributes = attributes;
     this->hp = attributes.max_hp;
+    this->team = team;
 
     // TODO remove this temporary sizing
     sf::Vector2f sizeVec;
@@ -33,19 +34,23 @@ Unit::Unit(Board* board, sf::Vector2f pos, Attributes attributes)
     this->range.setFillColor(rColor);
 }
 
-void Unit::attack(Unit& target)
-{
-    target.hp = target.hp - this->attributes.attackDamage;
-}
-
 bool Unit::shouldDie()
 {
     if (hp <= 0) return true;
     return false;
 }
 
-void Unit::draw(sf::RenderWindow& window)
+void Unit::step(sf::RenderWindow& window)
 {
+    if (!hasTarget) {
+        if (team == LEFT) {
+            body.move(0.05f, 0);
+            range.move(0.05f, 0);
+        } else if (team == RIGHT) {
+            body.move(-0.05f, 0);
+            range.move(-0.05f, 0);
+        }
+    }
     window.draw(body);
     window.draw(range);
 }

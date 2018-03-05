@@ -64,8 +64,9 @@ bool UnitCollider::checkRangeCollision(UnitCollider & other)
 {
     sf::Vector2f thisPos = range.getPosition();
     sf::Vector2f otherPos = other.body.getPosition();
-    if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f))
+    if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f)) {
         return true;
+    }
     
     return false;
 }
