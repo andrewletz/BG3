@@ -11,10 +11,13 @@
 GameStateStart::GameStateStart(Game* game)
 {
     this->game = game;
+    this->background.setTexture(game->texmgr.getRef("background"));
+
     sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
     this->view.setSize(pos);
     pos *= 0.5f;
     this->view.setCenter(pos);
+
     //make the start button and add it to the buttos vector
     std::string Message = "load_game";
     std::string textFile = "assets/images/start-button.png";
@@ -22,6 +25,7 @@ GameStateStart::GameStateStart(Game* game)
     sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
     Button *startButton = new Button(currPos, textFile, Message); //needs to appear dynamically
     this->buttons.push_back(startButton);
+
     //make the quit button and add it to the vector
     std::string Message2 = "quit_game";
     std::string textFile2 = "assets/images/quit-button.png";
@@ -29,6 +33,7 @@ GameStateStart::GameStateStart(Game* game)
     sf::Vector2f currPos2(currRes.x / 2, currRes.y / 2 + 100);
     Button *quitButton = new Button(currPos2, textFile2, Message2);
     this->buttons.push_back(quitButton);
+
     //make the logo (which is a button) and add it to the vector
     std::string Message3 = "logo";
     std::string textFile3 = "assets/images/logo.png";
@@ -40,10 +45,6 @@ GameStateStart::GameStateStart(Game* game)
 
 void GameStateStart::loadgame()
 {
-    this->game->background.setTexture(this->game->texmgr.getRef("background_main"), true);
-    this->game->background.setScale(
-                    float(this->view.getSize().x) / float(this->game->background.getTexture()->getSize().x),
-                    float(this->view.getSize().y) / float(this->game->background.getTexture()->getSize().y));
     this->game->pushState(new GameStateMain(this->game));
     return;
 }
@@ -53,8 +54,7 @@ void GameStateStart::draw(const float dt)
     this->game->window.setView(this->view);
 
     this->game->window.clear(sf::Color::Black);
-    this->game->window.draw(this->game->background);
-
+    this->game->window.draw(this->background);
 
     //Before this happens need to reposition the button if the resolution has changed.
     int butlen = buttons.size();
@@ -103,10 +103,10 @@ void GameStateStart::handleInput()
                 this->game->window.setSize(sf::Vector2u(uint(newWidth), uint(newHeight)));
                 this->game->window.setView(this->view);
 
-                this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
-                this->game->background.setScale(
-                    float(newWidth) / float(this->game->background.getTexture()->getSize().x),
-                    float(newHeight) / float(this->game->background.getTexture()->getSize().y));
+                this->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
+                this->background.setScale(
+                    float(newWidth) / float(this->background.getTexture()->getSize().x),
+                    float(newHeight) / float(this->background.getTexture()->getSize().y));
 
                 //TODO: reposition the button
                 int butlen = buttons.size();

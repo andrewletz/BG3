@@ -23,7 +23,7 @@ void Game::pushState(GameState* state)
 
 void Game::popState()
 {
-    delete this->states.top();
+    // delete this->states.top();
     this->states.pop();
 
     return;
@@ -50,6 +50,14 @@ void Game::gameLoop()
 
     while(this->window.isOpen())
     {
+        // if you want to implement this globally you would need a timer so you can't hold keys down
+        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+        //     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
+        //         this->cycleResolution(true);  
+        //     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Dash)) {
+        //         this->cycleResolution(false);
+        //     }
+        // }
         sf::Time elapsed = clock.restart();
         float dt = elapsed.asSeconds();
 
@@ -113,8 +121,6 @@ Game::Game()
     this->bitsPerPixel = maxBPP;
 
     this->window.setFramerateLimit(60);
-
-    this->background.setTexture(this->texmgr.getRef("background"));
 }
 
 Game::~Game()

@@ -8,6 +8,7 @@ class GameState
     public:
 
     Game* game;
+    sf::Sprite background;
 
     virtual void draw(const float dt) = 0;
     virtual void update(const float dt) = 0;

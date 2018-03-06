@@ -6,9 +6,13 @@
 
 void GameStateMain::draw(const float dt)
 {
-    this->game->window.clear(sf::Color::Black);
-    this->game->window.draw(this->game->background);
+    this->background.setTexture(game->texmgr.getRef("background_main"));
+    this->background.setScale(
+                    float(this->gameView.getSize().x) / float(this->background.getTexture()->getSize().x),
+                    float(this->gameView.getSize().y) / float(this->background.getTexture()->getSize().y));
 
+    this->game->window.clear(sf::Color::Black);
+    this->game->window.draw(this->background);
     return;
 }
 
@@ -34,7 +38,7 @@ void GameStateMain::handleInput()
             case sf::Event::KeyPressed:
             {
                 if(event.key.code == sf::Keyboard::Escape) {
-                    // pause or something
+                    game->popState();
                 }
                 break;
             }
