@@ -21,20 +21,21 @@ Button::Button(sf::Vector2f pos, std::string filename, std::string op)
 
 void Button::updatePos(float scale)
 {
-	//hitbox pos
-	sf::Vector2f hbp = this->hitbox.getPosition();
-	hbp.x *= scale;
-	hbp.y *= scale;
-	this->hitbox.setPosition(hbp);
-
 	//hitbox size
 	sf::Vector2f hbs = this->hitbox.getSize();
 	float newHeight = hbs.x*scale;
 	float newWidth = hbs.y*scale;
 
-	hbs.x = newHeight/hbs.x;
-	hbs.y = newWidth/hbs.y;
-	this->hitbox.setScale(hbs);
+	hbs.x = newHeight;
+	hbs.y = newWidth;
+	this->hitbox.setSize(hbs);
+	this->hitbox.setOrigin(newHeight / 2, newWidth / 2);
+
+	//hitbox pos
+	sf::Vector2f hbp = this->hitbox.getPosition();
+	hbp.x *= scale;
+	hbp.y *= scale;
+	this->hitbox.setPosition(hbp);
 }
 
 void Button::Draw(sf::RenderWindow &window)
