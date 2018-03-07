@@ -14,7 +14,6 @@ void Board::step(sf::RenderWindow& window)
     {
         if (units[i].shouldDie())
         {
-            units[i].dying = true;
             dyingUnits.push_back(i);
         }
         units[i].step(window);
@@ -43,23 +42,20 @@ void Board::checkCollisions()
         {
             if (j != i)
             {
-                UnitCollider firstCollider = units[i].getUnitCollider();
-                UnitCollider secondCollider = units[j].getUnitCollider();
-                if (firstCollider.checkUnitCollision(secondCollider, 0.0f))
-                {
-                    //std::cout << "unit body collision detected " << i << " " << j << std::endl;
-                }
+                Collider firstCollider = units[i].getCollider();
+                Collider secondCollider = units[j].getCollider();
 
-                if (firstCollider.checkRangeCollision(secondCollider))
+                // handles unit body collision and pushes out of way
+                firstCollider.checkUnitCollision(secondCollider, 0.0f);
+
+                // check vision range
+                if (firstCollider.checkVisionCollision(secondCollider))
                 {
-                    //std::cout << "unit range collision detected " << i << " " << j << std::endl;
-                    //units[i].attack(units[j]);
-                   
                     // set unit target
-                    if (!units[i].hasTarget && units[j].team != units[i].team)
+                    if (!units[i].hasTarget() && units[i].team != units[j].team)
                     {
-                        units[i].hasTarget = true;
-                        units[i].target = &units[j];
+                        units[i].setTarget(&units[j]);
+                        units[i].actionStack.push( MOVE );
                     }
                 }
             }

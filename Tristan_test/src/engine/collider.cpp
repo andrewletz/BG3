@@ -2,16 +2,16 @@
 #include <cmath>
 #include <iostream>
 
-UnitCollider::UnitCollider(sf::RectangleShape& body, sf::CircleShape& range) :
-    body(body), range(range)
+Collider::Collider(sf::RectangleShape& body, sf::CircleShape& range, sf::CircleShape& vision) :
+    body(body), range(range), vision(vision)
 {
 }
 
-UnitCollider::~UnitCollider()
+Collider::~Collider()
 {
 }
 
-bool UnitCollider::checkUnitCollision(UnitCollider & other, float push)
+bool Collider::checkUnitCollision(Collider & other, float push)
 {
     sf::Vector2f otherPosition = other.getPosition();
     sf::Vector2f otherHalfSize = other.getHalfSize();
@@ -60,11 +60,21 @@ bool UnitCollider::checkUnitCollision(UnitCollider & other, float push)
     return false;
 }
 
-bool UnitCollider::checkRangeCollision(UnitCollider & other)
+bool Collider::checkRangeCollision(Collider & other)
 {
     sf::Vector2f thisPos = range.getPosition();
     sf::Vector2f otherPos = other.body.getPosition();
     if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->range.getRadius(), 2.0f))
+        return true;
+    
+    return false;
+}
+
+bool Collider::checkVisionCollision(Collider & other)
+{
+    sf::Vector2f thisPos = vision.getPosition();
+    sf::Vector2f otherPos = other.body.getPosition();
+    if (pow((otherPos.x - thisPos.x), 2.0f) + pow((otherPos.y - thisPos.y), 2.0f) < pow(this->vision.getRadius(), 2.0f))
         return true;
     
     return false;
