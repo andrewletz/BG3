@@ -1,3 +1,5 @@
 Week 9:
 Added a logo and quit buttons to the start screen.
 Added parent class to Button that acts as a container/ui element that can't be clicked on.
+Added new UnitButton class for choosing the unit to place.
+Got some of the unit buttons placed correctly in game state main. 
