@@ -7,6 +7,7 @@
 #include "game_state_main.hpp"
 #include "game_state.hpp"
 #include "button.hpp"
+#include "container.hpp"
 
 GameStateStart::GameStateStart(Game* game)
 {
@@ -19,28 +20,22 @@ GameStateStart::GameStateStart(Game* game)
     this->view.setCenter(pos);
 
     //make the start button and add it to the buttos vector
-    std::string Message = "load_game";
-    std::string textFile = "assets/images/start-button.png";
     sf::Vector2i currRes = this->game->getResolution();
     sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
-    Button *startButton = new Button(currPos, textFile, Message); //needs to appear dynamically
+    Button *startButton = new Button(this->game, currPos, "start", "load_game"); //needs to appear dynamically
     this->buttons.push_back(startButton);
 
     //make the quit button and add it to the vector
-    std::string Message2 = "quit_game";
-    std::string textFile2 = "assets/images/quit-button.png";
     sf::Vector2i currRes2 = this->game->getResolution();
     sf::Vector2f currPos2(currRes.x / 2, currRes.y / 2 + 100);
-    Button *quitButton = new Button(currPos2, textFile2, Message2);
+    Button *quitButton = new Button(this->game, currPos2, "quit", "quit_game");
     this->buttons.push_back(quitButton);
 
-    //make the logo (which is a button) and add it to the vector
-    std::string Message3 = "logo";
-    std::string textFile3 = "assets/images/logo.png";
+    //make the logo and add it to the vector
     sf::Vector2i currRes3 = this->game->getResolution();
     sf::Vector2f currPos3(currRes.x / 2, currRes.y / 2 - 200);
-    Button *logoButton = new Button(currPos3, textFile3, Message3);
-    this->buttons.push_back(logoButton);
+    Container *logoButton = new Container(this->game, currPos3, "logo");
+    this->uiElements.push_back(logoButton);
 }
 
 void GameStateStart::loadgame()
@@ -61,6 +56,12 @@ void GameStateStart::draw(const float dt)
     for(int i = 0; i < butlen; i++)
     {
         buttons[i]->Draw(this->game->window);
+    }
+
+    int uilen = uiElements.size();
+    for(int i = 0; i < uilen; i++)
+    {
+        uiElements[i]->Draw(this->game->window);
     }
 
     return;
@@ -113,6 +114,12 @@ void GameStateStart::handleInput()
                 for(int i = 0; i < butlen; i++)
                 {
                     buttons[i]->updatePos(scale);
+                }
+                //resize all non buttons
+                int uilen = uiElements.size();
+                for(int i = 0; i < uilen; i++)
+                {
+                    uiElements[i]->Draw(this->game->window);
                 }
                 break;
             }

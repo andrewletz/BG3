@@ -1,46 +1,13 @@
 #include "button.hpp"
 #include <string>
 #include <iostream>
+#include "game.hpp"
 
-Button::Button(sf::Vector2f pos, std::string filename, std::string op)
+
+Button::Button(Game* game, sf::Vector2f pos, std::string textureName, std::string op) : Container(game, pos, textureName)
 {
 	//operation
 	this->operation = op;
-	//texture
-	this->buttTexture.loadFromFile(filename);
-	sf::Vector2u textureSize = this->buttTexture.getSize();
-	sf::Vector2f texSize;
-	texSize.x = textureSize.x;
-	texSize.y = textureSize.y;
-	//hitbox
-	this->hitbox.setPosition(pos);
-	this->hitbox.setSize(texSize);
-	this->hitbox.setOrigin(texSize.x/2, texSize.y/2);
-	this->hitbox.setTexture(&this->buttTexture);
-}
-
-void Button::updatePos(float scale)
-{
-	//hitbox size
-	sf::Vector2f hbs = this->hitbox.getSize();
-	float newHeight = hbs.x*scale;
-	float newWidth = hbs.y*scale;
-
-	hbs.x = newHeight;
-	hbs.y = newWidth;
-	this->hitbox.setSize(hbs);
-	this->hitbox.setOrigin(newHeight / 2, newWidth / 2);
-
-	//hitbox pos
-	sf::Vector2f hbp = this->hitbox.getPosition();
-	hbp.x *= scale;
-	hbp.y *= scale;
-	this->hitbox.setPosition(hbp);
-}
-
-void Button::Draw(sf::RenderWindow &window)
-{
-	window.draw(hitbox);
 }
 
 std::string Button::isClicked(sf::Vector2i cPos)

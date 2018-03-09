@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "game_state.hpp"
+#include "container.hpp"
 #include "button.hpp"
 #include <vector>
 
@@ -21,6 +22,7 @@ class GameStateStart : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
+    std::vector<Container*> uiElements;
     std::vector<Button*> buttons;
 
     GameStateStart(Game* game);
