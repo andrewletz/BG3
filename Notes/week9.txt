@@ -1,0 +1,3 @@
+Week 9:
+Added a logo and quit buttons to the start screen.
+Added parent class to Button that acts as a container/ui element that can't be clicked on.
