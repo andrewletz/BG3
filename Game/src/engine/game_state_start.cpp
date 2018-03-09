@@ -125,18 +125,15 @@ void GameStateStart::handleInput()
             }
             case sf::Event::KeyPressed:
             {
+                bool shiftPressed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift));
                 if(event.key.code == sf::Keyboard::Escape) {
                     this->game->window.close();
                 } else if(event.key.code == sf::Keyboard::Space) {
                     this->loadgame();
-                } else if(event.key.code == sf::Keyboard::Equal) {
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-                        this->game->cycleResolution(true);  
-                    }
-                } else if(event.key.code == sf::Keyboard::Dash) {  
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-                        this->game->cycleResolution(false);
-                    }
+                } else if(event.key.code == sf::Keyboard::Equal && shiftPressed) {
+                    this->game->cycleResolution(true);  
+                } else if(event.key.code == sf::Keyboard::Dash && shiftPressed) {
+                    this->game->cycleResolution(false);
                 }
                 break;
             }
