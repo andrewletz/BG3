@@ -109,17 +109,17 @@ void GameStateStart::handleInput()
                     float(newWidth) / float(this->background.getTexture()->getSize().x),
                     float(newHeight) / float(this->background.getTexture()->getSize().y));
 
-                //TODO: reposition the button
+
                 int butlen = buttons.size();
                 for(int i = 0; i < butlen; i++)
                 {
                     buttons[i]->updatePos(scale);
                 }
-                //resize all non buttons
+
                 int uilen = uiElements.size();
                 for(int i = 0; i < uilen; i++)
                 {
-                    uiElements[i]->Draw(this->game->window);
+                    uiElements[i]->updatePos(scale);
                 }
                 break;
             }
