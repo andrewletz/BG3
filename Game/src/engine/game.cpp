@@ -15,7 +15,12 @@ void Game::loadTextures()
     texmgr.loadTexture("logo", "assets/images/logo.png");
     texmgr.loadTexture("start", "assets/images/start-button.png");
     texmgr.loadTexture("quit", "assets/images/quit-button.png");
-
+    texmgr.loadTexture("unit_background", "assets/images/start-button.png");
+    texmgr.loadTexture("unit_one", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_two", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_three", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_four", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_five", "assets/images/unit_placeholder.png");
 }
 
 void Game::pushState(GameState* state)

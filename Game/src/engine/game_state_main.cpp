@@ -13,6 +13,12 @@ void GameStateMain::draw(const float dt)
 
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->background);
+    //draw the buttons
+    int butlen = buttons.size();
+    for(int i = 0; i < butlen; i++)
+    {
+        buttons[i]->Draw(this->game->window);
+    }
     return;
 }
 
@@ -58,4 +64,16 @@ GameStateMain::GameStateMain(Game* game)
     pos *= 0.5f;
     this->guiView.setCenter(pos);
     this->gameView.setCenter(pos);
+
+    //set up the buttons
+    sf::Vector2i currRes = this->game->getResolution();
+    sf::Vector2f currPos(currRes.x * 0.2f, currRes.y / 2 + 300);
+    UnitButton *unitOne = new UnitButton(this->game, currPos, "unit_background", "unit_one", "unit_one"); 
+    this->buttons.push_back(unitOne);
+
+    //make the quit button and add it to the vector
+    sf::Vector2i currRes2 = this->game->getResolution();
+    sf::Vector2f currPos2(currRes.x / 2, currRes.y / 2 + 300);
+    UnitButton *unitTwo = new UnitButton(this->game, currPos2, "unit_background", "unit_two", "unit_two");
+    this->buttons.push_back(unitTwo);
 }
