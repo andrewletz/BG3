@@ -21,6 +21,9 @@ void Game::loadTextures()
     texmgr.loadTexture("unit_three", "assets/images/unit_placeholder.png");
     texmgr.loadTexture("unit_four", "assets/images/unit_placeholder.png");
     texmgr.loadTexture("unit_five", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_six", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_seven", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("unit_eight", "assets/images/unit_placeholder.png");
 }
 
 void Game::pushState(GameState* state)

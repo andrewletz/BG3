@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "container.hpp"
+#include <iostream>
 
 
 Container::Container(Game* game, sf::Vector2f pos, std::string textureName)

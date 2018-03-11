@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 #include "unit_button.hpp"
 
 UnitButton::UnitButton(Game* game, sf::Vector2f pos, std::string backgroundName, std::string op, std::string foregroundName) 
