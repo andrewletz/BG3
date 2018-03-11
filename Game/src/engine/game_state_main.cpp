@@ -44,8 +44,18 @@ void GameStateMain::handleInput()
             }
             case sf::Event::KeyPressed:
             {
+                bool shiftPressed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift));
                 if(event.key.code == sf::Keyboard::Escape) {
                     game->popState();
+                }
+                else if(event.key.code == sf::Keyboard::Escape) {
+                    this->game->window.close();
+                } 
+                else if(event.key.code == sf::Keyboard::Equal && shiftPressed) {
+                    this->game->cycleResolution(true);  
+                } 
+                else if(event.key.code == sf::Keyboard::Dash && shiftPressed) {
+                    this->game->cycleResolution(false);
                 }
                 break;
             }
@@ -98,6 +108,36 @@ void GameStateMain::handleInput()
                     }
                     break;
                 }
+            }
+            case sf::Event::Resized:
+            {
+                float originalHeight = this->gameView.getSize().y;
+                float originalWidth = this->gameView.getSize().x;
+
+                float scaleHeight = float(event.size.height) / originalHeight;
+                float scaleWidth = float(event.size.width) / originalWidth;
+                float scale = std::min(scaleHeight, scaleWidth);
+
+                int newWidth = int(originalWidth * scale);
+                int newHeight = int(originalHeight * scale);
+                this->gameView.setSize(newWidth, newHeight);
+                this->gameView.setCenter(newWidth / 2, newHeight / 2);
+
+                this->game->window.setSize(sf::Vector2u(uint(newWidth), uint(newHeight)));
+                this->game->window.setView(this->gameView);
+
+                this->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
+                this->background.setScale(
+                    float(newWidth) / float(this->background.getTexture()->getSize().x),
+                    float(newHeight) / float(this->background.getTexture()->getSize().y));
+
+
+                int butlen = buttons.size();
+                for(int i = 0; i < butlen; i++)
+                {
+                    buttons[i]->updatePos(scale);
+                }
+                break;
             }
             default: break;
         }
