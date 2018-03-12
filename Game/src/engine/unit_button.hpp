@@ -11,6 +11,7 @@ public:
 	~UnitButton();
 
 	void Draw(sf::RenderWindow &window);
+	void updatePos(float scale);
 
 	//the hitbox and texture of the unit image
 	sf::RectangleShape secondbox;

@@ -19,7 +19,9 @@ class GameStateMain : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
-    std::vector<Button*> buttons;
+    std::vector<UnitButton*> buttons;
+    enum Units {UNIT_ONE, UNIT_TWO, UNIT_THREE, UNIT_FOUR, UNIT_FIVE, UNIT_SIX, UNIT_SEVEN, UNIT_EIGHT};
+    GameStateMain::Units currUnit;
 
     GameStateMain(Game* game);
 };
