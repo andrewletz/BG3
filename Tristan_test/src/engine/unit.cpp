@@ -47,12 +47,18 @@ Unit::Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes)
     this->vision.setFillColor(vColor);
 }
 
+// TODO deprecate
 bool Unit::shouldDie()
 {
     if (actionStack.empty() == false)
-        std::cout << actionStack.size() << std::endl;
         if (actionStack.top() == DYING)
             return true;
+    return false;
+}
+
+bool Unit::isLiving()
+{
+    if (hp > 0) return true;
     return false;
 }
 
@@ -72,16 +78,17 @@ bool Unit::targetInRange()
     return getCollider().checkRangeCollision(targetCollider);
 }
 
-void Unit::step(sf::RenderWindow& window)
+void Unit::step()
 {
     Action topAct = actionStack.top();
     // check health of unit
-    if (hp <= 0 && !shouldDie())
+    if (!isLiving())
     {
-        std::cout << "health at death " << hp << std::endl;
-        actionStack.push( DYING );
+        if (topAct != DYING)
+            actionStack.push( DYING );
     }
-
+    else
+    {
     // priorityStack logic
     if (!actionStack.empty())
     {
@@ -90,7 +97,6 @@ void Unit::step(sf::RenderWindow& window)
             // move forward`
             case MARCH:
             {
-                //std::cout << "MARCH" << std::endl;
                 if (team == LEFT)
                 {
                     body.move(moveSpeed, 0);
@@ -103,8 +109,7 @@ void Unit::step(sf::RenderWindow& window)
             // move towards another unit in vision
             case MOVE:
             {
-                //std::cout << "MOVE" << std::endl;
-                if (hasTarget())
+                if (isLiving() && hasTarget() && target->isLiving())
                 {
                     if (targetInRange())
                     {
@@ -121,24 +126,24 @@ void Unit::step(sf::RenderWindow& window)
                 else
                 {
                     // idk what im doing here lmao
+                    target = nullptr;
                     actionStack.pop();
                 }
                 break;
             }
             case ATTACK:
             {
-                //std::cout << "ATTACK" << std::endl;
-                if (hasTarget())
+                if (isLiving() && hasTarget())
                 {
-                    if (target->shouldDie())
+                    if (target->isLiving())
+                    {
+                        attack(target);
+                    }
+                    else
                     {
                         // target is dying, stop targeting
                         target = nullptr;
                         actionStack.pop();
-                    }
-                    else
-                    {
-                        attack(target);
                     }
                 }
                 else
@@ -150,7 +155,6 @@ void Unit::step(sf::RenderWindow& window)
             }
             case DYING:
             {
-                //std::cout << "DYING" << std::endl;
                 // do nothing, maybe show a death animation?
                 break;
             }
@@ -158,11 +162,16 @@ void Unit::step(sf::RenderWindow& window)
     } else {
         std::cout << "THIS SHOULD NEVER TRIGGER" << std::endl;
     }
-
+    
     // update pos
     sf::Vector2f curPos = body.getPosition();
     range.setPosition(curPos);
     vision.setPosition(curPos);
+    }
+}
+
+void Unit::draw(sf::RenderWindow &window)
+{
     // draw shapes
     window.draw(body);
     window.draw(range);

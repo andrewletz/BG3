@@ -12,11 +12,16 @@ void Board::step(sf::RenderWindow& window)
     // loop through and step each unit
     for (int i = 0; i < units.size(); i++)
     {
-        if (units[i].shouldDie())
+
+        units[i].step();
+        if (units[i].isLiving())
         {
-            dyingUnits.push_back(i);
+            units[i].draw(window);
         }
-        units[i].step(window);
+        else
+        {
+
+        }
     }
 
     // check for unit and range collision, after movement
@@ -25,6 +30,7 @@ void Board::step(sf::RenderWindow& window)
     // purge marked units
     for (auto unit : dyingUnits)
     {
+        std::cout << "erasing unit at index " << unit << std::endl;
         units.erase(units.begin() + unit);
     }
 }
@@ -52,7 +58,7 @@ void Board::checkCollisions()
                 if (firstCollider.checkVisionCollision(secondCollider))
                 {
                     // set unit target
-                    if (!units[i].hasTarget() && units[i].team != units[j].team)
+                    if (!units[i].hasTarget() && units[i].team != units[j].team && units[j].isLiving())
                     {
                         units[i].setTarget(&units[j]);
                         units[i].actionStack.push( MOVE );

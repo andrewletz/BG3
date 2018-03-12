@@ -46,8 +46,10 @@ public:
     void setTarget(Unit* target) { this->target = target; };
     bool hasTarget();
     bool shouldDie();
+    bool isLiving();
     bool targetInRange();
-    void step(sf::RenderWindow& window);
+    void step();
+    void draw(sf::RenderWindow& window);
 private:
     Board* parentBoard;
     
