@@ -11,19 +11,19 @@ void Game::loadTextures()
 {
     // remember paths are relative to the generated executable! (not the cpp file)
     texmgr.loadTexture("background", "assets/images/background.png");
-    texmgr.loadTexture("background_main", "assets/images/mainbackground.png");
+    texmgr.loadTexture("background_main", "assets/images/game_field_background.png");
     texmgr.loadTexture("logo", "assets/images/logo.png");
-    texmgr.loadTexture("start", "assets/images/start-button.png");
-    texmgr.loadTexture("quit", "assets/images/quit-button.png");
-    texmgr.loadTexture("unit_background", "assets/images/start-button.png");
-    texmgr.loadTexture("unit_one", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_two", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_three", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_four", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_five", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_six", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_seven", "assets/images/unit_placeholder.png");
-    texmgr.loadTexture("unit_eight", "assets/images/unit_placeholder.png");
+    texmgr.loadTexture("start", "assets/images/start_button.png");
+    texmgr.loadTexture("quit", "assets/images/quit_button.png");
+    texmgr.loadTexture("unit_background", "assets/images/unit_button.png");
+    texmgr.loadTexture("unit_one", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_two", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_three", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_four", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_five", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_six", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_seven", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("unit_eight", "assets/images/man_at_arms.png");
 }
 
 void Game::pushState(GameState* state)
