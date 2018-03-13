@@ -3,3 +3,4 @@ Added a logo and quit buttons to the start screen.
 Added parent class to Button that acts as a container/ui element that can't be clicked on.
 Added new UnitButton class for choosing the unit to place.
 Got some of the unit buttons placed correctly in game state main. 
+Added team class to store the units for each player as well as that players money.
