@@ -7,10 +7,12 @@ UnitButton::UnitButton(Game* game, sf::Vector2f pos, std::string backgroundName,
 : Button(game, pos, backgroundName, op){
 	//texture
 	this->secondTexture = game->texmgr.getRef(foregroundName);
-	sf::Vector2u textureSize = this->secondTexture.getSize();
+	//base the size on the size of the background
+	sf::Texture tex = game->texmgr.getRef(backgroundName);
+	sf::Vector2u textureSize = tex.getSize();
 	sf::Vector2f texSize;
-	texSize.x = textureSize.x;
-	texSize.y = textureSize.y;
+	texSize.x = textureSize.x - (textureSize.x * 0.2f);
+	texSize.y = textureSize.y - (textureSize.y * 0.2f);
 	//hitbox
 	this->secondbox.setPosition(pos);
 	this->secondbox.setSize(texSize);

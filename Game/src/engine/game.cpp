@@ -7,6 +7,48 @@
 #include "game.hpp"
 #include "game_state.hpp"
 
+Game::Game()
+{
+    this->loadTextures();
+
+    std::vector<sf::Vector2i> sixteenNine;
+    // Small list of valid 16:9 resolutions
+    sixteenNine.push_back(sf::Vector2i(1920, 1080));
+    sixteenNine.push_back(sf::Vector2i(1536, 864));
+    sixteenNine.push_back(sf::Vector2i(1280, 720));
+    sixteenNine.push_back(sf::Vector2i(896, 504));
+    sixteenNine.push_back(sf::Vector2i(512, 288));
+
+    std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
+    int maxHeight = modes[0].height; // get the monitors max information
+    int maxWidth = modes[0].width;
+    int maxBPP = modes[0].bitsPerPixel;
+    for (sf::Vector2i res : sixteenNine) {
+        if (res.x <= maxWidth && res.y <= maxHeight) { // if the given 16:9 resolution is smaller than monitors max
+            this->validResolutions.push_back(res);
+        }
+    }
+
+    if(validResolutions.size() > 1) { // choose second smallest if it exists
+        this->window.create(sf::VideoMode(this->validResolutions[1].x, this->validResolutions[1].y, maxBPP), "BG3", sf::Style::Close);
+        this->currentResolution = 1;
+    } else {
+        this->window.create(sf::VideoMode(maxWidth, maxHeight, maxBPP), "BG3", sf::Style::Close);
+        this->currentResolution = 0;
+    }
+    this->bitsPerPixel = maxBPP;
+
+    this->window.setFramerateLimit(60);
+    
+    this->icon.loadFromFile("assets/images/icon.png");
+    this->window.setIcon(32, 32, this->icon.getPixelsPtr());
+}
+
+Game::~Game()
+{
+    while(!this->states.empty()) popState();
+}
+
 void Game::loadTextures()
 {
     // remember paths are relative to the generated executable! (not the cpp file)
@@ -24,6 +66,8 @@ void Game::loadTextures()
     texmgr.loadTexture("unit_six", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_seven", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_eight", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("left_board", "assets/images/left_field.png");
+    texmgr.loadTexture("right_board", "assets/images/right_field.png");
 }
 
 void Game::pushState(GameState* state)
@@ -100,44 +144,7 @@ void Game::cycleResolution(bool forward) {
             this->window.create(sf::VideoMode(this->validResolutions[currentResolution].x, this->validResolutions[currentResolution].y, this->bitsPerPixel), "BG3", sf::Style::Close);
         }
     }
-}
-
-Game::Game()
-{
-    this->loadTextures();
-    std::vector<sf::Vector2i> sixteenNine;
-    // Small list of valid 16:9 resolutions
-    sixteenNine.push_back(sf::Vector2i(1920, 1080));
-    sixteenNine.push_back(sf::Vector2i(1536, 864));
-    sixteenNine.push_back(sf::Vector2i(1280, 720));
-    sixteenNine.push_back(sf::Vector2i(896, 504));
-    sixteenNine.push_back(sf::Vector2i(512, 288));
-
-    std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
-    int maxHeight = modes[0].height; // get the monitors max information
-    int maxWidth = modes[0].width;
-    int maxBPP = modes[0].bitsPerPixel;
-    for (sf::Vector2i res : sixteenNine) {
-        if (res.x <= maxWidth && res.y <= maxHeight) { // if the given 16:9 resolution is smaller than monitors max
-            this->validResolutions.push_back(res);
-        }
-    }
-
-    if(validResolutions.size() > 1) { // choose second smallest if it exists
-        this->window.create(sf::VideoMode(this->validResolutions[1].x, this->validResolutions[1].y, maxBPP), "BG3", sf::Style::Close);
-        this->currentResolution = 1;
-    } else {
-        this->window.create(sf::VideoMode(maxWidth, maxHeight, maxBPP), "BG3", sf::Style::Close);
-        this->currentResolution = 0;
-    }
-    this->bitsPerPixel = maxBPP;
-
-    this->window.setFramerateLimit(60);
-}
-
-Game::~Game()
-{
-    while(!this->states.empty()) popState();
+    this->window.setIcon(32, 32, this->icon.getPixelsPtr());
 }
 
 sf::Vector2i Game::getResolution()
