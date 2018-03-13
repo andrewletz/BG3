@@ -3,14 +3,25 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "unit.hpp"
 
-class Team{
+class Team {
+
 public:
-	Team(int teamNum);
-	~Team();
+	Team();
+	~Team() {};
 
-	//std::vector<Unit> units; TODO: add this in when the unit code gets integrated
+	std::vector<Unit> baseUnits;
+	std::vector<Unit> units;
+
+	int alive;
 	int shekels;
+
+	void addUnit(Unit unit);
+	void reset();
+
+	bool hasUnitsAlive();
+	bool hasLostGame();
 
 };
 

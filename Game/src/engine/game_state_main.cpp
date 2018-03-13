@@ -47,6 +47,7 @@ void GameStateMain::draw(const float dt)
 {
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->background);
+
     //draw the buttons
     int butlen = buttons.size();
     for(int i = 0; i < butlen; i++)
@@ -54,10 +55,8 @@ void GameStateMain::draw(const float dt)
         buttons[i]->draw(this->game->window);
     }
     //draw the board
-    for(int i = 0; i < 2; i++)
-    {
-        board[i]->draw(this->game->window);
-    }
+    board[0]->draw(this->game->window);
+    board[1]->draw(this->game->window);
     return;
 }
 

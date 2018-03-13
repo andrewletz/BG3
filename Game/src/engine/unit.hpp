@@ -9,7 +9,7 @@
 #include "animation_handler.hpp"
 
 
-enum Team { LEFT, RIGHT, NONE };
+enum Teams { LEFT, RIGHT, NONE };
 enum Action { DYING, MARCH, MOVE, ATTACK, PAUSE };
 
 typedef struct{
@@ -27,7 +27,7 @@ class Board;
 class Unit
 {
 public:
-    Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Team team, Attributes attributes);
+    Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Attributes attributes);
     ~Unit() {};
 
     AnimationHandler animHandler;
@@ -40,7 +40,7 @@ public:
     sf::CircleShape range;
 
     Attributes attributes;
-    Team team;
+    Teams team;
 
     Collider getCollider() { return Collider(body, range, vision); };
     sf::Vector2f getPosition() { return body.getPosition(); };

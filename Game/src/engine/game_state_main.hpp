@@ -5,6 +5,7 @@
 #include <vector>
 #include "game_state.hpp"
 #include "unit_button.hpp"
+#include "round_manager.hpp"
 
 class GameStateMain : public GameState
 {
@@ -17,6 +18,8 @@ class GameStateMain : public GameState
     virtual void draw(const float dt);
     virtual void update(const float dt);
     virtual void handleInput();
+
+    RoundManager roundManager;
 
     std::vector<UnitButton*> buttons;
     std::vector<Button*> board;

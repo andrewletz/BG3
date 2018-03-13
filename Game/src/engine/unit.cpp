@@ -4,7 +4,7 @@
 #include "board.hpp"
 #include "collider.hpp"
 
-Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Team team, Attributes attributes)
+Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Attributes attributes)
 {
     // set original position
     this->originalPos = pos;
