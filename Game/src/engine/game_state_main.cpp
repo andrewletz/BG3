@@ -159,10 +159,8 @@ GameStateMain::GameStateMain(Game* game)
 {
     this->game = game;
     sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
-    this->guiView.setSize(pos);
     this->gameView.setSize(pos);
     pos *= 0.5f;
-    this->guiView.setCenter(pos);
     this->gameView.setCenter(pos);
 
     //unit one
