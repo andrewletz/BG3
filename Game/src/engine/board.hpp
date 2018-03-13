@@ -14,6 +14,9 @@ public:
     // background of some type
 
     void step(sf::RenderWindow& window);
+    void startRound();
+    void endRound();
+    
     void addUnit(Unit unit);
     void checkCollisions();
 

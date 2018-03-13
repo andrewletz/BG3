@@ -40,6 +40,22 @@ void Board::addUnit(Unit unit)
     this->units.push_back(unit);
 }
 
+void Board::startRound()
+{
+    for (auto unit : units)
+    {
+        unit.start();
+    }
+}
+
+void Board::endRound()
+{
+    for (auto unit : units)
+    {
+        unit.reset();
+    }
+}
+
 void Board::checkCollisions()
 {
     for (int i = 0; i < this->units.size(); i++)
