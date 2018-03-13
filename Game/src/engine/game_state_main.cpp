@@ -20,6 +20,11 @@ void GameStateMain::draw(const float dt)
     {
         buttons[i]->Draw(this->game->window);
     }
+    //draw the board
+    for(int i = 0; i < 2; i++)
+    {
+        board[i]->Draw(this->game->window);
+    }
     return;
 }
 
@@ -137,6 +142,10 @@ void GameStateMain::handleInput()
                 {
                     buttons[i]->updatePos(scale);
                 }
+                //draw the board
+                board[0]->updatePos(scale);
+                board[1]->updatePos(scale);
+
                 break;
             }
             default: break;
@@ -158,44 +167,54 @@ GameStateMain::GameStateMain(Game* game)
 
     //unit one
     sf::Vector2i currRes = this->game->getResolution();
-    sf::Vector2f currPos(currRes.x * 0.11f, currRes.y / 2 + 300);
+    sf::Vector2f currPos(currRes.x * 0.11f, currRes.y / 2 + 350);
     UnitButton *unitOne = new UnitButton(this->game, currPos, "unit_background", "unit_one", "unit_one"); 
     this->buttons.push_back(unitOne);
 
     //unit two
-    sf::Vector2f currPos2(currRes.x * 0.22f, currRes.y / 2 + 300);
+    sf::Vector2f currPos2(currRes.x * 0.22f, currRes.y / 2 + 350);
     UnitButton *unitTwo = new UnitButton(this->game, currPos2, "unit_background", "unit_two", "unit_two");
     this->buttons.push_back(unitTwo);
 
     //unit three
-    sf::Vector2f currPos3(currRes.x * 0.33f, currRes.y / 2 + 300);
+    sf::Vector2f currPos3(currRes.x * 0.33f, currRes.y / 2 + 350);
     UnitButton *unitThree = new UnitButton(this->game, currPos3, "unit_background", "unit_three", "unit_three");
     this->buttons.push_back(unitThree);
 
     //unit four
-    sf::Vector2f currPos4(currRes.x * 0.44f, currRes.y / 2 + 300);
+    sf::Vector2f currPos4(currRes.x * 0.44f, currRes.y / 2 + 350);
     UnitButton *unitFour = new UnitButton(this->game, currPos4, "unit_background", "unit_four", "unit_four");
     this->buttons.push_back(unitFour);
 
     //unit five
-    sf::Vector2f currPos5(currRes.x * 0.55f, currRes.y / 2 + 300);
+    sf::Vector2f currPos5(currRes.x * 0.55f, currRes.y / 2 + 350);
     UnitButton *unitFive = new UnitButton(this->game, currPos5, "unit_background", "unit_five", "unit_five");
     this->buttons.push_back(unitFive);
 
     //unit six
-    sf::Vector2f currPos6(currRes.x * 0.66f, currRes.y / 2 + 300);
+    sf::Vector2f currPos6(currRes.x * 0.66f, currRes.y / 2 + 350);
     UnitButton *unitSix = new UnitButton(this->game, currPos6, "unit_background", "unit_six", "unit_six");
     this->buttons.push_back(unitSix);
 
     //unit seven
-    sf::Vector2f currPos7(currRes.x * 0.77f, currRes.y / 2 + 300);
+    sf::Vector2f currPos7(currRes.x * 0.77f, currRes.y / 2 + 350);
     UnitButton *unitSeven = new UnitButton(this->game, currPos7, "unit_background", "unit_seven", "unit_seven");
     this->buttons.push_back(unitSeven);
 
     //unit eight
-    sf::Vector2f currPos8(currRes.x * 0.88f, currRes.y / 2 + 300);
+    sf::Vector2f currPos8(currRes.x * 0.88f, currRes.y / 2 + 350);
     UnitButton *unitEight = new UnitButton(this->game, currPos8, "unit_background", "unit_eight", "unit_eight");
     this->buttons.push_back(unitEight);
+
+    //left board
+    sf::Vector2f currPos9((currRes.x * 0.25f) + 65, currRes.y / 2);
+    Button *leftField = new Button(this->game, currPos9, "left_board", "left_board");
+    this->board.push_back(leftField);
+
+    //right board
+    sf::Vector2f currPos10((currRes.x * 0.75f) - 65, currRes.y / 2);
+    Button *rightField = new Button(this->game, currPos10, "right_board", "right_board");
+    this->board.push_back(rightField);
 
     this->currUnit = UNIT_ONE;
 }

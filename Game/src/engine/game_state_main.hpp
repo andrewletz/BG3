@@ -20,6 +20,7 @@ class GameStateMain : public GameState
     virtual void handleInput();
 
     std::vector<UnitButton*> buttons;
+    std::vector<Button*> board;
     enum Units {UNIT_ONE, UNIT_TWO, UNIT_THREE, UNIT_FOUR, UNIT_FIVE, UNIT_SIX, UNIT_SEVEN, UNIT_EIGHT};
     GameStateMain::Units currUnit;
 

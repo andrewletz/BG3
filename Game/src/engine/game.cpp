@@ -24,6 +24,8 @@ void Game::loadTextures()
     texmgr.loadTexture("unit_six", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_seven", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_eight", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("left_board", "assets/images/left_field.png");
+    texmgr.loadTexture("right_board", "assets/images/right_field.png");
 }
 
 void Game::pushState(GameState* state)
