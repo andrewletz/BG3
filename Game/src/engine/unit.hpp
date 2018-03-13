@@ -6,6 +6,7 @@
 
 #include "board.hpp"
 #include "collider.hpp"
+#include "animation_handler.hpp"
 
 
 enum Team { LEFT, RIGHT, NONE };
@@ -26,15 +27,15 @@ class Board;
 class Unit
 {
 public:
-    Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes);
+    Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Team team, Attributes attributes);
     ~Unit() {};
 
-    //AnimationHandler animHandler;
-    //sf::Sprite sprite;
+    AnimationHandler animHandler;
+    sf::RectangleShape body;
  
     std::stack<Action> actionStack;
 
-    sf::RectangleShape body; 
+    //sf::RectangleShape body; 
     sf::CircleShape vision;
     sf::CircleShape range;
 
@@ -43,6 +44,12 @@ public:
 
     Collider getCollider() { return Collider(body, range, vision); };
     sf::Vector2f getPosition() { return body.getPosition(); };
+
+    void start();
+    void pause();
+    void reset();
+    void resume();
+    
     void setTarget(Unit* target) { this->target = target; };
     bool hasTarget();
     bool shouldDie();
@@ -54,9 +61,10 @@ private:
     Board* parentBoard;
     
     int hp;
+    sf::Vector2f originalPos;
     float moveSpeed;
     bool dying = false;
-    Unit* target = nullptr; 
+    Unit* target = nullptr;
     
     void attack(Unit* target) { target->hp = target->hp - this->attributes.attackDamage; };
 };

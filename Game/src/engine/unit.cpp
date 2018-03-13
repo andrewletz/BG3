@@ -4,11 +4,13 @@
 #include "board.hpp"
 #include "collider.hpp"
 
-Unit::Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes)
+Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Team team, Attributes attributes)
 {
+    // set original position
+    this->originalPos = pos;
 
     // setup priorityStack
-    this->actionStack.push( MARCH );
+    this->actionStack.push( PAUSE );
     
     // setup member vars
     this->parentBoard = board;
@@ -17,13 +19,22 @@ Unit::Unit(Board* board, sf::Vector2f pos, Team team, Attributes attributes)
     this->team = team;
     this->moveSpeed = attributes.moveSpeed;
 
-    // TODO remove this temporary sizing
+    /* TODO remove this temporary sizing
     sf::Vector2f sizeVec;
     sizeVec.x = 20.0f;
     sizeVec.y = 20.0f;
+    
+    */
 
     // setup body rectangle
-    this->body.setSize(sizeVec);
+    this->body.setTexture(texture);
+    
+    sf::Vector2f sizeVec;
+    const sf::IntRect texRect = body.getTextureRect();
+    sizeVec.x = texRect.width;
+    sizeVec.y = texRect.height;
+   
+    this->body.setSize(sizeVec);   
     this->body.setOrigin(sizeVec / 2.0f);
     this->body.setPosition(pos);
 
@@ -81,93 +92,102 @@ bool Unit::targetInRange()
 void Unit::step()
 {
     Action topAct = actionStack.top();
-    // check health of unit
-    if (!isLiving())
+    
+    // check if unit is not paused
+    if (topAct != PAUSE)
     {
-        if (topAct != DYING)
-            actionStack.push( DYING );
-    }
-    else
-    {
-    // priorityStack logic
-    if (!actionStack.empty())
-    {
-        switch (topAct)
+
+        // check if unit should be dying
+        if (!isLiving())
         {
-            // move forward`
-            case MARCH:
+            // make dying if not already dying
+            if (topAct != DYING)
+                actionStack.push( DYING );
+        }
+        else // unit is alive
+        {
+        // priorityStack logic
+        if (!actionStack.empty())
+        {
+            switch (topAct)
             {
-                if (team == LEFT)
+                // move forward`
+                case MARCH:
                 {
-                    body.move(moveSpeed, 0);
-                } else if (team == RIGHT)
-                {
-                    body.move(-moveSpeed, 0);
-                }
-                break;
-            }
-            // move towards another unit in vision
-            case MOVE:
-            {
-                if (isLiving() && hasTarget() && target->isLiving())
-                {
-                    if (targetInRange())
+                    if (team == LEFT)
                     {
-                        actionStack.pop();
-                        actionStack.push( ATTACK );
+                        body.move(moveSpeed, 0);
+                    } else if (team == RIGHT)
+                    {
+                        body.move(-moveSpeed, 0);
+                    }
+                    break;
+                }
+                // move towards another unit in vision
+                case MOVE:
+                {
+                    if (isLiving() && hasTarget() && target->isLiving())
+                    {
+                        if (targetInRange())
+                        {
+                            actionStack.pop();
+                            actionStack.push( ATTACK );
+                        }
+                        else
+                        {
+                            // movement towards target
+                            sf::Vector2f dir = target->getPosition() - getPosition();
+                            body.move((moveSpeed / 200) * dir);
+                        }
                     }
                     else
                     {
-                        // movement towards target
-                        sf::Vector2f dir = target->getPosition() - getPosition();
-                        body.move((moveSpeed / 200) * dir);
-                    }
-                }
-                else
-                {
-                    // idk what im doing here lmao
-                    target = nullptr;
-                    actionStack.pop();
-                }
-                break;
-            }
-            case ATTACK:
-            {
-                if (isLiving() && hasTarget())
-                {
-                    if (target->isLiving())
-                    {
-                        attack(target);
-                    }
-                    else
-                    {
-                        // target is dying, stop targeting
+                        // idk what im doing here lmao
                         target = nullptr;
                         actionStack.pop();
                     }
+                    break;
                 }
-                else
+                case ATTACK:
                 {
-                    // idk what im doing here lmao
-                    actionStack.pop();
+                    if (isLiving() && hasTarget())
+                    {
+                        if (target->isLiving())
+                        {
+                            attack(target);
+                        }
+                        else
+                        {
+                            // target is dying, stop targeting
+                            target = nullptr;
+                            actionStack.pop();
+                        }
+                    }
+                    else
+                    {
+                        // idk what im doing here lmao
+                        actionStack.pop();
+                    }
+                    break;
                 }
-                break;
+                case DYING:
+                {
+                    // do nothing, maybe show a death animation?
+                    break;
+                }
             }
-            case DYING:
-            {
-                // do nothing, maybe show a death animation?
-                break;
-            }
+        } 
+        else
+        {
+            std::cout << "THIS SHOULD NEVER TRIGGER" << std::endl;
         }
-    } else {
-        std::cout << "THIS SHOULD NEVER TRIGGER" << std::endl;
     }
-    
+
     // update pos
     sf::Vector2f curPos = body.getPosition();
     range.setPosition(curPos);
     vision.setPosition(curPos);
-    }
+    } 
 }
 
 void Unit::draw(sf::RenderWindow &window)
@@ -176,4 +196,32 @@ void Unit::draw(sf::RenderWindow &window)
     window.draw(body);
     window.draw(range);
     window.draw(vision);
+}
+
+void Unit::start()
+{
+    if (actionStack.top() == PAUSE)
+    {
+        if (actionStack.top() != MARCH)
+        {
+            actionStack.push( MARCH );
+        }
+    }
+}
+
+void Unit::pause()
+{
+    actionStack.push( PAUSE );
+}
+
+void Unit::reset()
+{
+    while (actionStack.empty())
+    {
+        actionStack.pop();
+    } 
+    pause();
+    body.setPosition(originalPos);
+    range.setPosition(originalPos);
+    vision.setPosition(originalPos);
 }
