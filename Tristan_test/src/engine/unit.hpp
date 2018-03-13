@@ -9,7 +9,7 @@
 
 
 enum Team { LEFT, RIGHT, NONE };
-enum Action { DYING, MARCH, MOVE, ATTACK };
+enum Action { DYING, MARCH, MOVE, ATTACK, PAUSE };
 
 typedef struct{
     unsigned cost;
