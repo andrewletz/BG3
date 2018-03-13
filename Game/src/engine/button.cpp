@@ -26,8 +26,8 @@ std::string Button::isClicked(sf::Vector2i cPos)
 	return "null";
 }
 
-void Button::Draw(sf::RenderWindow &window){
-	Container::Draw(window);
+void Button::draw(sf::RenderWindow &window){
+	Container::draw(window);
 }
 
 //just in case UnitButton needs to overload this function

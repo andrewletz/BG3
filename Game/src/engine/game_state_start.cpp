@@ -19,22 +19,22 @@ GameStateStart::GameStateStart(Game* game)
     pos *= 0.5f;
     this->view.setCenter(pos);
 
-    //make the start button and add it to the buttos vector
-    sf::Vector2i currRes = this->game->getResolution();
-    sf::Vector2f currPos(currRes.x / 2, currRes.y / 2);
-    Button *startButton = new Button(this->game, currPos, "start", "load_game"); //needs to appear dynamically
+    // Variables used to set up buttons
+    sf::Vector2i resolution = this->game->getResolution();
+    sf::Vector2f position(resolution.x / 2, resolution.y / 2);
+
+    // Start Button
+    Button *startButton = new Button(this->game, position, "start", "load_game"); //needs to appear dynamically
     this->buttons.push_back(startButton);
 
-    //make the quit button and add it to the vector
-    sf::Vector2i currRes2 = this->game->getResolution();
-    sf::Vector2f currPos2(currRes.x / 2, currRes.y / 2 + 100);
-    Button *quitButton = new Button(this->game, currPos2, "quit", "quit_game");
+    // Quit Button
+    position.y = resolution.y / 2 + (resolution.y * 0.15);
+    Button *quitButton = new Button(this->game, position, "quit", "quit_game");
     this->buttons.push_back(quitButton);
 
-    //make the logo and add it to the vector
-    sf::Vector2i currRes3 = this->game->getResolution();
-    sf::Vector2f currPos3(currRes.x / 2, currRes.y / 2 - 200);
-    Container *logoButton = new Container(this->game, currPos3, "logo");
+    // Logo
+    position.y = resolution.y / 2 - (resolution.y * 0.22);
+    Container *logoButton = new Container(this->game, position, "logo");
     this->uiElements.push_back(logoButton);
 }
 
@@ -51,24 +51,20 @@ void GameStateStart::draw(const float dt)
     this->game->window.clear(sf::Color::Black);
     this->game->window.draw(this->background);
 
-    //Before this happens need to reposition the button if the resolution has changed.
+    // Before this happens need to reposition the button if the resolution has changed
     int butlen = buttons.size();
     for(int i = 0; i < butlen; i++)
     {
-        buttons[i]->Draw(this->game->window);
+        buttons[i]->draw(this->game->window);
     }
 
     int uilen = uiElements.size();
     for(int i = 0; i < uilen; i++)
     {
-        uiElements[i]->Draw(this->game->window);
+        uiElements[i]->draw(this->game->window);
     }
 
     return;
-}
-
-void GameStateStart::update(const float dt)
-{
 }
 
 void GameStateStart::handleInput()
@@ -109,7 +105,6 @@ void GameStateStart::handleInput()
                     float(newWidth) / float(this->background.getTexture()->getSize().x),
                     float(newHeight) / float(this->background.getTexture()->getSize().y));
 
-
                 int butlen = buttons.size();
                 for(int i = 0; i < butlen; i++)
                 {
@@ -130,11 +125,12 @@ void GameStateStart::handleInput()
                     this->game->window.close();
                 } else if(event.key.code == sf::Keyboard::Space) {
                     this->loadgame();
-                } else if(event.key.code == sf::Keyboard::Equal && shiftPressed) {
+                } /*else if(event.key.code == sf::Keyboard::Equal && shiftPressed) {
                     this->game->cycleResolution(true);  
                 } else if(event.key.code == sf::Keyboard::Dash && shiftPressed) {
                     this->game->cycleResolution(false);
                 }
+                */
                 break;
             }
             case sf::Event::MouseButtonPressed:
@@ -168,4 +164,8 @@ void GameStateStart::handleInput()
     }
 
     return;
+}
+
+void GameStateStart::update(const float dt)
+{
 }

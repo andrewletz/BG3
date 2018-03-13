@@ -40,7 +40,7 @@ void Container::updatePos(float scale)
 	this->hitbox.setPosition(hbp);
 }
 
-void Container::Draw(sf::RenderWindow &window)
+void Container::draw(sf::RenderWindow &window)
 {
 	window.draw(hitbox);
 }

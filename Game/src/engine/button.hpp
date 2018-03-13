@@ -11,7 +11,7 @@ public:
 	~Button(){}
 
 	std::string isClicked(sf::Vector2i cPos);
-	void Draw(sf::RenderWindow &window);
+	void draw(sf::RenderWindow &window);
 	void updatePos(float scale);
 
 	//button info

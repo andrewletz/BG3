@@ -12,7 +12,7 @@ public:
 	~Container(){}
 
 	void updatePos(float scale);
-	void Draw(sf::RenderWindow &window);
+	void draw(sf::RenderWindow &window);
 
 	sf::RectangleShape hitbox;
 	sf::Texture buttTexture;

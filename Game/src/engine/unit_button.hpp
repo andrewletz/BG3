@@ -10,7 +10,7 @@ public:
 	UnitButton(Game* game, sf::Vector2f pos, std::string backgroundName, std::string op, std::string foregroundName);
 	~UnitButton();
 
-	void Draw(sf::RenderWindow &window);
+	void draw(sf::RenderWindow &window);
 	void updatePos(float scale);
 
 	//the hitbox and texture of the unit image

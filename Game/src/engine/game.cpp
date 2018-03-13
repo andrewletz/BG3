@@ -13,7 +13,7 @@ Game::Game()
 
     std::vector<sf::Vector2i> sixteenNine;
     // Small list of valid 16:9 resolutions
-    sixteenNine.push_back(sf::Vector2i(1920, 1080));
+    // sixteenNine.push_back(sf::Vector2i(1920, 1080));
     sixteenNine.push_back(sf::Vector2i(1536, 864));
     sixteenNine.push_back(sf::Vector2i(1280, 720));
     sixteenNine.push_back(sf::Vector2i(896, 504));
@@ -29,16 +29,24 @@ Game::Game()
         }
     }
 
-    if(validResolutions.size() > 1) { // choose second smallest if it exists
-        this->window.create(sf::VideoMode(this->validResolutions[1].x, this->validResolutions[1].y, maxBPP), "BG3", sf::Style::Close);
-        this->currentResolution = 1;
-    } else {
-        this->window.create(sf::VideoMode(maxWidth, maxHeight, maxBPP), "BG3", sf::Style::Close);
-        this->currentResolution = 0;
-    }
+    // if(validResolutions.size() > 1) { // choose second smallest if it exists
+    //     this->window.create(sf::VideoMode(this->validResolutions[1].x, this->validResolutions[1].y, maxBPP), "BG3", sf::Style::Close);
+    //     this->currentResolution = 1;
+    // } else {
+    //     this->window.create(sf::VideoMode(maxWidth, maxHeight, maxBPP), "BG3", sf::Style::Close);
+    //     this->currentResolution = 0;
+    // }
+
+    // Dynamic resolution scaling is taking too much time so for now lets just use 720p
+    // Most of the logic is there just some bugs to iron out
+    this->window.create(sf::VideoMode(this->validResolutions[1].x, this->validResolutions[1].y, maxBPP), "BG3", sf::Style::Close);
+    this->currentResolution = 1;
+
     this->bitsPerPixel = maxBPP;
 
     this->window.setFramerateLimit(60);
+    
+    this->window.setPosition(sf::Vector2i(this->window.getPosition().x / 2, this->window.getPosition().y / 2));
     
     this->icon.loadFromFile("assets/images/icon.png");
     this->window.setIcon(32, 32, this->icon.getPixelsPtr());
