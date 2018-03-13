@@ -22,6 +22,7 @@ class Game
     int bitsPerPixel;
     int currentResolution;
 
+    sf::Image icon;
     sf::RenderWindow window;
     TextureManager texmgr;
 

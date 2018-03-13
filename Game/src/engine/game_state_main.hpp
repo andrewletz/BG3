@@ -11,7 +11,6 @@ class GameStateMain : public GameState
     private:
 
     sf::View gameView;
-    sf::View guiView;
 
     public:
 
