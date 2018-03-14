@@ -48,7 +48,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     //make the clock to show how much time is left
     position.x = (resolution.x/ 2.0);
     position.y = 0;
-    std::unique_ptr<uiText> temp(new uiText(this->game, position, 0));
+    std::unique_ptr<uiText> temp(new uiText(this->game, position, 1));
     this->uiNumbers.push_back(std::move(temp));
 
     //make the cost buttons
@@ -99,7 +99,7 @@ void GameStateMain::update(const float dt)
     this->roundManager.update(dt);
     //update the clock
     float newTime = this->roundManager.time;
-    this->uiNumbers[0]->updateText((int) newTime);
+    this->uiNumbers[0]->updateText((int) (newTime + 1));
     return;
 }
 

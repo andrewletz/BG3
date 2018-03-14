@@ -8,9 +8,9 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
 
 	Attributes castleAttr;	
     castleAttr.cost = 0;	
-    castleAttr.attackRadius = 100.f;	
+    castleAttr.attackRadius = 150.f;	
     castleAttr.visionRadius = 200.f;	
-    castleAttr.attackDamage = 5;	
+    castleAttr.attackDamage = 6;	
     castleAttr.moveSpeed = 0.0f;	
     castleAttr.max_hp = 500;
 
@@ -18,9 +18,9 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
     towerAttr.cost = 0;	
     towerAttr.attackRadius = 100.f;	
     towerAttr.visionRadius = 200.f;	
-    towerAttr.attackDamage = 5;	
+    towerAttr.attackDamage = 2;	
     towerAttr.moveSpeed = 0.0f;	
-    towerAttr.max_hp = 500;
+    towerAttr.max_hp = 250;
 
     // Variables used to set up buttons
     sf::Vector2i resolution = this->game->getResolution();
