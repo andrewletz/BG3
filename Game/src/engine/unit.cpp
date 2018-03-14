@@ -51,8 +51,10 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     sf::Color vColor(0, 0, 255);
     vColor.a = 50;
     //this->body.setFillColor(sf::Color::Transparent);
-    this->range.setFillColor(rColor);
-    this->vision.setFillColor(vColor);
+    //this->range.setFillColor(rColor);
+    //this->vision.setFillColor(vColor);
+    this->range.setFillColor(sf::Color::Transparent);
+    this->vision.setFillColor(sf::Color::Transparent);
 }
 
 // TODO deprecate

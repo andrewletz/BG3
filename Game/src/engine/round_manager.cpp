@@ -53,9 +53,8 @@ void RoundManager::step() {
         Unit& leftUnit = leftTeam.units[left];
 
         // step left unit
-        if (leftUnit.isLiving()) {
+        if (leftUnit.isLiving())
             if (leftUnit.step()) leftTeam.alive--;
-        }
 
         // get left unit collider
         Collider leftCollider = leftUnit.getCollider();
@@ -73,9 +72,8 @@ void RoundManager::step() {
             Unit& rightUnit = rightTeam.units[right];
 
             // step right unit
-            if (rightUnit.isLiving()) {
+            if (rightUnit.isLiving())
                 if (rightUnit.step()) rightTeam.alive--;
-            }
 
             // get right unit collider
             Collider rightCollider = rightUnit.getCollider();
