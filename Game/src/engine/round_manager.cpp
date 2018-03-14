@@ -17,15 +17,32 @@ void RoundManager::update(const float dt) {
 			if (this->time >= this->maxPlacingTime) {
 				this->phase = FIGHT;
 				this->time = 0;
+				leftTeam.reset();
+	            rightTeam.reset();
+	            leftTeam.start();
+	            rightTeam.start();
 			}
-            leftTeam.reset();
-            rightTeam.reset();
 			break;
 
 		case FIGHT:
             step();
-		    leftTeam.start();
-            rightTeam.start();
+		    if (this->areUnitsAlive()) { // there is still fighting
+
+		    } else if (this->gameOver()) { // no base units left on some side
+		    	this->phase = OVER;
+		    	bool rightWon = hasLostGame(Enums::LEFT);
+		    	if (rightWon) {
+		    		this->winner = Enums::RIGHT;
+		    	} else {
+		    		this->winner = Enums::LEFT;
+		    	}
+		    } else { // only base units are left alive
+		    	this->phase = PLACE;
+		    }
+			break;
+
+		case OVER:
+			// prompt user to start new game
 			break;
 	}
 }
@@ -104,4 +121,8 @@ bool RoundManager::hasLostGame(Enums::Teams team) {
 		}
 		default: break;
 	}
+}
+
+bool RoundManager::gameOver() {
+	return !hasLostGame(Enums::RIGHT) && !hasLostGame(Enums::LEFT);
 }

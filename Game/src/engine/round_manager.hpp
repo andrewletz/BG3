@@ -13,7 +13,7 @@ public:
 	RoundManager(Game* game);
 	~RoundManager() {};
 	
-	enum Phase {PLACE, FIGHT};
+	enum Phase {PLACE, FIGHT, OVER};
 
 	Game* game;
 
@@ -28,13 +28,15 @@ public:
 	float time;
 
 	Enums::Teams currTeam;
+	Enums::Teams winner;
 
 	void update(const float dt);
 	void draw(sf::RenderWindow& window);
-        void step();
+       void step();
 
 	bool areUnitsAlive();
 	bool hasLostGame(Enums::Teams team);
+	bool gameOver();
 
 };
 

@@ -22,7 +22,7 @@ typedef struct{
 class Unit
 {
 public:
-    Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes);
+    Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes);
     ~Unit() {};
 
     AnimationHandler animHandler;

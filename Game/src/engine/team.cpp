@@ -24,20 +24,20 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
 
     // Variables used to set up buttons
     sf::Vector2i resolution = this->game->getResolution();
-    sf::Vector2f position(resolution.x, resolution.y / 2);
+    sf::Vector2f position(resolution.x, resolution.y / 2 - (resolution.y * 0.04f));
 
     switch (this->side) {
     	case Enums::LEFT:
     	{
     		position.x = resolution.x * 0.1f;
-    		Unit castle(game->texmgr.getRef("castle"), position, Enums::LEFT, castleAttr);
+    		Unit castle(&game->texmgr.getRef("castle"), position, Enums::LEFT, castleAttr);
 
-    		position.x = resolution.x * 0.3f;
+    		position.x = resolution.x * 0.18f;
     		position.y = resolution.y * 0.2f;
-			Unit towerTop(game->texmgr.getRef("castle"), position, Enums::LEFT, towerAttr);
+			Unit towerTop(&game->texmgr.getRef("tower"), position, Enums::LEFT, towerAttr);
 
-			position.y = resolution.y * 0.8f;
-			Unit towerBottom(game->texmgr.getRef("castle"), position, Enums::LEFT, towerAttr);
+			position.y = resolution.y * 0.65f;
+			Unit towerBottom(&game->texmgr.getRef("tower"), position, Enums::LEFT, towerAttr);
 
 			this->baseUnits.push_back(castle);
 			this->baseUnits.push_back(towerTop);
@@ -47,14 +47,14 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
     	case Enums::RIGHT:
     	{
     		position.x = resolution.x * 0.9f;
-    		Unit castle(game->texmgr.getRef("castle"), position, Enums::RIGHT, castleAttr);
+    		Unit castle(&game->texmgr.getRef("castle"), position, Enums::RIGHT, castleAttr);
 
-    		position.x = resolution.x * 0.7f;
+    		position.x = resolution.x * 0.82f;
     		position.y = resolution.y * 0.2f;
-			Unit towerTop(game->texmgr.getRef("castle"), position, Enums::RIGHT, towerAttr);
+			Unit towerTop(&game->texmgr.getRef("tower"), position, Enums::RIGHT, towerAttr);
 
-			position.y = resolution.y * 0.8f;
-			Unit towerBottom(game->texmgr.getRef("castle"), position, Enums::RIGHT, towerAttr);
+			position.y = resolution.y * 0.65f;
+			Unit towerBottom(&game->texmgr.getRef("tower"), position, Enums::RIGHT, towerAttr);
 
 			this->baseUnits.push_back(castle);
 			this->baseUnits.push_back(towerTop);

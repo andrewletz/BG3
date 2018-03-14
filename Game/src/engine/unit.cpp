@@ -3,7 +3,7 @@
 #include "unit.hpp"
 #include "collider.hpp"
 
-Unit::Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes)
+Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes)
 {
     // set original position
     this->originalPos = pos;
@@ -24,7 +24,7 @@ Unit::Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes 
     */
 
     // setup body rectangle
-    this->body.setTexture(&texture);
+    this->body.setTexture(texture);
     
     sf::Vector2f sizeVec;
     const sf::IntRect texRect = body.getTextureRect();
