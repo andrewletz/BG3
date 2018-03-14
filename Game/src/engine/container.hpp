@@ -8,6 +8,7 @@
 
 class Container{
 public:
+	Container();
 	Container(Game* game, sf::Vector2f pos, std::string filename);
 	~Container(){}
 
