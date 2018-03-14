@@ -22,7 +22,8 @@ public:
 	int shekels;
 
 	void addUnit(Unit unit);
-	void reset();
+	void start();
+        void reset();
 
 	bool hasUnitsAlive();
 	bool hasLostGame();

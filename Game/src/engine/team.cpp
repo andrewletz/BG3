@@ -41,6 +41,22 @@ void Team::addUnit(Unit unit) {
 	}
 }
 
+void Team::start() {
+    for (auto unit : baseUnits) {
+        unit.start();
+    }
+    for (auto unit : units) {
+        unit.start();
+    }
+}
+
 void Team::reset() {
-	this->alive = units.size();
+    this->alive = units.size();
+        
+    for (auto unit : baseUnits) {
+        unit.reset();
+    }
+    for (auto unit : units) {
+        unit.reset();
+    }
 }
