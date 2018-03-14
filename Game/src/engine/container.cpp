@@ -21,6 +21,9 @@ Container::Container(Game* game, sf::Vector2f pos, std::string textureName)
 	this->hitbox.setTexture(&this->buttTexture);
 }
 
+Container::Container(){
+	return;
+}
 void Container::updatePos(float scale)
 {
 	//hitbox size

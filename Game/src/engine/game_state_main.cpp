@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include<memory>
 
 #include "game_state.hpp"
 #include "game_state_start.hpp"
@@ -21,10 +22,10 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
 
     // Variables used to set up buttons
     sf::Vector2i resolution = this->game->getResolution();
-    sf::Vector2f position(resolution.x * 0.11f, resolution.y - (resolution.y * 0.08f));
+    sf::Vector2f position(resolution.x * 0.44f, resolution.y - (resolution.y * 0.08f));
 
-    std::vector<std::string> buttonStrings = {"unit_one", "unit_two", "unit_three", "unit_four", "unit_five", "unit_six", "unit_seven", "unit_eight"};
-    for (int i = 0; i < 8; i++) {
+    std::vector<std::string> buttonStrings = {"unit_one", "unit_two", /*"unit_three", "unit_four", "unit_five", "unit_six", "unit_seven", "unit_eight"*/};
+    for (int i = 0; i < 2; i++) {
         this->buttons.push_back(new UnitButton(this->game, position, "unit_background", buttonStrings[i], buttonStrings[i]));
         position.x += resolution.x * 0.11f;
     }
@@ -43,6 +44,21 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     // Outline is a container object
     position.x = resolution.x / 2.0;
     this->uiElements.push_back(new Container(this->game, position, "outline"));
+
+    //make the clock to show how much time is left
+    position.x = (resolution.x/ 2.0);
+    position.y = 0;
+    std::unique_ptr<uiText> temp(new uiText(this->game, position, 0));
+    this->uiNumbers.push_back(std::move(temp));
+
+    //make the cost buttons
+    position.x = resolution.x * 0.44f;
+    position.y = resolution.y - (resolution.y * 0.05f);
+    std::unique_ptr<uiText> temp2(new uiText(this->game, position, 3));
+    this->uiNumbers.push_back(std::move(temp2));
+    position.x = resolution.x * 0.55f;
+    std::unique_ptr<uiText> temp3(new uiText(this->game, position, 6));
+    this->uiNumbers.push_back(std::move(temp3));
 
     this->currUnit = UNIT_ONE;
 }
@@ -68,7 +84,10 @@ void GameStateMain::draw(const float dt)
             this->uiElements[0]->draw(this->game->window);
             break;
     }
-
+    int uilen = uiNumbers.size();
+    for(int i = 0; i < uilen; i++){
+        this->uiNumbers[i]->draw(this->game->window);
+    }
     // Unit drawing handled by roundmanager, do this last as they should be on top
     this->roundManager.draw(this->game->window);
     
@@ -78,6 +97,9 @@ void GameStateMain::draw(const float dt)
 void GameStateMain::update(const float dt)
 {
     this->roundManager.update(dt);
+    //update the clock
+    float newTime = this->roundManager.time;
+    this->uiNumbers[0]->updateText((int) newTime);
     return;
 }
 

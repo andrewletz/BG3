@@ -50,7 +50,7 @@ public:
     bool isLiving();
     bool targetInRange();
     bool advanceTarget();
-    void step();
+    bool step();
     void draw(sf::RenderWindow& window);
 
 private:

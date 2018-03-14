@@ -3,9 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 #include "game_state.hpp"
 #include "unit_button.hpp"
 #include "round_manager.hpp"
+#include "uitext.hpp"
 
 class GameStateMain : public GameState
 {
@@ -25,6 +27,7 @@ class GameStateMain : public GameState
 
     std::vector<UnitButton*> buttons;
     std::vector<Container*> uiElements;
+    std::vector<std::unique_ptr<uiText> > uiNumbers;
     std::vector<Button*> board;
 
     GameStateMain::Units currUnit;
