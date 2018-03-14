@@ -22,6 +22,7 @@ void RoundManager::update(const float dt) {
 			break;
 
 		case FIGHT:
+                        step();
 		        leftTeam.start();
                         rightTeam.start();
 			break;

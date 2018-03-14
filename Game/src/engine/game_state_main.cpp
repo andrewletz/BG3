@@ -70,7 +70,6 @@ void GameStateMain::draw(const float dt)
     }
 
     // Unit drawing handled by roundmanager, do this last as they should be on top
-    this->roundManager.step();
     this->roundManager.draw(this->game->window);
     
     return;
