@@ -3,13 +3,17 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "global_enum.hpp"
 #include "unit.hpp"
+#include "game.hpp"
 
 class Team {
 
 public:
-	Team();
+	Team(Game* game);
 	~Team() {};
+
+	Game* game;
 
 	std::vector<Unit> baseUnits;
 	std::vector<Unit> units;

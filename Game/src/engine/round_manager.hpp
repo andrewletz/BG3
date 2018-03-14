@@ -3,16 +3,19 @@
 #define ROUND_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
+#include "game.hpp"
 #include "team.hpp"
+#include "global_enum.hpp"
 
 class RoundManager {
 
 public:
-	RoundManager();
+	RoundManager(Game* game);
 	~RoundManager() {};
 	
-	enum Teams {LEFT, RIGHT};
 	enum Phase {PLACE, FIGHT};
+
+	Game* game;
 
 	Team leftTeam;
 	Team rightTeam;
@@ -24,11 +27,13 @@ public:
 	float maxPlacingTime; //the length of time the player gets to place units for
 	float time;
 
-	Teams currTeam;
+	Enums::Teams currTeam;
 
 	void update(const float dt);
+	void draw(sf::RenderWindow& window);
+
 	bool areUnitsAlive();
-	bool hasLostGame(Teams team);
+	bool hasLostGame(Enums::Teams team);
 
 };
 

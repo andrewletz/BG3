@@ -1,10 +1,9 @@
 #include <iostream>
 #include <vector>
 #include "unit.hpp"
-#include "board.hpp"
 #include "collider.hpp"
 
-Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Attributes attributes)
+Unit::Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes)
 {
     // set original position
     this->originalPos = pos;
@@ -13,7 +12,6 @@ Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Att
     this->actionStack.push( PAUSE );
     
     // setup member vars
-    this->parentBoard = board;
     this->attributes = attributes;
     this->hp = attributes.max_hp;
     this->team = team;
@@ -27,7 +25,7 @@ Unit::Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Att
     */
 
     // setup body rectangle
-    this->body.setTexture(texture);
+    this->body.setTexture(&texture);
     
     sf::Vector2f sizeVec;
     const sf::IntRect texRect = body.getTextureRect();
@@ -114,10 +112,10 @@ void Unit::step()
                 // move forward`
                 case MARCH:
                 {
-                    if (team == LEFT)
+                    if (team == Enums::LEFT)
                     {
                         body.move(moveSpeed, 0);
-                    } else if (team == RIGHT)
+                    } else if (team == Enums::RIGHT)
                     {
                         body.move(-moveSpeed, 0);
                     }

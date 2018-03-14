@@ -1,10 +1,29 @@
 #include "team.hpp"
 #include <vector>
 
-Team::Team() {
+Team::Team(Game* game) {
+	this->game = game;
 	this->shekels = 5;
 	this->alive = this->units.size();
-	// initialize base units
+
+	Attributes castleAttr;	
+    castleAttr.cost = 0;	
+    castleAttr.attackRadius = 100.f;	
+    castleAttr.visionRadius = 200.f;	
+    castleAttr.attackDamage = 5;	
+    castleAttr.moveSpeed = 0.0f;	
+    castleAttr.max_hp = 500;
+
+	Attributes towerAttr;	
+    towerAttr.cost = 0;	
+    towerAttr.attackRadius = 100.f;	
+    towerAttr.visionRadius = 200.f;	
+    towerAttr.attackDamage = 5;	
+    towerAttr.moveSpeed = 0.0f;	
+    towerAttr.max_hp = 500;
+
+	Unit castle(game->texmgr.getRef("castle"), sf::Vector2f(0, 0), Enums::RIGHT, castleAttr);
+	Unit tower(game->texmgr.getRef("castle"), sf::Vector2f(0, 0), Enums::RIGHT, towerAttr);
 }
 
 bool Team::hasUnitsAlive() {

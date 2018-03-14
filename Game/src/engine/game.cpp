@@ -60,12 +60,21 @@ Game::~Game()
 void Game::loadTextures()
 {
     // remember paths are relative to the generated executable! (not the cpp file)
+
+    // Backgrounds
     texmgr.loadTexture("background", "assets/images/background.png");
     texmgr.loadTexture("background_main", "assets/images/game_field_background.png");
+    texmgr.loadTexture("left_board", "assets/images/left_field.png");
+    texmgr.loadTexture("right_board", "assets/images/right_field.png");
+
+    // Gui elements
     texmgr.loadTexture("logo", "assets/images/logo.png");
     texmgr.loadTexture("start", "assets/images/start_button.png");
     texmgr.loadTexture("quit", "assets/images/quit_button.png");
     texmgr.loadTexture("unit_background", "assets/images/unit_button.png");
+    texmgr.loadTexture("outline", "assets/images/outline.png");
+
+    // Units
     texmgr.loadTexture("unit_one", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_two", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_three", "assets/images/man_at_arms.png");
@@ -74,8 +83,10 @@ void Game::loadTextures()
     texmgr.loadTexture("unit_six", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_seven", "assets/images/man_at_arms.png");
     texmgr.loadTexture("unit_eight", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("left_board", "assets/images/left_field.png");
-    texmgr.loadTexture("right_board", "assets/images/right_field.png");
+
+    // Base units
+    texmgr.loadTexture("castle", "assets/images/castle.png");
+    texmgr.loadTexture("tower", "assets/images/tower.png");
 }
 
 void Game::pushState(GameState* state)

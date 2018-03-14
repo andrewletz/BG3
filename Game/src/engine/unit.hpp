@@ -4,12 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <stack>
 
-#include "board.hpp"
 #include "collider.hpp"
 #include "animation_handler.hpp"
+#include "global_enum.hpp"
 
-
-enum Teams { LEFT, RIGHT, NONE };
 enum Action { DYING, MARCH, MOVE, ATTACK, PAUSE };
 
 typedef struct{
@@ -21,13 +19,10 @@ typedef struct{
     float moveSpeed;
 } Attributes;
 
-
-class Board;
-
 class Unit
 {
 public:
-    Unit(Board* board, sf::Texture* texture, sf::Vector2f pos, Teams team, Attributes attributes);
+    Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes);
     ~Unit() {};
 
     AnimationHandler animHandler;
@@ -40,7 +35,7 @@ public:
     sf::CircleShape range;
 
     Attributes attributes;
-    Teams team;
+    Enums::Teams team;
 
     Collider getCollider() { return Collider(body, range, vision); };
     sf::Vector2f getPosition() { return body.getPosition(); };
@@ -57,9 +52,8 @@ public:
     bool targetInRange();
     void step();
     void draw(sf::RenderWindow& window);
+
 private:
-    Board* parentBoard;
-    
     int hp;
     sf::Vector2f originalPos;
     float moveSpeed;

@@ -5,7 +5,7 @@
 #include "game_state_start.hpp"
 #include "game_state_main.hpp"
 
-GameStateMain::GameStateMain(Game* game)
+GameStateMain::GameStateMain(Game* game) : roundManager(game)
 {
     this->game = game;
     this->background.setTexture(game->texmgr.getRef("background_main"));
@@ -40,6 +40,10 @@ GameStateMain::GameStateMain(Game* game)
     Button *rightField = new Button(this->game, position, "right_board", "right_board");
     this->board.push_back(rightField);
 
+    // Outline is a container object
+    position.x = resolution.x / 2.0;
+    this->uiElements.push_back(new Container(this->game, position, "outline"));
+
     this->currUnit = UNIT_ONE;
 }
 
@@ -57,11 +61,23 @@ void GameStateMain::draw(const float dt)
     //draw the board
     board[0]->draw(this->game->window);
     board[1]->draw(this->game->window);
+
+    // Phase dependent draws (mainly for outline)
+    switch(roundManager.phase) {
+        case roundManager.Phase::PLACE:
+            this->uiElements[0]->draw(this->game->window);
+            break;
+    }
+
+    // Unit drawing handled by roundmanager, do this last as they should be on top
+    this->roundManager.draw(this->game->window);
+    
     return;
 }
 
 void GameStateMain::update(const float dt)
 {
+    this->roundManager.update(dt);
     return;
 }
 

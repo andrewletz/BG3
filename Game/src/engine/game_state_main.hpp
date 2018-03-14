@@ -19,11 +19,14 @@ class GameStateMain : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
+    enum Units {UNIT_ONE, UNIT_TWO, UNIT_THREE, UNIT_FOUR, UNIT_FIVE, UNIT_SIX, UNIT_SEVEN, UNIT_EIGHT};
+
     RoundManager roundManager;
 
     std::vector<UnitButton*> buttons;
+    std::vector<Container*> uiElements;
     std::vector<Button*> board;
-    enum Units {UNIT_ONE, UNIT_TWO, UNIT_THREE, UNIT_FOUR, UNIT_FIVE, UNIT_SIX, UNIT_SEVEN, UNIT_EIGHT};
+
     GameStateMain::Units currUnit;
 
     GameStateMain(Game* game);
