@@ -26,11 +26,10 @@ public:
     ~Unit() {};
 
     AnimationHandler animHandler;
-    sf::RectangleShape body;
  
     std::stack<Action> actionStack;
 
-    //sf::RectangleShape body; 
+    sf::RectangleShape body; 
     sf::CircleShape vision;
     sf::CircleShape range;
 
@@ -50,6 +49,7 @@ public:
     bool shouldDie();
     bool isLiving();
     bool targetInRange();
+    bool advanceTarget();
     void step();
     void draw(sf::RenderWindow& window);
 

@@ -10,11 +10,12 @@
 class Team {
 
 public:
-	Team(Game* game);
+	Team(Game* game, Enums::Teams team);
 	~Team() {};
 
 	Game* game;
 
+	Enums::Teams side;
 	std::vector<Unit> baseUnits;
 	std::vector<Unit> units;
 
@@ -22,7 +23,8 @@ public:
 	int shekels;
 
 	void addUnit(Unit unit);
-	void reset();
+	void start();
+    void reset();
 
 	bool hasUnitsAlive();
 	bool hasLostGame();

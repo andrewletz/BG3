@@ -15,7 +15,6 @@ Unit::Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes 
     this->attributes = attributes;
     this->hp = attributes.max_hp;
     this->team = team;
-    this->moveSpeed = attributes.moveSpeed;
 
     /* TODO remove this temporary sizing
     sf::Vector2f sizeVec;
@@ -67,7 +66,7 @@ bool Unit::shouldDie()
 
 bool Unit::isLiving()
 {
-    if (hp > 0) return true;
+    if (this->hp > 0) return true;
     return false;
 }
 
@@ -114,10 +113,10 @@ void Unit::step()
                 {
                     if (team == Enums::LEFT)
                     {
-                        body.move(moveSpeed, 0);
+                        body.move(attributes.moveSpeed, 0);
                     } else if (team == Enums::RIGHT)
                     {
-                        body.move(-moveSpeed, 0);
+                        body.move(-attributes.moveSpeed, 0);
                     }
                     break;
                 }
@@ -135,7 +134,7 @@ void Unit::step()
                         {
                             // movement towards target
                             sf::Vector2f dir = target->getPosition() - getPosition();
-                            body.move((moveSpeed / 200) * dir);
+                            body.move((attributes.moveSpeed / 200) * dir);
                         }
                     }
                     else
@@ -222,4 +221,14 @@ void Unit::reset()
     body.setPosition(originalPos);
     range.setPosition(originalPos);
     vision.setPosition(originalPos);
+}
+
+bool Unit::advanceTarget()
+{
+    if (target != nullptr)
+    {
+        actionStack.push( MOVE );
+        return true;
+    }
+    return false;
 }

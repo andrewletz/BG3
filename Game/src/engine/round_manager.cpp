@@ -1,6 +1,7 @@
 #include "round_manager.hpp"
+#include <iostream>
 
-RoundManager::RoundManager(Game* game) : leftTeam(game), rightTeam(game) {
+RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
 	this->maxPlacingTime = 10.0;
@@ -17,34 +18,74 @@ void RoundManager::update(const float dt) {
 				this->phase = FIGHT;
 				this->time = 0;
 			}
+            leftTeam.reset();
+            rightTeam.reset();
 			break;
 
 		case FIGHT:
-			
+            step();
+		    leftTeam.start();
+            rightTeam.start();
 			break;
 	}
 }
 
-void RoundManager::draw(sf::RenderWindow& window) {
-	// for (int i = 0; i < 3; i++) {
-	// 	this->leftTeam.baseUnits[i].draw(window);
-	// 	this->rightTeam.baseUnits[i].draw(window);
-	// }
-	// for (Unit unit : leftTeam.units) {
-	// 	unit.draw(window);
-	// }
-	// for (Unit unit : rightTeam.units) {
-	// 	unit.draw(window);
-	// }
-	// switch (this->phase) {
-	// 	case PLACE:
-			
-	// 		break;
+void RoundManager::step() {
+    
+    for (int left = 0; left < leftTeam.units.size(); left++) {
+        // left unit reference
+        Unit& leftUnit = leftTeam.units[left];
 
-	// 	case FIGHT:
-			
-	// 		break;
-	// }
+        // get collider for left unit comparison
+        Collider leftCollider = leftUnit.getCollider();
+
+        // LEFT TEAM INNER COLLISIONS
+        for (int left2 = 0; left2 < leftTeam.units.size(); left2++) {
+            if (left != left2) {
+                Collider leftCollider2 = leftTeam.units[left2].getCollider();
+                leftCollider.checkUnitCollision(leftCollider2, 0.0f);
+            }
+        }
+
+        for (int right = 0; right < rightTeam.units.size(); right++) {
+            // get collider for right unit comparison
+            Unit& rightUnit = rightTeam.units[right];
+            Collider rightCollider = rightUnit.getCollider();
+
+            // RIGHT TEAM INNER COLLISIONS
+            for (int right2 = 0; right2 < rightTeam.units.size(); right2++) {
+                if (right != right2) {
+                    Collider rightCollider2 = rightTeam.units[right2].getCollider();
+                    rightCollider.checkUnitCollision(rightCollider2, 0.0f);
+                }
+            }
+
+            // check for vision collision LEFT -> RIGHT
+            if (leftCollider.checkVisionCollision(rightCollider)) {
+               if (!leftUnit.hasTarget() && rightUnit.isLiving()) {
+                   leftUnit.setTarget(&rightUnit);
+                   leftUnit.advanceTarget();
+               }
+            }
+
+            // check for vision collision RIGHT -> LEFT
+            if (rightCollider.checkVisionCollision(leftCollider)) {
+               if (!rightUnit.hasTarget() && leftUnit.isLiving()) {
+                   rightUnit.setTarget(&leftUnit);
+                   rightUnit.advanceTarget();
+               }
+            }  
+        }
+    }
+}
+
+void RoundManager::draw(sf::RenderWindow& window) {
+    for (int i = 0; i < 3; i++) {
+        if (leftTeam.baseUnits[i].isLiving())
+            leftTeam.baseUnits[i].draw(window);
+        if (rightTeam.baseUnits[i].isLiving())
+            rightTeam.baseUnits[i].draw(window);
+    }
 }
 
 bool RoundManager::areUnitsAlive() {
