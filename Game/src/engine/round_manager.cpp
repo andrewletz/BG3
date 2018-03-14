@@ -1,6 +1,7 @@
 #include "round_manager.hpp"
 #include <iostream>
-RoundManager::RoundManager(Game* game) : leftTeam(game), rightTeam(game) {
+
+RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
 	this->maxPlacingTime = 10.0;
@@ -17,14 +18,14 @@ void RoundManager::update(const float dt) {
 				this->phase = FIGHT;
 				this->time = 0;
 			}
-                        leftTeam.reset();
-                        rightTeam.reset();
+            leftTeam.reset();
+            rightTeam.reset();
 			break;
 
 		case FIGHT:
-                        step();
-		        leftTeam.start();
-                        rightTeam.start();
+            step();
+		    leftTeam.start();
+            rightTeam.start();
 			break;
 	}
 }
@@ -79,33 +80,12 @@ void RoundManager::step() {
 }
 
 void RoundManager::draw(sf::RenderWindow& window) {
-	// switch (this->phase) {
-	// 	case PLACE:
-			
-	// 		break;
-
-	// 	case FIGHT:
-			
-	// 		break;
-	// }
-    
-        /*
-        for (int i = 0; i < 3; i++) {
-            if (leftTeam.baseUnits[i].isLiving())
-                leftTeam.baseUnits[i].draw(window);
-            if (rightTeam.baseUnits[i].isLiving())
-                rightTeam.baseUnits[i].draw(window);
-        }
-       
-        */
-        for (auto leftUnit : leftTeam.baseUnits) {
-            if (leftUnit.isLiving())
-                leftUnit.draw(window);
-        }
-        for (auto rightUnit : rightTeam.baseUnits) {
-            if (rightUnit.isLiving())
-                rightUnit.draw(window);
-        }
+    for (int i = 0; i < 3; i++) {
+        if (leftTeam.baseUnits[i].isLiving())
+            leftTeam.baseUnits[i].draw(window);
+        if (rightTeam.baseUnits[i].isLiving())
+            rightTeam.baseUnits[i].draw(window);
+    }
 }
 
 bool RoundManager::areUnitsAlive() {

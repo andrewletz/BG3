@@ -1,7 +1,7 @@
 #include "team.hpp"
 #include <vector>
 
-Team::Team(Game* game) {
+Team::Team(Game* game, Enums::Teams team) : side(team) {
 	this->game = game;
 	this->shekels = 5;
 	this->alive = this->units.size();
@@ -22,8 +22,46 @@ Team::Team(Game* game) {
     towerAttr.moveSpeed = 0.0f;	
     towerAttr.max_hp = 500;
 
-	Unit castle(game->texmgr.getRef("castle"), sf::Vector2f(0, 0), Enums::RIGHT, castleAttr);
-	Unit tower(game->texmgr.getRef("castle"), sf::Vector2f(0, 0), Enums::RIGHT, towerAttr);
+    // Variables used to set up buttons
+    sf::Vector2i resolution = this->game->getResolution();
+    sf::Vector2f position(resolution.x, resolution.y / 2);
+
+    switch (this->side) {
+    	case Enums::LEFT:
+    	{
+    		position.x = resolution.x * 0.1f;
+    		Unit castle(game->texmgr.getRef("castle"), position, Enums::LEFT, castleAttr);
+
+    		position.x = resolution.x * 0.3f;
+    		position.y = resolution.y * 0.2f;
+			Unit towerTop(game->texmgr.getRef("castle"), position, Enums::LEFT, towerAttr);
+
+			position.y = resolution.y * 0.8f;
+			Unit towerBottom(game->texmgr.getRef("castle"), position, Enums::LEFT, towerAttr);
+
+			this->baseUnits.push_back(castle);
+			this->baseUnits.push_back(towerTop);
+			this->baseUnits.push_back(towerBottom);
+    		break;
+    	}
+    	case Enums::RIGHT:
+    	{
+    		position.x = resolution.x * 0.9f;
+    		Unit castle(game->texmgr.getRef("castle"), position, Enums::RIGHT, castleAttr);
+
+    		position.x = resolution.x * 0.7f;
+    		position.y = resolution.y * 0.2f;
+			Unit towerTop(game->texmgr.getRef("castle"), position, Enums::RIGHT, towerAttr);
+
+			position.y = resolution.y * 0.8f;
+			Unit towerBottom(game->texmgr.getRef("castle"), position, Enums::RIGHT, towerAttr);
+
+			this->baseUnits.push_back(castle);
+			this->baseUnits.push_back(towerTop);
+			this->baseUnits.push_back(towerBottom);
+    		break;
+    	}
+    }
 }
 
 bool Team::hasUnitsAlive() {
