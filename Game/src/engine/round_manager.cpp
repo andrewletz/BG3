@@ -23,10 +23,10 @@ void RoundManager::update(const float dt) {
 			break;
 
 		case FIGHT:
-            step();
-		    leftTeam.start();
-            rightTeam.start();
-			break;
+	            leftTeam.start();
+                    rightTeam.start();
+                    step();
+		    break;
 	}
 }
 
@@ -36,7 +36,12 @@ void RoundManager::step() {
         // left unit reference
         Unit& leftUnit = leftTeam.units[left];
 
-        // get collider for left unit comparison
+        // step left unit
+        if (leftUnit.isLiving()) {
+            if (leftUnit.step()) leftTeam.alive--;
+        }
+
+        // get left unit collider
         Collider leftCollider = leftUnit.getCollider();
 
         // LEFT TEAM INNER COLLISIONS
@@ -48,8 +53,15 @@ void RoundManager::step() {
         }
 
         for (int right = 0; right < rightTeam.units.size(); right++) {
-            // get collider for right unit comparison
+            // right unit reference
             Unit& rightUnit = rightTeam.units[right];
+
+            // step right unit
+            if (rightUnit.isLiving()) {
+                if (rightUnit.step()) rightTeam.alive--;
+            }
+
+            // get right unit collider
             Collider rightCollider = rightUnit.getCollider();
 
             // RIGHT TEAM INNER COLLISIONS

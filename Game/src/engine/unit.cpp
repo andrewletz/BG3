@@ -50,7 +50,7 @@ Unit::Unit(sf::Texture texture, sf::Vector2f pos, Enums::Teams team, Attributes 
     rColor.a = 100;
     sf::Color vColor(0, 0, 255);
     vColor.a = 50;
-    this->body.setFillColor(sf::Color::Red);
+    //this->body.setFillColor(sf::Color::Transparent);
     this->range.setFillColor(rColor);
     this->vision.setFillColor(vColor);
 }
@@ -86,7 +86,7 @@ bool Unit::targetInRange()
     return getCollider().checkRangeCollision(targetCollider);
 }
 
-void Unit::step()
+bool Unit::step()
 {
     Action topAct = actionStack.top();
     
@@ -100,6 +100,7 @@ void Unit::step()
             // make dying if not already dying
             if (topAct != DYING)
                 actionStack.push( DYING );
+                return true;
         }
         else // unit is alive
         {
@@ -139,7 +140,7 @@ void Unit::step()
                     }
                     else
                     {
-                        // idk what im doing here lmao
+                        // catch lack of target
                         target = nullptr;
                         actionStack.pop();
                     }
@@ -162,7 +163,7 @@ void Unit::step()
                     }
                     else
                     {
-                        // idk what im doing here lmao
+                        // catch lack of target
                         actionStack.pop();
                     }
                     break;
@@ -184,7 +185,9 @@ void Unit::step()
     sf::Vector2f curPos = body.getPosition();
     range.setPosition(curPos);
     vision.setPosition(curPos);
-    } 
+    }
+
+    return false;
 }
 
 void Unit::draw(sf::RenderWindow &window)
