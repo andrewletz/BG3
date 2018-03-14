@@ -66,7 +66,7 @@ bool Unit::shouldDie()
 
 bool Unit::isLiving()
 {
-    if (hp > 0) return true;
+    if (this->hp > 0) return true;
     return false;
 }
 
