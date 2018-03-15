@@ -56,8 +56,8 @@ public:
     bool step();
     void draw(sf::RenderWindow& window);
 
-private:
     int hp;
+private:
     HealthBar healthBar;
     sf::Vector2f originalPos;
     float moveSpeed;

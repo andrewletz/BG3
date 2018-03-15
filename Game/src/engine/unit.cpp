@@ -44,8 +44,8 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     rColor.a = 100;
     sf::Color vColor(0, 0, 255);
     vColor.a = 50;
-    this->range.setFillColor(rColor);
-    this->vision.setFillColor(vColor);
+    this->range.setFillColor(sf::Color::Transparent);
+    this->vision.setFillColor(sf::Color::Transparent);
 }
 
 bool Unit::isLiving()
@@ -82,7 +82,6 @@ bool Unit::step()
         {
             // make dying if not already dying, this only triggers once
             if (topAct != DYING) {
-                std::cout << "push death trigger" << std::endl;
                 this->actionStack.push( DYING );
                 return true;
             }
@@ -184,25 +183,20 @@ void Unit::draw(sf::RenderWindow &window)
 
 void Unit::reset()
 {
-    std::cout << "before size = " << actionStack.size() << std::endl;
-    while (!this->actionStack.empty())
-    {
+    while (!this->actionStack.empty()) {
         this->actionStack.pop();
     }
-    std::cout << "after size = " << actionStack.size() << std::endl;
     this->body.setPosition(originalPos);
     this->range.setPosition(originalPos);
     this->vision.setPosition(originalPos);
     this->target = nullptr;
     this->hp = this->attributes.max_hp;
-    std::cout << "this hp reset = " << this->hp << std::endl;
     this->actionStack.push(MARCH);
 }
 
 bool Unit::advanceTarget()
 {
-    if (target != nullptr)
-    {
+    if (target != nullptr) {
         this->actionStack.push( MOVE );
         return true;
     }

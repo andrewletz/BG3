@@ -81,8 +81,8 @@ void Team::reset() {
         unit.reset();
     */
 
-    for (auto unit : units)
-        unit.reset();
+    for (int i = 0; i < units.size(); i++)
+        units[i].reset();
 
     this->alive = units.size();
 }

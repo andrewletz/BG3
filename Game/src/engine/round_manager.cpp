@@ -34,10 +34,11 @@ void RoundManager::update(const float dt) {
 		case FIGHT:
                     this->incomeTime += dt;
 
-                    step();
 		    if (this->areUnitsAlive()) { // there is still fighting
                         //std::cout << "left team unit cnt: " << leftTeam.alive;
                         //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl;
+                        
+                        step();
                         if (this->incomeTime >= this->incomeInterval) {
 		    		this->leftTeam.giveShekels(1);
 		    		this->rightTeam.giveShekels(1);
@@ -52,10 +53,18 @@ void RoundManager::update(const float dt) {
 		    		this->winner = Enums::LEFT;
 		    	}
 		    } else { // only base units are left alive
+                        std::cout << "No units, resetting board" << std::endl;
 		    	this->phase = PLACE;
 		    	this->time = 0;
                         leftTeam.reset();
 		        rightTeam.reset();
+                        for (auto lUnit : leftTeam.units) {
+                            std::cout << "lUnit hp = " << lUnit.hp << std::endl;
+                        }
+                        
+                        for (auto rUnit : rightTeam.units) {
+                            std::cout << "lUnit hp = " << rUnit.hp << std::endl;
+                        }
 		    }
                     
 			break;
