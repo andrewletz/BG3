@@ -15,12 +15,18 @@ void RoundManager::update(const float dt) {
 		case PLACE:
 			this->time += dt;
 			if (this->time >= this->maxPlacingTime) {
-				this->phase = FIGHT;
+				if (this->currTeam == Enums::LEFT) { // need to switch to right team
+					this->currTeam = Enums::RIGHT;
+					std::cout << "Switching to right team\n";
+				} else {
+					std::cout << "Fighting begins\n";
+					this->phase = FIGHT;
+					leftTeam.reset();
+		            rightTeam.reset();
+		            leftTeam.start();
+		            rightTeam.start();
+				}
 				this->time = 0;
-				leftTeam.reset();
-	            rightTeam.reset();
-	            leftTeam.start();
-	            rightTeam.start();
 			}
 			break;
 
@@ -111,6 +117,16 @@ void RoundManager::draw(sf::RenderWindow& window) {
             leftTeam.baseUnits[i].draw(window);
         if (rightTeam.baseUnits[i].isLiving())
             rightTeam.baseUnits[i].draw(window);
+    }
+    for (Unit leftUnit : leftTeam.units) {
+    	if (leftUnit.isLiving()) {
+    		leftUnit.draw(window);
+    	}
+    }
+    for (Unit rightUnit : rightTeam.units) {
+    	if (rightUnit.isLiving()) {
+    		rightUnit.draw(window);
+    	}
     }
 }
 
