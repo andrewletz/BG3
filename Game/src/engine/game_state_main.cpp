@@ -5,6 +5,7 @@
 #include "game_state.hpp"
 #include "game_state_start.hpp"
 #include "game_state_main.hpp"
+#include "game_state_pause.hpp"
 
 GameStateMain::GameStateMain(Game* game) : roundManager(game)
 {
@@ -143,6 +144,10 @@ void GameStateMain::handleInput()
                 // bool shiftPressed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift));
                 if(event.key.code == sf::Keyboard::Escape) {
                     game->popState();
+                }
+                //pause the game
+                else if(event.key.code == sf::Keyboard::P) {
+                    game->pushState(new GameStatePause(this->game));
                 }
                 // else if(event.key.code == sf::Keyboard::Escape) {
                 //     this->game->window.close();
