@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <stack>
+#include <string>
 
 #include "collider.hpp"
 #include "animation_handler.hpp"

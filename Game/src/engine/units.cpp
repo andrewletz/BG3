@@ -11,22 +11,22 @@ Units::Units() {
 	tower.cost = 0; 
 	tower.attackRadius = 100.f; 
 	tower.visionRadius = 200.f; 
-	tower.attackDamage = 2; 
+	tower.attackDamage = 1; 
 	tower.moveSpeed = 0.0f; 
 	tower.max_hp = 250;
 
 	manAtArms.cost = 2; 
-	manAtArms.attackRadius = 4.f; 
-	manAtArms.visionRadius = 10.f; 
-	manAtArms.attackDamage = 2; 
-	manAtArms.moveSpeed = 0.1f; 
-	manAtArms.max_hp = 8;
+	manAtArms.attackRadius = 30.f; 
+	manAtArms.visionRadius = 60.f; 
+	manAtArms.attackDamage = 1; 
+	manAtArms.moveSpeed = 1.0f; 
+	manAtArms.max_hp = 20;
 
 	bowArcher.cost = 3; 
-	bowArcher.attackRadius = 20.f; 
-	bowArcher.visionRadius = 20.f; 
-	bowArcher.attackDamage = 2; 
-	bowArcher.moveSpeed = 0.08f; 
+	bowArcher.attackRadius = 60.f; 
+	bowArcher.visionRadius = 80.f; 
+	bowArcher.attackDamage = 1; 
+	bowArcher.moveSpeed = 0.1f; 
 	bowArcher.max_hp = 8;
 }
 
