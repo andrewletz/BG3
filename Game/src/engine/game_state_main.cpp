@@ -51,6 +51,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     position.y = resolution.y - (resolution.y * 0.99);
     std::unique_ptr<uiText> temp(new uiText(this->game, position, 1));
     this->uiNumbers.push_back(std::move(temp));
+    
 
     //make the cost text  [1] and [2]
     position.x = resolution.x * 0.44f;
@@ -75,6 +76,12 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     position.x = resolution.x * 0.975f;
     std::unique_ptr<uiText> temp5(new uiText(this->game, position, 5));
     this->uiNumbers.push_back(std::move(temp5));
+
+    //player turn text [5]
+    position.x = (resolution.x / 2.0);
+    position.y = resolution.y - (resolution.y * 0.95);
+    std::unique_ptr<uiText> temp6(new uiText(this->game, position, 1));
+    this->uiNumbers.push_back(std::move(temp6));
 }
 
 void GameStateMain::draw(const float dt)
@@ -115,12 +122,21 @@ void GameStateMain::update(const float dt)
     float newTime = this->roundManager.time;
     this->uiNumbers[0]->updateText((int) (newTime + 1));
     this->uiNumbers[0]->updateOrigin();
+    //update the money of each player
     int newShek = this->roundManager.leftTeam.shekels;
     this->uiNumbers[3]->updateText(newShek);
     this->uiNumbers[0]->updateOrigin();
     newShek = this->roundManager.rightTeam.shekels;
     this->uiNumbers[4]->updateText(newShek);
     this->uiNumbers[0]->updateOrigin();
+    //update the current players turn
+    if(this->roundManager.currTeam == Enums::LEFT){
+        this->uiNumbers[5]->updateText(1);
+    }
+    else{
+        this->uiNumbers[5]->updateText(2);
+    }
+
 
     return;
 }
@@ -205,8 +221,12 @@ void GameStateMain::handleInput()
                             this->currUnit = Enums::BOW_ARCHER;
                         }
                     }
-                    break;
+
                 }
+                if (event.mouseButton.button == sf::Mouse::Right){
+                    return;
+                }
+                break;
             }
             case sf::Event::Resized:
             {
