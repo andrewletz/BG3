@@ -11,12 +11,9 @@ class GameState;
 
 class Game
 {
-
-    private:
-
-    void loadTextures();
-
     public:
+    Game();
+    ~Game();
 
     std::stack<GameState*> states;
 
@@ -27,20 +24,28 @@ class Game
     Units units;
 
     sf::Image icon;
+    bool windowsCursorVisible;
+    sf::Sprite cursor;
+
     sf::RenderWindow window;
     TextureManager texmgr;
+
+    void resetCursor();
+    void setCursorSprite(std::string textureName);
 
     void pushState(GameState* state);
     void popState();
     void changeState(GameState* state);
+    GameState* peekState();
+
     void cycleResolution(bool forward);
     sf::Vector2i getResolution();
-    GameState* peekState();
 
     void gameLoop();
 
-    Game();
-    ~Game();
+    private:
+
+    void loadTextures();
 };
 
 #endif /* GAME_HPP */

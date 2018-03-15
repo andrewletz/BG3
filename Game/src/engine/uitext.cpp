@@ -11,7 +11,7 @@ uiText::uiText(Game* game, sf::Vector2f pos, int num){
 	this->_font.loadFromFile("assets/font/ALGER.TTF");
 	this->_text.setFont(_font);
 	this->_text.setPosition(pos);
-	this->_text.setColor(sf::Color::White);
+	// this->_text.setColor(sf::Color::White);
 	sf::Rect<float> bounds = this->_text.getLocalBounds();
 	this->_text.setOrigin(bounds.width / 2, bounds.height / 2);
 }
@@ -23,7 +23,7 @@ uiText::uiText(Game* game, sf::Vector2f pos, std::string string){
 	this->_font.loadFromFile("assets/font/ALGER.TTF");
 	this->_text.setFont(_font);
 	this->_text.setPosition(pos);
-	this->_text.setColor(sf::Color::White);
+	// this->_text.setColor(sf::Color::White);
 	sf::Rect<float> bounds = this->_text.getLocalBounds();
 	this->_text.setOrigin(bounds.width / 2, bounds.height / 2);
 }
