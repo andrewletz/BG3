@@ -2,6 +2,7 @@
 #include <vector>
 #include "unit.hpp"
 #include "collider.hpp"
+#include "healthbar.hpp"
 
 Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes)
 {
@@ -19,8 +20,7 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     /* TODO remove this temporary sizing
     sf::Vector2f sizeVec;
     sizeVec.x = 20.0f;
-    sizeVec.y = 20.0f;
-    
+    sizeVec.y = 20.0f; 
     */
 
     // setup body rectangle
@@ -55,6 +55,8 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     //this->vision.setFillColor(vColor);
     this->range.setFillColor(sf::Color::Transparent);
     this->vision.setFillColor(sf::Color::Transparent);
+
+    HealthBar fuckinGHEALTH(attributes.max_hp);
 }
 
 // TODO deprecate
@@ -198,6 +200,7 @@ void Unit::draw(sf::RenderWindow &window)
     window.draw(body);
     window.draw(range);
     window.draw(vision);
+    //healthBar.draw(hp, body.getPosition(), window);
 }
 
 void Unit::start()
