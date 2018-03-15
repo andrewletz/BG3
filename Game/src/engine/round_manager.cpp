@@ -6,6 +6,7 @@ RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(
 	this->roundNumber = 1;
 	this->maxPlacingTime = 10.0;
 	this->incomeInterval = 2.5;
+    this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
 	this->time = 0.0;
 	this->phase = PLACE;
@@ -32,11 +33,13 @@ void RoundManager::update(const float dt) {
 			break;
 
 		case FIGHT:
+            this->incomeTime += dt;
             step();
 		    if (this->areUnitsAlive()) { // there is still fighting
-		    	if (this->time >= this->incomeInterval) {
+		    	if (this->incomeTime >= this->incomeInterval) {
 		    		this->leftTeam.giveShekels(1);
 		    		this->rightTeam.giveShekels(1);
+		    		this->incomeTime = 0;
 		    	}
 		    } else if (this->gameOver()) { // no base units left on some side
 		    	this->phase = OVER;

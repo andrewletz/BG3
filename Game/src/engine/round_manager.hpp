@@ -26,6 +26,7 @@ public:
 
 	float maxPlacingTime; //the length of time the player gets to place units for
 	float incomeInterval;
+	float incomeTime;
 	float time;
 
 	Enums::Teams currTeam;

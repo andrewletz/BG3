@@ -15,19 +15,19 @@ Units::Units() {
 	tower.moveSpeed = 0.0f; 
 	tower.max_hp = 250;
 
-	manAtArms.cost = 0; 
-	manAtArms.attackRadius = 100.f; 
-	manAtArms.visionRadius = 200.f; 
+	manAtArms.cost = 2; 
+	manAtArms.attackRadius = 4.f; 
+	manAtArms.visionRadius = 10.f; 
 	manAtArms.attackDamage = 2; 
-	manAtArms.moveSpeed = 0.0f; 
-	manAtArms.max_hp = 250;
+	manAtArms.moveSpeed = 0.1f; 
+	manAtArms.max_hp = 8;
 
-	bowArcher.cost = 0; 
-	bowArcher.attackRadius = 100.f; 
-	bowArcher.visionRadius = 200.f; 
+	bowArcher.cost = 3; 
+	bowArcher.attackRadius = 20.f; 
+	bowArcher.visionRadius = 20.f; 
 	bowArcher.attackDamage = 2; 
-	bowArcher.moveSpeed = 0.0f; 
-	bowArcher.max_hp = 250;
+	bowArcher.moveSpeed = 0.08f; 
+	bowArcher.max_hp = 8;
 }
 
 Unit Units::getUnitWithPos(Enums::Units unit_type, TextureManager* texmgr, sf::Vector2f pos, Enums::Teams team) {
