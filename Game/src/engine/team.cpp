@@ -1,26 +1,9 @@
 #include "team.hpp"
-#include <vector>
 
 Team::Team(Game* game, Enums::Teams team) : side(team) {
 	this->game = game;
 	this->shekels = 5;
 	this->alive = this->units.size();
-
-	Attributes castleAttr;	
-    castleAttr.cost = 0;	
-    castleAttr.attackRadius = 150.f;	
-    castleAttr.visionRadius = 200.f;	
-    castleAttr.attackDamage = 6;	
-    castleAttr.moveSpeed = 0.0f;	
-    castleAttr.max_hp = 500;
-
-	Attributes towerAttr;	
-    towerAttr.cost = 0;	
-    towerAttr.attackRadius = 100.f;	
-    towerAttr.visionRadius = 200.f;	
-    towerAttr.attackDamage = 2;	
-    towerAttr.moveSpeed = 0.0f;	
-    towerAttr.max_hp = 250;
 
     // Variables used to set up buttons
     sf::Vector2i resolution = this->game->getResolution();
@@ -30,14 +13,14 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
     	case Enums::LEFT:
     	{
     		position.x = resolution.x * 0.1f;
-    		Unit castle(&game->texmgr.getRef("castle"), position, Enums::LEFT, castleAttr);
+            Unit castle = this->game->units.getUnitWithPos(Enums::CASTLE, &game->texmgr, position, Enums::LEFT);
 
     		position.x = resolution.x * 0.18f;
     		position.y = resolution.y * 0.2f;
-			Unit towerTop(&game->texmgr.getRef("tower"), position, Enums::LEFT, towerAttr);
+			Unit towerTop = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
 
 			position.y = resolution.y * 0.65f;
-			Unit towerBottom(&game->texmgr.getRef("tower"), position, Enums::LEFT, towerAttr);
+			Unit towerBottom = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
 
 			this->baseUnits.push_back(castle);
 			this->baseUnits.push_back(towerTop);
@@ -47,14 +30,14 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
     	case Enums::RIGHT:
     	{
     		position.x = resolution.x * 0.9f;
-    		Unit castle(&game->texmgr.getRef("castle"), position, Enums::RIGHT, castleAttr);
+    		Unit castle = this->game->units.getUnitWithPos(Enums::CASTLE, &game->texmgr, position, Enums::LEFT);
 
     		position.x = resolution.x * 0.82f;
     		position.y = resolution.y * 0.2f;
-			Unit towerTop(&game->texmgr.getRef("tower"), position, Enums::RIGHT, towerAttr);
+			Unit towerTop = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
 
 			position.y = resolution.y * 0.65f;
-			Unit towerBottom(&game->texmgr.getRef("tower"), position, Enums::RIGHT, towerAttr);
+			Unit towerBottom = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
 
 			this->baseUnits.push_back(castle);
 			this->baseUnits.push_back(towerTop);
@@ -97,4 +80,8 @@ void Team::reset() {
     for (auto unit : units) {
         unit.reset();
     }
+}
+
+void Team::giveShekels(int numShekels) {
+    this->shekels += numShekels;
 }

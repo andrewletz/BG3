@@ -8,6 +8,7 @@
 #include "unit_button.hpp"
 #include "round_manager.hpp"
 #include "uitext.hpp"
+#include "global_enum.hpp"
 
 class GameStateMain : public GameState
 {
@@ -21,8 +22,6 @@ class GameStateMain : public GameState
     virtual void update(const float dt);
     virtual void handleInput();
 
-    enum Units {UNIT_ONE, UNIT_TWO, UNIT_THREE, UNIT_FOUR, UNIT_FIVE, UNIT_SIX, UNIT_SEVEN, UNIT_EIGHT};
-
     RoundManager roundManager;
 
     std::vector<UnitButton*> buttons;
@@ -30,7 +29,7 @@ class GameStateMain : public GameState
     std::vector<std::unique_ptr<uiText> > uiNumbers;
     std::vector<Button*> board;
 
-    GameStateMain::Units currUnit;
+    Enums::Units currUnit;
 
     GameStateMain(Game* game);
 };
