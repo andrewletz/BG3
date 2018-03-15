@@ -20,6 +20,7 @@ typedef struct{
     float attackRadius;
     float visionRadius;
     float moveSpeed;
+    float bodyScale;
 } Attributes;
 
 class Unit

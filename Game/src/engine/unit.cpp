@@ -22,8 +22,8 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     
     sf::Vector2f sizeVec;
     const sf::IntRect texRect = body.getTextureRect();
-    sizeVec.x = texRect.width;
-    sizeVec.y = texRect.height;
+    sizeVec.x = texRect.width * attributes.bodyScale;
+    sizeVec.y = texRect.height * attributes.bodyScale;
    
     this->body.setSize(sizeVec);   
     this->body.setOrigin(sizeVec / 2.0f);
