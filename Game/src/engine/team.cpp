@@ -56,7 +56,7 @@ bool Team::hasLostGame() {
 }
 
 void Team::addUnit(Unit unit) {
-	if (unit.attributes.cost < shekels) {
+	if (unit.attributes.cost <= shekels) {
 		this->units.push_back(unit);
 		this->shekels -= unit.attributes.cost;
 	}
