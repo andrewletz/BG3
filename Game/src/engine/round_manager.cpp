@@ -23,10 +23,10 @@ void RoundManager::update(const float dt) {
 				} else {
 					std::cout << "Fighting begins\n";
 					this->phase = FIGHT;
-                                        std::cout << "left team start unit cnt: " << leftTeam.alive;
-
-                                        std::cout << ", right team start unit cnt: " << rightTeam.alive << std::endl;
-                                }
+                    this->game->resetCursor();
+                    std::cout << "left team start unit cnt: " << leftTeam.alive;
+                    std::cout << ", right team start unit cnt: " << rightTeam.alive << std::endl;
+                 }
 				this->time = 0;
 			}
 			break;

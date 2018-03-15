@@ -67,7 +67,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
 
     //make the player money text
     //right [3]
-    position.x = resolution.x - (resolution.x * 0.99);
+    position.x = resolution.x - (resolution.x * 0.975f);
     position.y = resolution.y * 0.82f;
     std::unique_ptr<uiText> temp4(new uiText(this->game, position, 5));
     this->uiNumbers.push_back(std::move(temp4));
@@ -192,7 +192,9 @@ void GameStateMain::handleInput()
                     clickPos.x = event.mouseButton.x;
                     clickPos.y = event.mouseButton.y;
 
-                    if (roundManager.phase == RoundManager::Phase::PLACE) {
+                    bool placing = roundManager.phase == RoundManager::Phase::PLACE;
+
+                    if (placing) {
                         std::string leftBoardClicked = board[0]->isClicked(clickPos);
                         if (leftBoardClicked == "left_board") {
                                 std::cout << "Trying to place unit on left side" << std::endl;
@@ -221,11 +223,17 @@ void GameStateMain::handleInput()
                         if(validClick == "man_at_arms")
                         {
                             std::cout << "Man at arms" << std::endl;
+                            if (placing) {
+                                this->game->setCursorSprite("man_at_arms");
+                            }
                             this->currUnit = Enums::MAN_AT_ARMS;
                         }
                         else if(validClick == "bow_archer")
                         {
                             std::cout << "Bow archer" << std::endl;
+                            if (placing) {
+                                this->game->setCursorSprite("bow_archer");
+                            }
                             this->currUnit = Enums::BOW_ARCHER;
                         }
                     }

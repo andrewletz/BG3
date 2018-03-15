@@ -7,7 +7,7 @@
 #include "game.hpp"
 #include "game_state.hpp"
 
-Game::Game()
+Game::Game() : windowsCursorVisible(true)
 {
     this->loadTextures();
     this->units = Units();
@@ -131,11 +131,22 @@ void Game::gameLoop()
         sf::Time elapsed = clock.restart();
         float dt = elapsed.asSeconds();
 
+        if (this->windowsCursorVisible) {
+            window.setMouseCursorVisible(true);
+        } else {
+            window.setMouseCursorVisible(false);
+            this->cursor.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(this->window)));
+        }
+
         if(peekState() == nullptr) continue;
         peekState()->handleInput();
         peekState()->update(dt);
         //this->window.clear(sf::Color::Black);
         peekState()->draw(dt);
+        if (!this->windowsCursorVisible) {
+            this->window.draw(this->cursor);
+        }
+        
         this->window.display();
     }
 }
@@ -164,4 +175,13 @@ void Game::cycleResolution(bool forward) {
 sf::Vector2i Game::getResolution()
 {
     return this->validResolutions[this->currentResolution];
+}
+
+void Game::resetCursor() {
+    this->windowsCursorVisible = true;
+}
+
+void Game::setCursorSprite(std::string textureName) {
+    this->windowsCursorVisible = false;
+    this->cursor.setTexture(this->texmgr.getRef(textureName));
 }
