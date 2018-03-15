@@ -4,7 +4,7 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-	this->maxPlacingTime = 10.0;
+	this->maxPlacingTime = 3.0;
 	this->incomeInterval = 2.5;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
@@ -23,20 +23,22 @@ void RoundManager::update(const float dt) {
 				} else {
 					std::cout << "Fighting begins\n";
 					this->phase = FIGHT;
-					leftTeam.reset();
-		            rightTeam.reset();
-		            leftTeam.start();
-		            rightTeam.start();
-				}
+                                        std::cout << "left team start unit cnt: " << leftTeam.alive;
+
+                                        std::cout << ", right team start unit cnt: " << rightTeam.alive << std::endl;
+                                }
 				this->time = 0;
 			}
 			break;
 
 		case FIGHT:
-            this->incomeTime += dt;
-            step();
+                    this->incomeTime += dt;
+                    step();
+
 		    if (this->areUnitsAlive()) { // there is still fighting
-		    	if (this->incomeTime >= this->incomeInterval) {
+                        //std::cout << "left team unit cnt: " << leftTeam.alive;
+                        //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl;
+                        if (this->incomeTime >= this->incomeInterval) {
 		    		this->leftTeam.giveShekels(1);
 		    		this->rightTeam.giveShekels(1);
 		    		this->incomeTime = 0;
@@ -52,6 +54,9 @@ void RoundManager::update(const float dt) {
 		    } else { // only base units are left alive
 		    	this->phase = PLACE;
 		    	this->time = 0;
+                        leftTeam.reset();
+		        rightTeam.reset();
+                        step();
 		    }
 			break;
 
@@ -66,12 +71,10 @@ void RoundManager::step() {
         // left unit reference
         Unit& leftUnit = leftTeam.units[left];
 
-        // step left unit
-        if (leftUnit.isLiving())
-            if (leftUnit.step()) leftTeam.alive--;
-
         // get left unit collider
         Collider leftCollider = leftUnit.getCollider();
+
+        if (leftUnit.step()) leftTeam.alive--;
 
         // LEFT TEAM INNER COLLISIONS
         for (int left2 = 0; left2 < leftTeam.units.size(); left2++) {
@@ -81,16 +84,33 @@ void RoundManager::step() {
             }
         }
 
+        for (int i = 0; i < 3; i++) {
+            Unit& rightBaseUnit = rightTeam.baseUnits[i];
+            Collider rightBaseCollider = rightBaseUnit.getCollider();
+
+            if (leftCollider.checkVisionCollision(rightBaseCollider)) {
+                if (!leftUnit.hasTarget() && rightBaseUnit.isLiving()) {
+                    leftUnit.setTarget(&rightBaseUnit);
+                    leftUnit.advanceTarget();
+                }
+            }
+
+            if (rightBaseCollider.checkVisionCollision(leftCollider)) {
+                if (!rightBaseUnit.hasTarget() && leftUnit.isLiving()) {
+                    rightBaseUnit.setTarget(&leftUnit);
+                    rightBaseUnit.advanceTarget();
+                }
+            }
+        }
+
         for (int right = 0; right < rightTeam.units.size(); right++) {
             // right unit reference
             Unit& rightUnit = rightTeam.units[right];
 
-            // step right unit
-            if (rightUnit.isLiving())
-                if (rightUnit.step()) rightTeam.alive--;
-
             // get right unit collider
             Collider rightCollider = rightUnit.getCollider();
+
+            if (rightUnit.step()) rightTeam.alive--;
 
             // RIGHT TEAM INNER COLLISIONS
             for (int right2 = 0; right2 < rightTeam.units.size(); right2++) {
@@ -117,24 +137,43 @@ void RoundManager::step() {
             }
 
             for (int i = 0; i < 3; i++) {
-                Collider rightBaseCollider = rightTeam.baseUnits[i].getCollider();
-                Collider leftBaseCollider = leftTeam.baseUnits[i].getCollider();
-
-                if (leftCollider.checkVisionCollision(rightBaseCollider)) {
-                    if (!leftUnit.hasTarget() && rightTeam.baseUnits[i].isLiving()) {
-                        leftUnit.setTarget(&rightTeam.baseUnits[i]);
-                        leftUnit.advanceTarget();
-                    }
-                }
+                Unit& leftBaseUnit = leftTeam.baseUnits[i];
+                Collider leftBaseCollider = leftBaseUnit.getCollider();
 
                 if (rightCollider.checkVisionCollision(leftBaseCollider)) {
-                    if (!rightUnit.hasTarget() && leftTeam.baseUnits[i].isLiving()) {
-                        rightUnit.setTarget(&leftTeam.baseUnits[i]);
+                    if (!rightUnit.hasTarget() && leftBaseUnit.isLiving()) {
+                        rightUnit.setTarget(&leftBaseUnit);
                         rightUnit.advanceTarget();
                     }
                 }
+
+                if (leftBaseCollider.checkVisionCollision(rightCollider)) {
+                    if (!leftBaseUnit.hasTarget() && rightUnit.isLiving()) {
+                        leftBaseUnit.setTarget(&rightUnit);
+                        leftBaseUnit.advanceTarget();
+                    }
+                }
+
+
+                rightTeam.baseUnits[i].step();
+                leftTeam.baseUnits[i].step();
             }
         }
+
+        /*
+        for (auto lUnit : leftTeam.units)
+            // step left unit
+            if (lUnit.step()) leftTeam.alive--;
+        for (auto rUnit : rightTeam.units)
+            // step right unit
+            if (rUnit.step()) rightTeam.alive--;
+
+        for (int i = 0; i < 3; i++) {
+            rightTeam.baseUnits[i].step();
+            leftTeam.baseUnits[i].step();
+        }
+        */
+
     }
 }
 
@@ -158,7 +197,7 @@ void RoundManager::draw(sf::RenderWindow& window) {
 }
 
 bool RoundManager::areUnitsAlive() {
-	return leftTeam.hasUnitsAlive() && rightTeam.hasUnitsAlive();
+	return leftTeam.hasUnitsAlive() || rightTeam.hasUnitsAlive();
 }
 
 bool RoundManager::hasLostGame(Enums::Teams team) {

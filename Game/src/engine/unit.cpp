@@ -10,7 +10,7 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     this->originalPos = pos;
 
     // setup priorityStack
-    this->actionStack.push( PAUSE );
+    this->actionStack.push(MARCH);
     
     // setup member vars
     this->attributes = attributes;
@@ -27,21 +27,25 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
    
     this->body.setSize(sizeVec);   
     this->body.setOrigin(sizeVec / 2.0f);
-    this->body.setPosition(pos);
+    this->body.setPosition(originalPos);
 
     // setup vision circle
     this->vision.setRadius(attributes.visionRadius);
     this->vision.setOrigin(attributes.visionRadius, attributes.visionRadius);
-    this->vision.setPosition(pos);
+    this->vision.setPosition(originalPos);
 
     // setup range circle
     this->range.setRadius(attributes.attackRadius);
     this->range.setOrigin(attributes.attackRadius, attributes.attackRadius);
-    this->range.setPosition(pos);
+    this->range.setPosition(originalPos);
 
     // color
-    this->range.setFillColor(sf::Color::Transparent);
-    this->vision.setFillColor(sf::Color::Transparent);
+    sf::Color rColor(0, 255, 0);
+    rColor.a = 100;
+    sf::Color vColor(0, 0, 255);
+    vColor.a = 50;
+    this->range.setFillColor(rColor);
+    this->vision.setFillColor(vColor);
 }
 
 bool Unit::isLiving()
@@ -66,24 +70,25 @@ bool Unit::targetInRange()
     return getCollider().checkRangeCollision(targetCollider);
 }
 
+std::string ActionAs[5] = { "DYING", "MARCH", "MOVE", "ATTACK", "PAUSE" };
+
 bool Unit::step()
 {
     Action topAct = actionStack.top();
-    
+
     // check if unit is not paused
     if (topAct != PAUSE)
     {
-
         // check if unit should be dying
         if (!isLiving())
         {
-            // make dying if not already dying
-            if (topAct != DYING)
+            // make dying if not already dying, this only triggers once
+            if (topAct != DYING) {
                 actionStack.push( DYING );
                 return true;
+            }
         }
-        else // unit is alive
-        {
+        
         // priorityStack logic
         if (!actionStack.empty())
         {
@@ -159,13 +164,11 @@ bool Unit::step()
         {
             std::cout << "THIS SHOULD NEVER TRIGGER" << std::endl;
         }
-    }
-
+    } 
     // update pos
     sf::Vector2f curPos = body.getPosition();
     range.setPosition(curPos);
     vision.setPosition(curPos);
-    }
 
     return false;
 }
@@ -179,32 +182,19 @@ void Unit::draw(sf::RenderWindow &window)
     healthBar.draw(hp, body.getPosition(), window);
 }
 
-void Unit::start()
-{
-    if (actionStack.top() == PAUSE)
-    {
-        if (actionStack.top() != MARCH)
-        {
-            actionStack.push( MARCH );
-        }
-    }
-}
-
-void Unit::pause()
-{
-    actionStack.push( PAUSE );
-}
-
 void Unit::reset()
 {
-    while (actionStack.empty())
+    while (!actionStack.empty())
     {
         actionStack.pop();
     } 
-    pause();
     body.setPosition(originalPos);
     range.setPosition(originalPos);
     vision.setPosition(originalPos);
+    target = nullptr;
+    hp = attributes.max_hp;
+    std::cout << "new hp: " << hp << std::endl;
+    actionStack.push(MARCH);
 }
 
 bool Unit::advanceTarget()

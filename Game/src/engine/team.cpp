@@ -1,4 +1,5 @@
 #include "team.hpp"
+#include <iostream>
 
 Team::Team(Game* game, Enums::Teams team) : side(team) {
 	this->game = game;
@@ -59,9 +60,11 @@ void Team::addUnit(Unit unit) {
 	if (unit.attributes.cost <= shekels) {
 		this->units.push_back(unit);
 		this->shekels -= unit.attributes.cost;
+                this->alive++;
 	}
 }
 
+/*
 void Team::start() {
     for (auto unit : baseUnits) {
         unit.start();
@@ -70,13 +73,15 @@ void Team::start() {
         unit.start();
     }
 }
+*/
 
 void Team::reset() {
     this->alive = units.size();
-        
+    /*
     for (auto unit : baseUnits) {
         unit.reset();
     }
+    */
     for (auto unit : units) {
         unit.reset();
     }
