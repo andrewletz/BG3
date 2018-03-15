@@ -118,10 +118,12 @@ void GameStateMain::draw(const float dt)
 void GameStateMain::update(const float dt)
 {
     this->roundManager.update(dt);
+
     //update the clock
     float newTime = this->roundManager.time;
     this->uiNumbers[0]->updateText((int) (newTime + 1));
     this->uiNumbers[0]->updateOrigin();
+
     //update the money of each player
     int newShek = this->roundManager.leftTeam.shekels;
     this->uiNumbers[3]->updateText(newShek);
@@ -129,14 +131,18 @@ void GameStateMain::update(const float dt)
     newShek = this->roundManager.rightTeam.shekels;
     this->uiNumbers[4]->updateText(newShek);
     this->uiNumbers[0]->updateOrigin();
-    //update the current players turn
-    if(this->roundManager.currTeam == Enums::LEFT){
-        this->uiNumbers[5]->updateText(1);
-    }
-    else{
-        this->uiNumbers[5]->updateText(2);
-    }
 
+    //update the current players turn
+    if (roundManager.phase == RoundManager::Phase::PLACE) {
+        if(this->roundManager.currTeam == Enums::LEFT){
+            this->uiNumbers[5]->updateText("LEFT");
+        }
+        else{
+            this->uiNumbers[5]->updateText("RIGHT");
+        }
+    } else {
+        this->uiNumbers[5]->updateText("");
+    }
 
     return;
 }
@@ -186,24 +192,26 @@ void GameStateMain::handleInput()
                     clickPos.x = event.mouseButton.x;
                     clickPos.y = event.mouseButton.y;
 
-                    std::string leftBoardClicked = board[0]->isClicked(clickPos);
-                    if (leftBoardClicked == "left_board") {
-                            std::cout << "Trying to place unit on left side" << std::endl;
-                            if (roundManager.currTeam == Enums::LEFT) {
-                                roundManager.leftTeam.addUnit(
-                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
-                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::LEFT));
-                            }
-                    }
+                    if (roundManager.phase == RoundManager::Phase::PLACE) {
+                        std::string leftBoardClicked = board[0]->isClicked(clickPos);
+                        if (leftBoardClicked == "left_board") {
+                                std::cout << "Trying to place unit on left side" << std::endl;
+                                if (roundManager.currTeam == Enums::LEFT) {
+                                    roundManager.leftTeam.addUnit(
+                                        this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
+                                            sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::LEFT));
+                                }
+                        }
 
-                    std::string rightBoardClicked = board[1]->isClicked(clickPos);
-                    if (rightBoardClicked == "right_board") {
-                            std::cout << "Trying to place unit on right side" << std::endl;
-                            if (roundManager.currTeam == Enums::RIGHT) {
-                                roundManager.rightTeam.addUnit(
-                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
-                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::RIGHT));
-                            }
+                        std::string rightBoardClicked = board[1]->isClicked(clickPos);
+                        if (rightBoardClicked == "right_board") {
+                                std::cout << "Trying to place unit on right side" << std::endl;
+                                if (roundManager.currTeam == Enums::RIGHT) {
+                                    roundManager.rightTeam.addUnit(
+                                        this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
+                                            sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::RIGHT));
+                                }
+                        }
                     }
 
                     int butlen = buttons.size();
@@ -212,7 +220,7 @@ void GameStateMain::handleInput()
                         std::string validClick = buttons[i]->isClicked(clickPos);
                         if(validClick == "man_at_arms")
                         {
-                            std::cout << "Mat at arms" << std::endl;
+                            std::cout << "Man at arms" << std::endl;
                             this->currUnit = Enums::MAN_AT_ARMS;
                         }
                         else if(validClick == "bow_archer")
