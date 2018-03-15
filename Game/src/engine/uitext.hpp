@@ -11,6 +11,7 @@ public:
 
 	void updateText(int newText);
 	void updatePos(float scale);
+	void updateOrigin();
 	void draw(sf::RenderWindow &window);
 
 	sf::Text _text;

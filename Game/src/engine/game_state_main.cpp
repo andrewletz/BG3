@@ -45,20 +45,33 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     position.x = resolution.x / 2.0;
     this->uiElements.push_back(new Container(this->game, position, "outline"));
 
-    //make the clock to show how much time is left
-    position.x = (resolution.x/ 2.0);
-    position.y = 0;
+    //make the clock to show how much time is left  [0]
+    position.x = (resolution.x / 2.0);
+    position.y = resolution.y - (resolution.y * 0.99);
     std::unique_ptr<uiText> temp(new uiText(this->game, position, 1));
     this->uiNumbers.push_back(std::move(temp));
 
-    //make the cost buttons
+    //make the cost text  [1] and [2]
     position.x = resolution.x * 0.44f;
-    position.y = resolution.y - (resolution.y * 0.05f);
+    position.y = resolution.y - (resolution.y * 0.03f);
     std::unique_ptr<uiText> temp2(new uiText(this->game, position, 3));
     this->uiNumbers.push_back(std::move(temp2));
+
     position.x = resolution.x * 0.55f;
     std::unique_ptr<uiText> temp3(new uiText(this->game, position, 6));
     this->uiNumbers.push_back(std::move(temp3));
+
+    //make the player money text
+    //right [3]
+    position.x = resolution.x - (resolution.x * 0.99);
+    position.y = resolution.y * 0.82f;
+    std::unique_ptr<uiText> temp4(new uiText(this->game, position, 5));
+    this->uiNumbers.push_back(std::move(temp4));
+
+    //left [4]
+    position.x = resolution.x * 0.975f;
+    std::unique_ptr<uiText> temp5(new uiText(this->game, position, 5));
+    this->uiNumbers.push_back(std::move(temp5));
 
     this->currUnit = UNIT_ONE;
 }
@@ -100,6 +113,14 @@ void GameStateMain::update(const float dt)
     //update the clock
     float newTime = this->roundManager.time;
     this->uiNumbers[0]->updateText((int) (newTime + 1));
+    this->uiNumbers[0]->updateOrigin();
+    int newShek = this->roundManager.leftTeam.shekels;
+    this->uiNumbers[4]->updateText(newShek);
+    this->uiNumbers[0]->updateOrigin();
+    newShek = this->roundManager.rightTeam.shekels;
+    this->uiNumbers[3]->updateText(newShek);
+    this->uiNumbers[0]->updateOrigin();
+
     return;
 }
 

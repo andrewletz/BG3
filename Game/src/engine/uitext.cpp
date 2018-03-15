@@ -12,6 +12,8 @@ uiText::uiText(Game* game, sf::Vector2f pos, int num){
 	this->_text.setFont(_font);
 	this->_text.setPosition(pos);
 	this->_text.setColor(sf::Color::White);
+	sf::Rect<float> bounds = this->_text.getLocalBounds();
+	this->_text.setOrigin(bounds.width / 2, bounds.height / 2);
 }
 
 void uiText::draw(sf::RenderWindow &window){
@@ -23,6 +25,11 @@ void uiText::updatePos(float scale){
 	tbp.x *= scale;
 	tbp.y *= scale;
 	this->_text.setPosition(tbp);
+}
+
+void uiText::updateOrigin(){
+	sf::Rect<float> bounds = this->_text.getLocalBounds();
+	this->_text.setOrigin(bounds.width / 2, bounds.height / 2);
 }
 
 void uiText::updateText(int newText){
