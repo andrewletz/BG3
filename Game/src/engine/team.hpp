@@ -5,6 +5,7 @@
 #include <vector>
 #include "global_enum.hpp"
 #include "unit.hpp"
+#include "units.hpp"
 #include "game.hpp"
 
 class Team {
@@ -25,6 +26,8 @@ public:
 	void addUnit(Unit unit);
 	void start();
     void reset();
+
+    void giveShekels(int numShekels);
 
 	bool hasUnitsAlive();
 	bool hasLostGame();

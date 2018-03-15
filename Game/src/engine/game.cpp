@@ -10,6 +10,7 @@
 Game::Game()
 {
     this->loadTextures();
+    this->units = Units();
 
     std::vector<sf::Vector2i> sixteenNine;
     // Small list of valid 16:9 resolutions
@@ -75,14 +76,8 @@ void Game::loadTextures()
     texmgr.loadTexture("outline", "assets/images/outline.png");
 
     // Units
-    texmgr.loadTexture("unit_one", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_two", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_three", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_four", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_five", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_six", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_seven", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("unit_eight", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("man_at_arms", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("bow_archer", "assets/images/man_at_arms.png");
 
     // Base units
     texmgr.loadTexture("castle", "assets/images/castle.png");

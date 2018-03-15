@@ -4,7 +4,9 @@
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include "texture_manager.hpp"
+#include "units.hpp"
 
+class Units;
 class GameState;
 
 class Game
@@ -21,6 +23,8 @@ class Game
     std::vector<sf::Vector2i> validResolutions;
     int bitsPerPixel;
     int currentResolution;
+
+    Units units;
 
     sf::Image icon;
     sf::RenderWindow window;

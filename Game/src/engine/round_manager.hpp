@@ -25,6 +25,7 @@ public:
 	int roundNumber;
 
 	float maxPlacingTime; //the length of time the player gets to place units for
+	float incomeInterval;
 	float time;
 
 	Enums::Teams currTeam;

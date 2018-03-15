@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include<memory>
+#include <memory>
 
 #include "game_state.hpp"
 #include "game_state_start.hpp"
@@ -24,7 +24,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     sf::Vector2i resolution = this->game->getResolution();
     sf::Vector2f position(resolution.x * 0.44f, resolution.y - (resolution.y * 0.08f));
 
-    std::vector<std::string> buttonStrings = {"unit_one", "unit_two", /*"unit_three", "unit_four", "unit_five", "unit_six", "unit_seven", "unit_eight"*/};
+    std::vector<std::string> buttonStrings = {"man_at_arms", "bow_archer", /*"unit_three", "unit_four", "unit_five", "unit_six", "unit_seven", "unit_eight"*/};
     for (int i = 0; i < 2; i++) {
         this->buttons.push_back(new UnitButton(this->game, position, "unit_background", buttonStrings[i], buttonStrings[i]));
         position.x += resolution.x * 0.11f;
@@ -60,7 +60,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     std::unique_ptr<uiText> temp3(new uiText(this->game, position, 6));
     this->uiNumbers.push_back(std::move(temp3));
 
-    this->currUnit = UNIT_ONE;
+    this->currUnit = Enums::MAN_AT_ARMS;
 }
 
 void GameStateMain::draw(const float dt)
@@ -148,37 +148,23 @@ void GameStateMain::handleInput()
                     for(int i = 0; i < butlen; i++)
                     {
                         std::string validClick = buttons[i]->isClicked(clickPos);
-                        if(validClick == "unit_one")
+                        if(validClick == "man_at_arms")
                         {
-                            this->currUnit = UNIT_ONE;
+                            std::cout << "Unit one clicked";
+                            this->currUnit = Enums::MAN_AT_ARMS;
                         }
-                        else if(validClick == "unit_two")
+                        else if(validClick == "bow_archer")
                         {
-                            this->currUnit = UNIT_TWO;
-                        }
-                        else if(validClick == "unit_three")
-                        {
-                            this->currUnit = UNIT_THREE;
-                        }
-                        else if(validClick == "unit_four")
-                        {
-                            this->currUnit = UNIT_FOUR;
-                        }
-                        else if(validClick == "unit_five")
-                        {
-                            this->currUnit = UNIT_FIVE;
-                        }
-                        else if(validClick == "unit_six")
-                        {
-                            this->currUnit = UNIT_SIX;
-                        }
-                        else if(validClick == "unit_seven")
-                        {
-                            this->currUnit = UNIT_SEVEN;
-                        }
-                        else if(validClick == "unit_eight")
-                        {
-                            this->currUnit = UNIT_EIGHT;
+                            this->currUnit = Enums::BOW_ARCHER;
+                        } else if (validClick == "left_board") {
+                            if (roundManager.currTeam == Enums::LEFT) {
+                                std::cout << "Trying to place unit on left side\n";
+                                roundManager.leftTeam.addUnit(
+                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
+                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::LEFT));
+                            }
+                        } else if (validClick == "right_board") {
+
                         }
                     }
                     break;
