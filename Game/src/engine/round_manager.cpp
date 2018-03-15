@@ -106,7 +106,26 @@ void RoundManager::step() {
                    rightUnit.setTarget(&leftUnit);
                    rightUnit.advanceTarget();
                }
-            }  
+            }
+
+            for (int i = 0; i < 3; i++) {
+                Collider rightBaseCollider = rightTeam.baseUnits[i].getCollider();
+                Collider leftBaseCollider = leftTeam.baseUnits[i].getCollider();
+
+                if (leftCollider.checkVisionCollision(rightBaseCollider)) {
+                    if (!leftUnit.hasTarget() && rightTeam.baseUnits[i].isLiving()) {
+                        leftUnit.setTarget(&rightTeam.baseUnits[i]);
+                        leftUnit.advanceTarget();
+                    }
+                }
+
+                if (rightCollider.checkVisionCollision(leftBaseCollider)) {
+                    if (!rightUnit.hasTarget() && leftTeam.baseUnits[i].isLiving()) {
+                        rightUnit.setTarget(&leftTeam.baseUnits[i]);
+                        rightUnit.advanceTarget();
+                    }
+                }
+            }
         }
     }
 }

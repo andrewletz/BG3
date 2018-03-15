@@ -7,6 +7,8 @@
 #include "collider.hpp"
 #include "animation_handler.hpp"
 #include "global_enum.hpp"
+#include "healthbar.hpp"
+
 
 enum Action { DYING, MARCH, MOVE, ATTACK, PAUSE };
 
@@ -55,6 +57,7 @@ public:
 
 private:
     int hp;
+    //HealthBar healthBar;
     sf::Vector2f originalPos;
     float moveSpeed;
     bool dying = false;
