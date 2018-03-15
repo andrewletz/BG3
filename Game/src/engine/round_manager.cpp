@@ -83,8 +83,6 @@ void RoundManager::step() {
         // get left unit collider
         Collider leftCollider = leftUnit.getCollider();
 
-        if (leftUnit.step()) leftTeam.alive--;
-
         // LEFT TEAM INNER COLLISIONS
         for (int left2 = 0; left2 < leftTeam.units.size(); left2++) {
             if (left != left2) {
@@ -118,8 +116,6 @@ void RoundManager::step() {
 
             // get right unit collider
             Collider rightCollider = rightUnit.getCollider();
-
-            if (rightUnit.step()) rightTeam.alive--;
 
             // RIGHT TEAM INNER COLLISIONS
             for (int right2 = 0; right2 < rightTeam.units.size(); right2++) {
@@ -162,18 +158,13 @@ void RoundManager::step() {
                         leftBaseUnit.advanceTarget();
                     }
                 }
-
-
-                rightTeam.baseUnits[i].step();
-                leftTeam.baseUnits[i].step();
             }
         }
 
-        /*
-        for (auto lUnit : leftTeam.units)
+        for (Unit& lUnit : leftTeam.units)
             // step left unit
             if (lUnit.step()) leftTeam.alive--;
-        for (auto rUnit : rightTeam.units)
+        for (Unit& rUnit : rightTeam.units)
             // step right unit
             if (rUnit.step()) rightTeam.alive--;
 
@@ -181,8 +172,6 @@ void RoundManager::step() {
             rightTeam.baseUnits[i].step();
             leftTeam.baseUnits[i].step();
         }
-        */
-
     }
 }
 
