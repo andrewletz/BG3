@@ -4,7 +4,7 @@
 #include "collider.hpp"
 #include "healthbar.hpp"
 
-Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes)
+Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes) : healthBar(attributes.max_hp)
 {
     // set original position
     this->originalPos = pos;
@@ -16,13 +16,7 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     this->attributes = attributes;
     this->hp = attributes.max_hp;
     this->team = team;
-
-    /* TODO remove this temporary sizing
-    sf::Vector2f sizeVec;
-    sizeVec.x = 20.0f;
-    sizeVec.y = 20.0f; 
-    */
-
+    
     // setup body rectangle
     this->body.setTexture(texture);
     
@@ -46,26 +40,8 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     this->range.setPosition(pos);
 
     // color
-    sf::Color rColor(0, 255, 0);
-    rColor.a = 100;
-    sf::Color vColor(0, 0, 255);
-    vColor.a = 50;
-    //this->body.setFillColor(sf::Color::Transparent);
-    //this->range.setFillColor(rColor);
-    //this->vision.setFillColor(vColor);
     this->range.setFillColor(sf::Color::Transparent);
     this->vision.setFillColor(sf::Color::Transparent);
-
-    HealthBar fuckinGHEALTH(attributes.max_hp);
-}
-
-// TODO deprecate
-bool Unit::shouldDie()
-{
-    if (actionStack.empty() == false)
-        if (actionStack.top() == DYING)
-            return true;
-    return false;
 }
 
 bool Unit::isLiving()
@@ -200,7 +176,7 @@ void Unit::draw(sf::RenderWindow &window)
     window.draw(body);
     window.draw(range);
     window.draw(vision);
-    //healthBar.draw(hp, body.getPosition(), window);
+    healthBar.draw(hp, body.getPosition(), window);
 }
 
 void Unit::start()

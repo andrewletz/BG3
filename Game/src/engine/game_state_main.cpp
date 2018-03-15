@@ -55,15 +55,15 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     //make the cost text  [1] and [2]
     position.x = resolution.x * 0.44f;
     position.y = resolution.y - (resolution.y * 0.03f);
-    std::unique_ptr<uiText> temp2(new uiText(this->game, position, 3));
+    std::unique_ptr<uiText> temp2(new uiText(this->game, position, 2));
     this->uiNumbers.push_back(std::move(temp2));
 
     position.x = resolution.x * 0.55f;
-    std::unique_ptr<uiText> temp3(new uiText(this->game, position, 6));
+    std::unique_ptr<uiText> temp3(new uiText(this->game, position, 3));
     this->uiNumbers.push_back(std::move(temp3));
 
     this->currUnit = Enums::MAN_AT_ARMS;
-    
+
     //make the player money text
     //right [3]
     position.x = resolution.x - (resolution.x * 0.99);
@@ -116,10 +116,10 @@ void GameStateMain::update(const float dt)
     this->uiNumbers[0]->updateText((int) (newTime + 1));
     this->uiNumbers[0]->updateOrigin();
     int newShek = this->roundManager.leftTeam.shekels;
-    this->uiNumbers[4]->updateText(newShek);
+    this->uiNumbers[3]->updateText(newShek);
     this->uiNumbers[0]->updateOrigin();
     newShek = this->roundManager.rightTeam.shekels;
-    this->uiNumbers[3]->updateText(newShek);
+    this->uiNumbers[4]->updateText(newShek);
     this->uiNumbers[0]->updateOrigin();
 
     return;
@@ -170,27 +170,39 @@ void GameStateMain::handleInput()
                     clickPos.x = event.mouseButton.x;
                     clickPos.y = event.mouseButton.y;
 
+                    std::string leftBoardClicked = board[0]->isClicked(clickPos);
+                    if (leftBoardClicked == "left_board") {
+                            std::cout << "Trying to place unit on left side" << std::endl;
+                            if (roundManager.currTeam == Enums::LEFT) {
+                                roundManager.leftTeam.addUnit(
+                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
+                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::LEFT));
+                            }
+                    }
+
+                    std::string rightBoardClicked = board[1]->isClicked(clickPos);
+                    if (rightBoardClicked == "right_board") {
+                            std::cout << "Trying to place unit on right side" << std::endl;
+                            if (roundManager.currTeam == Enums::RIGHT) {
+                                roundManager.rightTeam.addUnit(
+                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
+                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::RIGHT));
+                            }
+                    }
+
                     int butlen = buttons.size();
                     for(int i = 0; i < butlen; i++)
                     {
                         std::string validClick = buttons[i]->isClicked(clickPos);
                         if(validClick == "man_at_arms")
                         {
-                            std::cout << "Unit one clicked";
+                            std::cout << "Mat at arms" << std::endl;
                             this->currUnit = Enums::MAN_AT_ARMS;
                         }
                         else if(validClick == "bow_archer")
                         {
+                            std::cout << "Bow archer" << std::endl;
                             this->currUnit = Enums::BOW_ARCHER;
-                        } else if (validClick == "left_board") {
-                            if (roundManager.currTeam == Enums::LEFT) {
-                                std::cout << "Trying to place unit on left side\n";
-                                roundManager.leftTeam.addUnit(
-                                    this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
-                                        sf::Vector2f((float)clickPos.x, (float)clickPos.y), Enums::LEFT));
-                            }
-                        } else if (validClick == "right_board") {
-
                         }
                     }
                     break;

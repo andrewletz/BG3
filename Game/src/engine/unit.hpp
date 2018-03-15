@@ -57,7 +57,7 @@ public:
 
 private:
     int hp;
-    //HealthBar healthBar;
+    HealthBar healthBar;
     sf::Vector2f originalPos;
     float moveSpeed;
     bool dying = false;
