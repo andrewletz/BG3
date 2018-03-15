@@ -76,15 +76,15 @@ void Team::start() {
 */
 
 void Team::reset() {
-    this->alive = units.size();
     /*
-    for (auto unit : baseUnits) {
+    for (auto unit : baseUnits)
         unit.reset();
-    }
     */
-    for (auto unit : units) {
+
+    for (auto unit : units)
         unit.reset();
-    }
+
+    this->alive = units.size();
 }
 
 void Team::giveShekels(int numShekels) {

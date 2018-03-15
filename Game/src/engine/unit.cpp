@@ -50,16 +50,13 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
 
 bool Unit::isLiving()
 {
-    if (this->hp > 0) return true;
-    return false;
+    if (actionStack.top() == DYING) return false;
+    return true;
 }
 
 bool Unit::hasTarget()
 {
-    if (target != nullptr)
-    {
-        return true;
-    }
+    if (target != nullptr) return true;
     return false;
 }
 
@@ -74,23 +71,25 @@ std::string ActionAs[5] = { "DYING", "MARCH", "MOVE", "ATTACK", "PAUSE" };
 
 bool Unit::step()
 {
-    Action topAct = actionStack.top();
-
+    Action topAct = this->actionStack.top();
+    //std::cout << "stack len = " << actionStack.size() << std::endl;
     // check if unit is not paused
     if (topAct != PAUSE)
     {
+        //std::cout << "unit action = " << ActionAs[topAct] << std::endl;
         // check if unit should be dying
-        if (!isLiving())
+        if (this->hp < 1)
         {
             // make dying if not already dying, this only triggers once
             if (topAct != DYING) {
-                actionStack.push( DYING );
+                std::cout << "push death trigger" << std::endl;
+                this->actionStack.push( DYING );
                 return true;
             }
         }
         
         // priorityStack logic
-        if (!actionStack.empty())
+        if (!this->actionStack.empty())
         {
             switch (topAct)
             {
@@ -155,6 +154,7 @@ bool Unit::step()
                 }
                 case DYING:
                 {
+                    //std::cout << "a unit is dead" << std::endl;
                     // do nothing, maybe show a death animation?
                     break;
                 }
@@ -184,24 +184,26 @@ void Unit::draw(sf::RenderWindow &window)
 
 void Unit::reset()
 {
-    while (!actionStack.empty())
+    std::cout << "before size = " << actionStack.size() << std::endl;
+    while (!this->actionStack.empty())
     {
-        actionStack.pop();
-    } 
-    body.setPosition(originalPos);
-    range.setPosition(originalPos);
-    vision.setPosition(originalPos);
-    target = nullptr;
-    hp = attributes.max_hp;
-    std::cout << "new hp: " << hp << std::endl;
-    actionStack.push(MARCH);
+        this->actionStack.pop();
+    }
+    std::cout << "after size = " << actionStack.size() << std::endl;
+    this->body.setPosition(originalPos);
+    this->range.setPosition(originalPos);
+    this->vision.setPosition(originalPos);
+    this->target = nullptr;
+    this->hp = this->attributes.max_hp;
+    std::cout << "this hp reset = " << this->hp << std::endl;
+    this->actionStack.push(MARCH);
 }
 
 bool Unit::advanceTarget()
 {
     if (target != nullptr)
     {
-        actionStack.push( MOVE );
+        this->actionStack.push( MOVE );
         return true;
     }
     return false;

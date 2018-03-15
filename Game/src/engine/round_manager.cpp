@@ -4,7 +4,7 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-	this->maxPlacingTime = 3.0;
+	this->maxPlacingTime = 1.0;
 	this->incomeInterval = 2.5;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
@@ -33,8 +33,8 @@ void RoundManager::update(const float dt) {
 
 		case FIGHT:
                     this->incomeTime += dt;
-                    step();
 
+                    step();
 		    if (this->areUnitsAlive()) { // there is still fighting
                         //std::cout << "left team unit cnt: " << leftTeam.alive;
                         //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl;
@@ -56,8 +56,8 @@ void RoundManager::update(const float dt) {
 		    	this->time = 0;
                         leftTeam.reset();
 		        rightTeam.reset();
-                        step();
 		    }
+                    
 			break;
 
 		case OVER:
@@ -185,14 +185,12 @@ void RoundManager::draw(sf::RenderWindow& window) {
             rightTeam.baseUnits[i].draw(window);
     }
     for (Unit leftUnit : leftTeam.units) {
-    	if (leftUnit.isLiving()) {
+    	if (leftUnit.isLiving())
     		leftUnit.draw(window);
-    	}
     }
     for (Unit rightUnit : rightTeam.units) {
-    	if (rightUnit.isLiving()) {
+    	if (rightUnit.isLiving())
     		rightUnit.draw(window);
-    	}
     }
 }
 
