@@ -4,7 +4,7 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-    this->maxPlacingTime = 2.0;
+    this->maxPlacingTime = 7.0;
 	this->incomeInterval = 2.5;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;

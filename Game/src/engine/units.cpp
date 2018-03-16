@@ -6,18 +6,18 @@ Units::Units() {
 	castle.visionRadius = 200.f;    
 	castle.attackDamage = 4;    
 	castle.moveSpeed = 0.0f;    
-	castle.max_hp = 1000;
+	castle.max_hp = 80;
     castle.bodyScale = 1.0f;
     castle.attackSpeed = 3.0f;
 
 	tower.cost = 0; 
 	tower.attackRadius = 200.f; 
 	tower.visionRadius = 200.f; 
-	tower.attackDamage = 4; 
+	tower.attackDamage = 1; 
 	tower.moveSpeed = 0.0f; 
-	tower.max_hp = 500;
+	tower.max_hp = 40;
     tower.bodyScale = 1.0f;
-    tower.attackSpeed = 3.0f;
+    tower.attackSpeed = 1.0f;
 
 	manAtArms.cost = 2; 
 	manAtArms.attackRadius = 35.f; 

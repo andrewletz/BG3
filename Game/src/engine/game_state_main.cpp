@@ -38,10 +38,14 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     Button *leftField = new Button(this->game, position, "left_board", "left_board");
     this->board.push_back(leftField);
 
+    this->uiElements.push_back(new Container(this->game, position, "blue_left"));
+
     // Right board
     position.x = resolution.x - (resolution.x / 4.0);
     Button *rightField = new Button(this->game, position, "right_board", "right_board");
     this->board.push_back(rightField);
+
+    this->uiElements.push_back(new Container(this->game, position, "blue_right"));
 
     // Outline is a container object
     position.x = resolution.x / 2.0;
@@ -54,10 +58,12 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
 
     //make the clock to show how much time is left  [0]
     position.x = (resolution.x / 2.0);
-    position.y = resolution.y - (resolution.y * 0.99);
+    position.y = resolution.y - (resolution.y * 0.8885);
     std::unique_ptr<uiText> temp(new uiText(this->game, position, 1));
     this->uiNumbers.push_back(std::move(temp));
     
+    position.y = resolution.y - (resolution.y * 0.877f);
+    this->uiElements.push_back(new Container(this->game, position, "mini_button"));
 
     //make the cost text  [1] and [2]
     position.x = resolution.x * 0.44f;
@@ -73,20 +79,27 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
 
     //make the player money text
     //right [3]
-    position.x = resolution.x - (resolution.x * 0.975f);
-    position.y = resolution.y * 0.82f;
+    position.x = resolution.x - (resolution.x * 0.93f);
+    position.y = resolution.y * 0.9f;
     std::unique_ptr<uiText> temp4(new uiText(this->game, position, 5));
     this->uiNumbers.push_back(std::move(temp4));
 
+    position.y = position.y * 1.011f;
+    this->uiElements.push_back(new Container(this->game, position, "mini_button"));
+
     //left [4]
-    position.x = resolution.x * 0.975f;
+    position.x = resolution.x * 0.93f;
+    position.y = resolution.y * 0.9f;
     std::unique_ptr<uiText> temp5(new uiText(this->game, position, 5));
     this->uiNumbers.push_back(std::move(temp5));
+
+    position.y = position.y * 1.011f;
+    this->uiElements.push_back(new Container(this->game, position, "mini_button"));
 
     //player turn text [5]
     position.x = (resolution.x / 2.0);
     position.y = resolution.y - (resolution.y * 0.95);
-    std::unique_ptr<uiText> temp6(new uiText(this->game, position, 1));
+    std::unique_ptr<uiText> temp6(new uiText(this->game, position, ""));
     this->uiNumbers.push_back(std::move(temp6));
 }
 
@@ -105,14 +118,24 @@ void GameStateMain::draw(const float dt)
     board[0]->draw(this->game->window);
     board[1]->draw(this->game->window);
 
-    this->uiElements[1]->draw(this->game->window);
+    this->uiElements[3]->draw(this->game->window);
 
     // Phase dependent draws (mainly for outline)
     switch(roundManager.phase) {
         case roundManager.Phase::PLACE:
-            this->uiElements[0]->draw(this->game->window);
+            this->uiElements[2]->draw(this->game->window);
+            if (roundManager.currTeam == Enums::RIGHT) {
+                this->uiElements[1]->draw(this->game->window);
+            } else {
+                this->uiElements[0]->draw(this->game->window);
+            }
             break;
     }
+
+    this->uiElements[4]->draw(this->game->window);
+    this->uiElements[5]->draw(this->game->window);
+    this->uiElements[6]->draw(this->game->window);
+
     int uilen = uiNumbers.size();
     for(int i = 0; i < uilen; i++){
         this->uiNumbers[i]->draw(this->game->window);
@@ -141,16 +164,16 @@ void GameStateMain::update(const float dt)
     this->uiNumbers[0]->updateOrigin();
 
     //update the current players turn
-    if (roundManager.phase == RoundManager::Phase::PLACE) {
-        if(this->roundManager.currTeam == Enums::LEFT){
-            this->uiNumbers[5]->updateText("LEFT");
-        }
-        else{
-            this->uiNumbers[5]->updateText("RIGHT");
-        }
-    } else {
-        this->uiNumbers[5]->updateText("");
-    }
+    // if (roundManager.phase == RoundManager::Phase::PLACE) {
+    //     if(this->roundManager.currTeam == Enums::LEFT){
+    //         this->uiNumbers[5]->updateText("LEFT");
+    //     }
+    //     else{
+    //         this->uiNumbers[5]->updateText("RIGHT");
+    //     }
+    // } else {
+    //     this->uiNumbers[5]->updateText("");
+    // }
 
     return;
 }

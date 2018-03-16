@@ -68,6 +68,8 @@ void Game::loadTextures()
     texmgr.loadTexture("left_board", "assets/images/left_field.png");
     texmgr.loadTexture("right_board", "assets/images/right_field.png");
     texmgr.loadTexture("under_build_grass", "assets/images/under_build_grass.png");
+    texmgr.loadTexture("blue_left", "assets/images/blue_left.png");
+    texmgr.loadTexture("blue_right", "assets/images/blue_right.png");
 
     // Gui elements
     texmgr.loadTexture("logo", "assets/images/logo.png");
@@ -75,6 +77,7 @@ void Game::loadTextures()
     texmgr.loadTexture("quit", "assets/images/quit_button.png");
     texmgr.loadTexture("unit_background", "assets/images/unit_button.png");
     texmgr.loadTexture("outline", "assets/images/outline.png");
+    texmgr.loadTexture("mini_button", "assets/images/mini_button.png");
 
     // Units
     texmgr.loadTexture("man_at_arms", "assets/images/man_at_arms.png");
