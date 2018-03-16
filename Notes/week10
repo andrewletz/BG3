@@ -1,2 +1,12 @@
 Added text ui to give information.
 Fixed it so it no longer crashed when the player right clicks.
+Implemented round and team logic so the game is playable.
+Added custom cursor during placing phase.
+Fixed a lot of bugs with unit code that was integrated into the game.
+Added ability for units to have custom textures.
+Added timestep dependent attack speed and movespeed to units.
+Finished up all art assets needed for final version of game (barring animations).
+Updated unit stats to be more balanced.
+Moved UI elements arround to make them look better along with small backgrounds.
+Added blue effect so it is more clear who is placing.
+Added unit healthbars.
