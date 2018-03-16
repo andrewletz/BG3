@@ -159,6 +159,7 @@ void RoundManager::step(const float dt) {
                 }
             }
         }
+    	}
 
         for (Unit& lUnit : leftTeam.units) {
             //std::cout << "l unit pos = " << lUnit.getPosition().x << std::endl;
@@ -177,7 +178,6 @@ void RoundManager::step(const float dt) {
             leftTeam.baseUnits[i].step(dt);
         }
     }
-}
 
 void RoundManager::draw(sf::RenderWindow& window) {
     for (int i = 0; i < 3; i++) {

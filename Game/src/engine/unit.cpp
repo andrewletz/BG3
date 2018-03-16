@@ -182,7 +182,7 @@ void Unit::reset() {
 }
 
 bool Unit::advanceTarget() {
-    if (target != nullptr) {
+    if (target != nullptr && this->actionStack.top() != MOVE) {
         this->actionStack.push( MOVE );
         return true;
     }
