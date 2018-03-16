@@ -87,7 +87,7 @@ void RoundManager::step(const float dt) {
         for (int left2 = 0; left2 < leftTeam.units.size(); left2++) {
             if (left != left2) {
                 Collider leftCollider2 = leftTeam.units[left2].getCollider();
-                leftCollider.checkUnitCollision(leftCollider2, 0.0f);
+                leftCollider.checkUnitCollision(leftCollider2, 0.5f);
             }
         }
 
@@ -121,7 +121,7 @@ void RoundManager::step(const float dt) {
             for (int right2 = 0; right2 < rightTeam.units.size(); right2++) {
                 if (right != right2) {
                     Collider rightCollider2 = rightTeam.units[right2].getCollider();
-                    rightCollider.checkUnitCollision(rightCollider2, 0.0f);
+                    rightCollider.checkUnitCollision(rightCollider2, 0.5f);
                 }
             }
 
