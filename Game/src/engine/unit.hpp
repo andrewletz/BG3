@@ -57,10 +57,15 @@ public:
     bool step();
     void draw(sf::RenderWindow& window);
 
-    int hp;
+    void originalViewR();
+    void globalViewR();
+
 private:
+
+    int hp;
     HealthBar healthBar;
     sf::Vector2f originalPos;
+    float origViewV;
     float moveSpeed;
     bool dying = false;
     Unit* target = nullptr;
