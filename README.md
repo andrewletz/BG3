@@ -6,9 +6,13 @@ A game based on Starcraft II's "**g**ood **g**reat **b**est **g**ame". Built wit
 
 ## Description
 
-BG3 is a simple video game based on the arcade mode from Starcraft 2 titled “good great best game”. The game field is split into two sides, left and right, both with a home base that can defend itself from attackers. Each player is given a random selection of distinct units at the start of each match with different strengths and costs. The game is split into rounds where each player has a short amount of time to place units on their side of the field in whatever arrangement seems best. Once a round begins, the units walk towards each other and fight wherever they meet, the winning side pushing towards the enemies base. Depending on the time taken for the round, each player receives an equal amount of income. Once one side’s base is destroyed, they lose.
+BG3 is a simple video game based on the arcade mode from Starcraft 2 titled “good great best game”. The game field is split into two sides, left and right, both with a home base that can defend itself from attackers. Each player is given a random selection of distinct units at the start of each match with different strengths and costs (not implemented yet). The game is split into rounds where each player has a short amount of time to place units on their side of the field in whatever arrangement seems best. Once a round begins, the units walk towards each other and fight wherever they meet, the winning side pushing towards the enemies base. Depending on the time taken for the round, each player receives an equal amount of income. Once one side’s base is destroyed, they lose.
 
 The difficulty factor comes from the short time allotted each round to place units, where each player must decide which arrangement will be best to counter their opponent’s army. The composition of units will decide which attacks first, meaning it is important where they are placed. For example, if the ranged units are placed in front of the melee units, it will cause pathing issues as the melee units are unable to fight from behind.
+
+## Compilation
+
+Go into the Game folder and type make. If all goes well, you should be able to run BG3.exe.
 
 ## Status
 
