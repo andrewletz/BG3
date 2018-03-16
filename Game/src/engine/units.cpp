@@ -7,7 +7,7 @@ Units::Units() {
 	castle.attackDamage = 1;    
 	castle.moveSpeed = 0.0f;    
 	castle.max_hp = 1000;
-        castle.bodyScale = 1.0f;
+    castle.bodyScale = 1.0f;
 
 	tower.cost = 0; 
 	tower.attackRadius = 200.f; 
@@ -15,23 +15,23 @@ Units::Units() {
 	tower.attackDamage = 1; 
 	tower.moveSpeed = 0.0f; 
 	tower.max_hp = 500;
-        tower.bodyScale = 1.0f;
+    tower.bodyScale = 1.0f;
 
 	manAtArms.cost = 2; 
 	manAtArms.attackRadius = 50.f; 
 	manAtArms.visionRadius = 100.f; 
 	manAtArms.attackDamage = 1; 
-	manAtArms.moveSpeed = 1.0f; 
+	manAtArms.moveSpeed = 0.52f; 
 	manAtArms.max_hp = 100;
-        manAtArms.bodyScale = 3.0f;
+    manAtArms.bodyScale = 3.0f;
 
 	bowArcher.cost = 3; 
-	bowArcher.attackRadius = 80.f; 
-	bowArcher.visionRadius = 100.f; 
+	bowArcher.attackRadius = 150.f; 
+	bowArcher.visionRadius = 150.f; 
 	bowArcher.attackDamage = 1; 
-	bowArcher.moveSpeed = 0.1f; 
+	bowArcher.moveSpeed = 0.4f; 
 	bowArcher.max_hp = 100;
-        manAtArms.bodyScale = 3.0f;
+    bowArcher.bodyScale = 3.0f;
 }
 
 Unit Units::getUnitWithPos(Enums::Units unit_type, TextureManager* texmgr, sf::Vector2f pos, Enums::Teams team) {
