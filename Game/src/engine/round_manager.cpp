@@ -4,7 +4,7 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-	this->maxPlacingTime = 1.0;
+        this->maxPlacingTime = 5.0;
 	this->incomeInterval = 2.5;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
@@ -15,7 +15,7 @@ RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(
 void RoundManager::update(const float dt) {
 	this->time += dt;
 	switch (this->phase) {
-		case PLACE:
+		case PLACE: {
 			if (this->time >= this->maxPlacingTime) {
 				if (this->currTeam == Enums::LEFT) { // need to switch to right team
 					this->currTeam = Enums::RIGHT;
@@ -24,53 +24,53 @@ void RoundManager::update(const float dt) {
 					std::cout << "Fighting begins\n";
 					this->phase = FIGHT;
                     this->game->resetCursor();
-                    std::cout << "left team start unit cnt: " << leftTeam.alive;
-                    std::cout << ", right team start unit cnt: " << rightTeam.alive << std::endl;
                  }
 				this->time = 0;
 			}
 			break;
-
-		case FIGHT:
+                }
+		case FIGHT: {
                     this->incomeTime += dt;
-
 		    if (this->areUnitsAlive()) { // there is still fighting
-                        //std::cout << "left team unit cnt: " << leftTeam.alive;
-                        //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl;
-                        
                         step();
+                        
+                        //std::cout << "left team unit cnt: " << leftTeam.alive;
+                        //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl; 
                         if (this->incomeTime >= this->incomeInterval) {
 		    		this->leftTeam.giveShekels(1);
 		    		this->rightTeam.giveShekels(1);
 		    		this->incomeTime = 0;
 		    	}
-		    } else if (this->gameOver()) { // no base units left on some side
+		    } else if (this->gameOver() == Enums::NONE) { // only base units are left alive
+                        std::cout << "No units, resetting board" << std::endl;
+		    	this->phase = PLACE;
+                        leftTeam.reset();
+		        rightTeam.reset();
+                        this->currTeam = Enums::LEFT;
+		    	this->time = 0;
+		    }
+
+                    if (this->gameOver() != Enums::NONE) { // no base units left on some side
 		    	this->phase = OVER;
+
+                        std::cout << "game over triggered" << std::endl;
+                        /*
 		    	bool rightWon = hasLostGame(Enums::LEFT);
 		    	if (rightWon) {
 		    		this->winner = Enums::RIGHT;
 		    	} else {
 		    		this->winner = Enums::LEFT;
 		    	}
-		    } else { // only base units are left alive
-                        std::cout << "No units, resetting board" << std::endl;
-		    	this->phase = PLACE;
-		    	this->time = 0;
-                        leftTeam.reset();
-		        rightTeam.reset();
-                        for (auto lUnit : leftTeam.units) {
-                            std::cout << "lUnit hp = " << lUnit.hp << std::endl;
-                        }
-                        
-                        for (auto rUnit : rightTeam.units) {
-                            std::cout << "lUnit hp = " << rUnit.hp << std::endl;
-                        }
-		    }
-                    
-			break;
+                        */
+                        this->winner = this->gameOver(); 
+                    }
+                    break;
+                }
 
-		case OVER:
+		case OVER: {
+                    std::cout << "GAME OVER" << std::endl;
 		    break;
+                }
 	}
 }
 
@@ -210,6 +210,9 @@ bool RoundManager::hasLostGame(Enums::Teams team) {
 	}
 }
 
-bool RoundManager::gameOver() {
-	return !hasLostGame(Enums::RIGHT) && !hasLostGame(Enums::LEFT);
+Enums::Teams RoundManager::gameOver() {
+	//return hasLostGame(Enums::RIGHT) || hasLostGame(Enums::LEFT);
+        if (leftTeam.hasLostGame()) return Enums::RIGHT;
+        if (rightTeam.hasLostGame()) return Enums::LEFT;
+        return Enums::NONE;
 }
