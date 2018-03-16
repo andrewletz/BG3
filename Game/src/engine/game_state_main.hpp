@@ -29,6 +29,8 @@ class GameStateMain : public GameState
     std::vector<std::unique_ptr<uiText> > uiNumbers;
     std::vector<Button*> board;
 
+    sf::Sprite underBuilds;
+
     Enums::Units currUnit;
 
     GameStateMain(Game* game);

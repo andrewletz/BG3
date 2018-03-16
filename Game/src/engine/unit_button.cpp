@@ -4,19 +4,20 @@
 #include "unit_button.hpp"
 
 UnitButton::UnitButton(Game* game, sf::Vector2f pos, std::string backgroundName, std::string op, std::string foregroundName) 
-: Button(game, pos, backgroundName, op){
-	//texture
+: Button(game, pos, backgroundName, op) {
 	this->secondTexture = game->texmgr.getRef(foregroundName);
-	//base the size on the size of the background
-	sf::Texture tex = game->texmgr.getRef(backgroundName);
-	sf::Vector2u textureSize = tex.getSize();
-	sf::Vector2f texSize;
-	texSize.x = textureSize.x - (textureSize.x * 0.5f);
-	texSize.y = textureSize.y - (textureSize.y * 0.5f);
-	//hitbox
+
+	// base the size on the size of the background
+	sf::Texture buttonBackground = game->texmgr.getRef(backgroundName);
+	sf::Vector2u buttonBackgroundSize = buttonBackground.getSize();
+
+	sf::Vector2f innerImageSize;
+	innerImageSize.x = secondTexture.getSize().x * 3.f;
+	innerImageSize.y = secondTexture.getSize().y * 3.f;
+
 	this->secondbox.setPosition(pos);
-	this->secondbox.setSize(texSize);
-	this->secondbox.setOrigin(texSize.x/2, texSize.y/2);
+	this->secondbox.setSize(innerImageSize);
+	this->secondbox.setOrigin(innerImageSize.x/2, innerImageSize.y/2);
 	this->secondbox.setTexture(&this->secondTexture);
 }
 

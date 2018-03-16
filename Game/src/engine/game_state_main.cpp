@@ -34,6 +34,7 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     // Left board
     position.y = (resolution.y / 2.0);
     position.x = resolution.x / 4.0;
+
     Button *leftField = new Button(this->game, position, "left_board", "left_board");
     this->board.push_back(leftField);
 
@@ -45,6 +46,11 @@ GameStateMain::GameStateMain(Game* game) : roundManager(game)
     // Outline is a container object
     position.x = resolution.x / 2.0;
     this->uiElements.push_back(new Container(this->game, position, "outline"));
+
+    // Under build grass
+    position.y += position.y * (0.035f);
+    Container *underBuilds = new Container(this->game, position, "under_build_grass");
+    this->uiElements.push_back(underBuilds);
 
     //make the clock to show how much time is left  [0]
     position.x = (resolution.x / 2.0);
@@ -98,6 +104,8 @@ void GameStateMain::draw(const float dt)
     //draw the board
     board[0]->draw(this->game->window);
     board[1]->draw(this->game->window);
+
+    this->uiElements[1]->draw(this->game->window);
 
     // Phase dependent draws (mainly for outline)
     switch(roundManager.phase) {

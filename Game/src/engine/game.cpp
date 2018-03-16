@@ -67,6 +67,7 @@ void Game::loadTextures()
     texmgr.loadTexture("background_main", "assets/images/game_field_background.png");
     texmgr.loadTexture("left_board", "assets/images/left_field.png");
     texmgr.loadTexture("right_board", "assets/images/right_field.png");
+    texmgr.loadTexture("under_build_grass", "assets/images/under_build_grass.png");
 
     // Gui elements
     texmgr.loadTexture("logo", "assets/images/logo.png");
@@ -77,7 +78,7 @@ void Game::loadTextures()
 
     // Units
     texmgr.loadTexture("man_at_arms", "assets/images/man_at_arms.png");
-    texmgr.loadTexture("bow_archer", "assets/images/man_at_arms.png");
+    texmgr.loadTexture("bow_archer", "assets/images/bow_archer.png");
 
     // Base units
     texmgr.loadTexture("castle", "assets/images/castle.png");

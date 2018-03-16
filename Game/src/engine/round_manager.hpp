@@ -34,7 +34,7 @@ public:
 
 	void update(const float dt);
 	void draw(sf::RenderWindow& window);
-    void step();
+    void step(const float dt);
 
 	bool areUnitsAlive();
 	bool hasLostGame(Enums::Teams team);

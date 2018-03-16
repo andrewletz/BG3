@@ -4,7 +4,7 @@
 #include "collider.hpp"
 #include "healthbar.hpp"
 
-Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes) : healthBar(attributes.max_hp)
+Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes attributes) : healthBar(attributes.max_hp), attackTime(0.f)
 {
     // set original position
     this->originalPos = pos;
@@ -75,8 +75,9 @@ bool Unit::targetInRange()
 
 std::string ActionAs[5] = { "DYING", "MARCH", "MOVE", "ATTACK", "PAUSE" };
 
-bool Unit::step()
+bool Unit::step(const float dt)
 {
+    this->attackTime += dt;
     Action topAct = this->actionStack.top();
     //std::cout << "stack len = " << actionStack.size() << std::endl;
     // check if unit is not paused
@@ -103,7 +104,7 @@ bool Unit::step()
                 {
                     if (team == Enums::LEFT)
                     {
-                        body.move(attributes.moveSpeed, 0);
+                        body.move(dt * attributes.moveSpeed, 0);
                         if (this->body.getPosition().x > 1200) {
                             globalViewR();
                         } else {
@@ -111,7 +112,7 @@ bool Unit::step()
                         }
                     } else if (team == Enums::RIGHT)
                     {
-                        body.move(-attributes.moveSpeed, 0);
+                        body.move(dt * -attributes.moveSpeed, 0);
                         if (this->body.getPosition().x < 200) {
                             globalViewR();
                         } else {
@@ -134,7 +135,7 @@ bool Unit::step()
                         {
                             // movement towards target
                             sf::Vector2f dir = target->getPosition() - getPosition();
-                            body.move((attributes.moveSpeed / 200) * dir);
+                            body.move(dt * (attributes.moveSpeed / 80) * dir);
                         }
                     }
                     else
@@ -151,7 +152,10 @@ bool Unit::step()
                     {
                         if (target->isLiving())
                         {
-                            attack(target);
+                            if (this->attackTime > this->attributes.attackSpeed) {
+                                attack(target);
+                                this->attackTime = 0.f;
+                            }
                         }
                         else
                         {

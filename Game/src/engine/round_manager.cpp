@@ -4,7 +4,7 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-    this->maxPlacingTime = 10.0;
+    this->maxPlacingTime = 2.0;
 	this->incomeInterval = 2.5;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
@@ -32,7 +32,7 @@ void RoundManager::update(const float dt) {
 		case FIGHT: {
                     this->incomeTime += dt;
 		    if (this->areUnitsAlive()) { // there is still fighting
-                        step();
+                        step(dt);
                         
                         //std::cout << "left team unit cnt: " << leftTeam.alive;
                         //std::cout << ", right team unit cnt: " << rightTeam.alive << std::endl; 
@@ -74,7 +74,7 @@ void RoundManager::update(const float dt) {
 	}
 }
 
-void RoundManager::step() {
+void RoundManager::step(const float dt) {
     
     for (int left = 0; left < leftTeam.units.size(); left++) {
         // left unit reference
@@ -165,17 +165,17 @@ void RoundManager::step() {
             //std::cout << "l unit pos = " << lUnit.getPosition().x << std::endl;
             //std::cout << "widow len = " << t;
             // step left unit
-            if (lUnit.step()) leftTeam.alive--;
+            if (lUnit.step(dt)) leftTeam.alive--;
         }
 
         for (Unit& rUnit : rightTeam.units) {
             // step right unit
-            if (rUnit.step()) rightTeam.alive--;
+            if (rUnit.step(dt)) rightTeam.alive--;
         }
 
         for (int i = 0; i < 3; i++) {
-            rightTeam.baseUnits[i].step();
-            leftTeam.baseUnits[i].step();
+            rightTeam.baseUnits[i].step(dt);
+            leftTeam.baseUnits[i].step(dt);
         }
     }
 }

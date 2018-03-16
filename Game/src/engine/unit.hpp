@@ -20,6 +20,7 @@ typedef struct{
     float attackRadius;
     float visionRadius;
     float moveSpeed;
+    float attackSpeed;
     float bodyScale;
 } Attributes;
 
@@ -54,7 +55,7 @@ public:
     bool isLiving();
     bool targetInRange();
     bool advanceTarget();
-    bool step();
+    bool step(const float dt);
     void draw(sf::RenderWindow& window);
 
     void originalViewR();
@@ -66,7 +67,7 @@ private:
     HealthBar healthBar;
     sf::Vector2f originalPos;
     float origViewV;
-    float moveSpeed;
+    float attackTime;
     bool dying = false;
     Unit* target = nullptr;
     
