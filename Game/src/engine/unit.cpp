@@ -16,6 +16,7 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     this->attributes = attributes;
     this->hp = attributes.max_hp;
     this->team = team;
+    this->origViewV = attributes.visionRadius;
     
     // setup body rectangle
     this->body.setTexture(texture);
@@ -98,9 +99,19 @@ bool Unit::step()
                     if (team == Enums::LEFT)
                     {
                         body.move(attributes.moveSpeed, 0);
+                        if (this->body.getPosition().x > 1200) {
+                            globalViewR();
+                        } else {
+                            originalViewR();
+                        }
                     } else if (team == Enums::RIGHT)
                     {
                         body.move(-attributes.moveSpeed, 0);
+                        if (this->body.getPosition().x < 200) {
+                            globalViewR();
+                        } else {
+                            originalViewR();
+                        }
                     }
                     break;
                 }
@@ -189,6 +200,7 @@ void Unit::reset()
     this->body.setPosition(originalPos);
     this->range.setPosition(originalPos);
     this->vision.setPosition(originalPos);
+    originalViewR();
     this->target = nullptr;
     this->hp = this->attributes.max_hp;
     this->actionStack.push(MARCH);
@@ -201,4 +213,14 @@ bool Unit::advanceTarget()
         return true;
     }
     return false;
+}
+
+void Unit::globalViewR()
+{
+    this->vision.setRadius(1000);
+}
+
+void Unit::originalViewR()
+{
+    this->vision.setRadius(origViewV);
 }

@@ -49,7 +49,7 @@ Unit Units::getUnitWithPos(Enums::Units unit_type, TextureManager* texmgr, sf::V
 			break;
 		}
 		case Enums::BOW_ARCHER: {
-			return Unit(&(texmgr->getRef("bow_archer")), pos, team, this->bowArcher);
+			return Unit(&(texmgr->getRef("man_at_arms")), pos, team, this->bowArcher);
 			break;
 		}
 	}

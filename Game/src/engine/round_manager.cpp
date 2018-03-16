@@ -4,8 +4,8 @@
 RoundManager::RoundManager(Game* game) : leftTeam(game, Enums::LEFT), rightTeam(game, Enums::RIGHT) {
 	this->game = game;
 	this->roundNumber = 1;
-        this->maxPlacingTime = 5.0;
-	this->incomeInterval = 2.5;
+        this->maxPlacingTime = 2.0;
+	this->incomeInterval = 1;
     this->incomeTime = 0.0;
 	this->currTeam = Enums::LEFT;
 	this->time = 0.0;
@@ -161,12 +161,17 @@ void RoundManager::step() {
             }
         }
 
-        for (Unit& lUnit : leftTeam.units)
+        for (Unit& lUnit : leftTeam.units) {
+            //std::cout << "l unit pos = " << lUnit.getPosition().x << std::endl;
+            //std::cout << "widow len = " << t;
             // step left unit
             if (lUnit.step()) leftTeam.alive--;
-        for (Unit& rUnit : rightTeam.units)
+        }
+
+        for (Unit& rUnit : rightTeam.units) {
             // step right unit
             if (rUnit.step()) rightTeam.alive--;
+        }
 
         for (int i = 0; i < 3; i++) {
             rightTeam.baseUnits[i].step();
