@@ -3,7 +3,7 @@
 
 Team::Team(Game* game, Enums::Teams team) : side(team) {
 	this->game = game;
-	this->shekels = 5;
+	this->shekels = 6;
 	this->alive = this->units.size();
 
     // Variables used to set up buttons

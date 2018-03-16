@@ -19,18 +19,18 @@ void RoundManager::update(const float dt) {
 			if (this->time >= this->maxPlacingTime) {
 				if (this->currTeam == Enums::LEFT) { // need to switch to right team
 					this->currTeam = Enums::RIGHT;
-					std::cout << "Switching to right team\n";
+					//std::cout << "Switching to right team\n";
 				} else {
-					std::cout << "Fighting begins\n";
+					//std::cout << "Fighting begins\n";
 					this->phase = FIGHT;
                     this->game->resetCursor();
                  }
 				this->time = 0;
 			}
 			break;
-                }
+            }
 		case FIGHT: {
-                    this->incomeTime += dt;
+            this->incomeTime += dt;
 		    if (this->areUnitsAlive()) { // there is still fighting
                         step(dt);
                         
@@ -40,20 +40,20 @@ void RoundManager::update(const float dt) {
 		    		this->leftTeam.giveShekels(1);
 		    		this->rightTeam.giveShekels(1);
 		    		this->incomeTime = 0;
-		    	}
+		    }
 		    } else if (this->gameOver() == Enums::NONE) { // only base units are left alive
-                        std::cout << "No units, resetting board" << std::endl;
+                //std::cout << "No units, resetting board" << std::endl;
 		    	this->phase = PLACE;
-                        leftTeam.reset();
+                leftTeam.reset();
 		        rightTeam.reset();
-                        this->currTeam = Enums::LEFT;
+                this->currTeam = Enums::LEFT;
 		    	this->time = 0;
 		    }
 
-                    if (this->gameOver() != Enums::NONE) { // no base units left on some side
+                if (this->gameOver() != Enums::NONE) { // no base units left on some side
 		    	this->phase = OVER;
 
-                        std::cout << "GAME OVER" << std::endl;
+                //std::cout << "GAME OVER" << std::endl;
                         /*
 		    	bool rightWon = hasLostGame(Enums::LEFT);
 		    	if (rightWon) {

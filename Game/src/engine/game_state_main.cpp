@@ -228,7 +228,7 @@ void GameStateMain::handleInput()
                     if (placing) {
                         std::string leftBoardClicked = board[0]->isClicked(clickPos);
                         if (leftBoardClicked == "left_board") {
-                                std::cout << "Trying to place unit on left side" << std::endl;
+                                //std::cout << "Trying to place unit on left side" << std::endl;
                                 if (roundManager.currTeam == Enums::LEFT) {
                                     roundManager.leftTeam.addUnit(
                                         this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
@@ -238,7 +238,7 @@ void GameStateMain::handleInput()
 
                         std::string rightBoardClicked = board[1]->isClicked(clickPos);
                         if (rightBoardClicked == "right_board") {
-                                std::cout << "Trying to place unit on right side" << std::endl;
+                                //std::cout << "Trying to place unit on right side" << std::endl;
                                 if (roundManager.currTeam == Enums::RIGHT) {
                                     roundManager.rightTeam.addUnit(
                                         this->game->units.getUnitWithPos(this->currUnit, &this->game->texmgr, 
@@ -253,7 +253,7 @@ void GameStateMain::handleInput()
                         std::string validClick = buttons[i]->isClicked(clickPos);
                         if(validClick == "man_at_arms")
                         {
-                            std::cout << "Man at arms" << std::endl;
+                            //std::cout << "Man at arms" << std::endl;
                             if (placing) {
                                 this->game->setCursorSprite("man_at_arms", this->roundManager.currTeam);
                             }
@@ -261,7 +261,7 @@ void GameStateMain::handleInput()
                         }
                         else if(validClick == "bow_archer")
                         {
-                            std::cout << "Bow archer" << std::endl;
+                            //std::cout << "Bow archer" << std::endl;
                             if (placing) {
                                 this->game->setCursorSprite("bow_archer", this->roundManager.currTeam);
                             }
