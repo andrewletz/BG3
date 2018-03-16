@@ -25,10 +25,23 @@ You must have a compatible version of SFML installed on your machine, along with
 
 ## Team Members
 
-* Andrew Letz (architect of the glorious makefile)
+* Andrew Letz
+  * Makefile
+  * Round/game logic
+  * Team logic
+  * Dynamic resolution scaling
+  * Art assets
 * Ethan Quick
+  * Buttons/Containers
+  * Timers
+  * Other UI elements
+  * Pause state
 * Tristan Colby
-
+  * Unit class design
+  * Collision detection
+  * Unit combat/movement logic
+  * Unit integration with rounds/team
+  
 ## Credits
 
 Thank you to Daniel Mansfield for your SFML intro tutorial located here: https://github.com/dbMansfield/citybuilder
