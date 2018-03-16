@@ -4,7 +4,7 @@ Units::Units() {
 	castle.cost = 0;    
 	castle.attackRadius = 200.f;    
 	castle.visionRadius = 200.f;    
-	castle.attackDamage = 0;    
+	castle.attackDamage = 1;    
 	castle.moveSpeed = 0.0f;    
 	castle.max_hp = 1000;
         castle.bodyScale = 1.0f;
@@ -12,25 +12,25 @@ Units::Units() {
 	tower.cost = 0; 
 	tower.attackRadius = 200.f; 
 	tower.visionRadius = 200.f; 
-	tower.attackDamage = 0; 
+	tower.attackDamage = 1; 
 	tower.moveSpeed = 0.0f; 
 	tower.max_hp = 500;
         tower.bodyScale = 1.0f;
 
 	manAtArms.cost = 2; 
-	manAtArms.attackRadius = 30.f; 
-	manAtArms.visionRadius = 300.f; 
+	manAtArms.attackRadius = 50.f; 
+	manAtArms.visionRadius = 100.f; 
 	manAtArms.attackDamage = 1; 
 	manAtArms.moveSpeed = 1.0f; 
-	manAtArms.max_hp = 20;
+	manAtArms.max_hp = 100;
         manAtArms.bodyScale = 3.0f;
 
 	bowArcher.cost = 3; 
-	bowArcher.attackRadius = 60.f; 
-	bowArcher.visionRadius = 80.f; 
+	bowArcher.attackRadius = 80.f; 
+	bowArcher.visionRadius = 100.f; 
 	bowArcher.attackDamage = 1; 
 	bowArcher.moveSpeed = 0.1f; 
-	bowArcher.max_hp = 8;
+	bowArcher.max_hp = 100;
         manAtArms.bodyScale = 3.0f;
 }
 

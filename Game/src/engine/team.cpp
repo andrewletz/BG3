@@ -53,7 +53,11 @@ bool Team::hasUnitsAlive() {
 }
 
 bool Team::hasLostGame() {
-	return this->baseUnits.size() > 0;
+    // very inefficient
+    int cnt = 0;
+    for (Unit& unit : baseUnits)
+        if (unit.isLiving()) cnt++;
+    return (cnt == 0);
 }
 
 void Team::addUnit(Unit unit) {

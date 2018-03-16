@@ -38,7 +38,7 @@ public:
 
 	bool areUnitsAlive();
 	bool hasLostGame(Enums::Teams team);
-	bool gameOver();
+        Enums::Teams gameOver();
 
 };
 
