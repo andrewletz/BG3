@@ -53,7 +53,7 @@ void RoundManager::update(const float dt) {
                     if (this->gameOver() != Enums::NONE) { // no base units left on some side
 		    	this->phase = OVER;
 
-                        std::cout << "game over triggered" << std::endl;
+                        std::cout << "GAME OVER" << std::endl;
                         /*
 		    	bool rightWon = hasLostGame(Enums::LEFT);
 		    	if (rightWon) {
@@ -68,7 +68,6 @@ void RoundManager::update(const float dt) {
                 }
 
 		case OVER: {
-                    std::cout << "GAME OVER" << std::endl;
 		    break;
                 }
 	}
