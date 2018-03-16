@@ -224,7 +224,7 @@ void GameStateMain::handleInput()
                         {
                             std::cout << "Man at arms" << std::endl;
                             if (placing) {
-                                this->game->setCursorSprite("man_at_arms");
+                                this->game->setCursorSprite("man_at_arms", this->roundManager.currTeam);
                             }
                             this->currUnit = Enums::MAN_AT_ARMS;
                         }
@@ -232,7 +232,7 @@ void GameStateMain::handleInput()
                         {
                             std::cout << "Bow archer" << std::endl;
                             if (placing) {
-                                this->game->setCursorSprite("bow_archer");
+                                this->game->setCursorSprite("bow_archer", this->roundManager.currTeam);
                             }
                             this->currUnit = Enums::BOW_ARCHER;
                         }

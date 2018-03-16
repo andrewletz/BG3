@@ -20,6 +20,11 @@ Unit::Unit(sf::Texture* texture, sf::Vector2f pos, Enums::Teams team, Attributes
     
     // setup body rectangle
     this->body.setTexture(texture);
+    if (team == Enums::RIGHT) {
+        if (attributes.max_hp != 500) {
+            this->body.scale(-1.f, 1.f); 
+        }
+    }
     
     sf::Vector2f sizeVec;
     const sf::IntRect texRect = body.getTextureRect();

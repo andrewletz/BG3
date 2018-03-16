@@ -181,7 +181,11 @@ void Game::resetCursor() {
     this->windowsCursorVisible = true;
 }
 
-void Game::setCursorSprite(std::string textureName) {
+void Game::setCursorSprite(std::string textureName, Enums::Teams team) {
     this->windowsCursorVisible = false;
     this->cursor.setTexture(this->texmgr.getRef(textureName));
+    this->cursor.setScale(sf::Vector2f(3.0, 3.0));
+    if (team == Enums::RIGHT) {
+        this->cursor.setScale(-3.f, 3.f);
+    }
 }

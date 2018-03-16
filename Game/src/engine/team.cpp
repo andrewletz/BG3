@@ -3,7 +3,7 @@
 
 Team::Team(Game* game, Enums::Teams team) : side(team) {
 	this->game = game;
-	this->shekels = 50;
+	this->shekels = 5;
 	this->alive = this->units.size();
 
     // Variables used to set up buttons
@@ -31,14 +31,14 @@ Team::Team(Game* game, Enums::Teams team) : side(team) {
     	case Enums::RIGHT:
     	{
     		position.x = resolution.x * 0.9f;
-    		Unit castle = this->game->units.getUnitWithPos(Enums::CASTLE, &game->texmgr, position, Enums::LEFT);
+    		Unit castle = this->game->units.getUnitWithPos(Enums::CASTLE, &game->texmgr, position, Enums::RIGHT);
 
     		position.x = resolution.x * 0.82f;
     		position.y = resolution.y * 0.2f;
-			Unit towerTop = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
+			Unit towerTop = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::RIGHT);
 
 			position.y = resolution.y * 0.65f;
-			Unit towerBottom = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::LEFT);
+			Unit towerBottom = this->game->units.getUnitWithPos(Enums::TOWER, &game->texmgr, position, Enums::RIGHT);
 
 			this->baseUnits.push_back(castle);
 			this->baseUnits.push_back(towerTop);

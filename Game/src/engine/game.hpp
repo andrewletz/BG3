@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "texture_manager.hpp"
 #include "units.hpp"
+#include "global_enum.hpp"
 
 class Units;
 class GameState;
@@ -31,7 +32,7 @@ class Game
     TextureManager texmgr;
 
     void resetCursor();
-    void setCursorSprite(std::string textureName);
+    void setCursorSprite(std::string textureName, Enums::Teams team);
 
     void pushState(GameState* state);
     void popState();
