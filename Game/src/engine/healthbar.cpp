@@ -17,6 +17,7 @@ void HealthBar::setMax(int max) {
 }
 
 void HealthBar::draw(int curHP, sf::Vector2f newPos, sf::RenderWindow& window) {
+    newPos.y = newPos.y - 25;
     this->backBar.setPosition(newPos);
     this->healthBar.setPosition(newPos.x - (maxSize.x / 2), newPos.y - (maxSize.y / 2));
    
