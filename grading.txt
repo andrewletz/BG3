@@ -1,0 +1,95 @@
+Summary:
+  + Strengths: 
+	Well designed project, implementation is good given the time limitations
+	Great teamwork! 
+	Work distributed over several weeks
+	Very nice presentation
+  - Weaknesses:
+	In group projects, make sure to set your git info (name) for proper effort tracking.
+
+(The invisible author in that stats below is Ethan (EthanQ@EQ-pc.localdomain), before he set his git name.)
+
+Statistical information for the repository 'BG3' was gathered on 2018/03/18.
+The following historical commit information, by author, was found:
+
+Author                     Commits    Insertions      Deletions    % of changes
+                                 1           200              0            2.58
+AndrewLetz                      29          1563           2463           52.00
+Ethan Quick                     24          1277            223           19.37
+Tristan Colby                   29          1359            657           26.04
+
+Below are the number of rows from each author that have survived and are still
+intact in the current revision:
+
+Author                     Rows      Stability          Age       % in comments
+                             55           27.5          0.0                1.82
+Andrew Letz                1084          100.0          1.1               10.70
+Ethan Quick                 572           44.8          1.0                5.42
+Tristan Colby               577           42.5          0.8                8.84
+
+The following history timeline has been gathered from the repository:
+
+Author                  2018W08    2018W09    2018W10    2018W11 
+                      +++++++++                                  
+AndrewLetz                        ++++++++          .   ------++ 
+Ethan Quick                       -+++++++    -++++++          . 
+Tristan Colby                       ++++++   ----++++          + 
+Modified Rows:              200       1960       1142       4440 
+
+The following files have an elevated cyclomatic complexity (in order of severity):
+Game/src/engine/round_manager.cpp (108 in cyclomatic complexity)
+Game/src/engine/unit.cpp (76 in cyclomatic complexity)
+
+The following responsibilities, by author, were found in the current revision of
+the repository (comments are excluded from the line count, if possible):
+
+EthanQ@EQ-pc.localdomain is mostly responsible for:
+    11 Game/src/engine/game_state.hpp
+     9 Game/src/engine/game.hpp
+     8 Game/src/engine/game_state_start.hpp
+     8 Game/src/engine/game_state_main.hpp
+     5 Game/src/main.cpp
+     4 Game/src/engine/game_state_start.cpp
+     4 Game/src/engine/game_state_pause.hpp
+     4 Game/src/engine/game.cpp
+     1 Game/src/engine/game_state_main.cpp
+
+Andrew Letz is mostly responsible for:
+   161 Game/src/engine/game_state_main.cpp
+   152 Game/src/engine/game.cpp
+   104 Game/src/engine/game_state_start.cpp
+    76 Game/src/engine/round_manager.cpp
+    62 Game/src/engine/team.cpp
+    56 Game/src/engine/units.cpp
+    40 Game/src/engine/game.hpp
+    36 Game/src/engine/animation_handler.hpp
+    32 Game/src/engine/animation_handler.cpp
+    30 Game/src/engine/round_manager.hpp
+
+Ethan Quick is mostly responsible for:
+   108 Game/src/engine/game_state_main.cpp
+    49 Game/src/engine/game_state_start.cpp
+    48 Game/src/engine/uitext.cpp
+    41 Game/src/engine/container.cpp
+    33 Game/src/engine/unit_button.cpp
+    31 Game/src/engine/game_state_pause.cpp
+    28 Game/src/engine/button.cpp
+    25 Game/src/engine/animation_handler.hpp
+    22 Game/src/engine/container.hpp
+    21 Game/src/engine/uitext.hpp
+
+Tristan Colby is mostly responsible for:
+   162 Game/src/engine/unit.cpp
+   119 Game/src/engine/round_manager.cpp
+    81 Game/src/engine/collider.cpp
+    71 Game/src/engine/unit.hpp
+    31 Game/src/engine/healthbar.cpp
+    26 Game/src/engine/collider.hpp
+    19 Game/src/engine/healthbar.hpp
+    11 Game/src/engine/team.cpp
+     4 Game/src/engine/units.cpp
+     1 Game/src/engine/team.hpp
+
+The extensions below were found in the repository history (extensions used
+during statistical analysis are marked):
+* [cpp] d [hpp] md txt 
